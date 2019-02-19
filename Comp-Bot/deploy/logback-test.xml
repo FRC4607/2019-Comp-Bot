@@ -1,0 +1,73 @@
+<configuration>
+
+	<timestamp key="TIME_BY_SECOND" datePattern="yyyy-MM-dd_HH.mm.ss"/>
+	<timestamp key="TIME_BY_DAY" datePattern="yyyy-MM-dd"/>
+	
+	<property name="LOG_DATEFORMAT_PATTERN" value="HH:mm:ss.SSS"/>
+	<property name="LOG_LEVEL_PATTERN" value="%5p"/>
+	<property name="LOG_PATTERN" value="%d{${LOG_DATEFORMAT_PATTERN}} ${LOG_LEVEL_PATTERN} --- %-40.40logger{39} : %m%n"/>
+	
+	<property name="LOG_DIR_BASE" value="C:/Users/Public/logback"/>
+	<property name="LOG_DIR_DAILY" value="${LOG_DIR_BASE}/per-day"/>
+	<property name="LOG_DIR_SESSION" value="${LOG_DIR_BASE}/per-session"/>
+	<property name="LOG_DIR_SELFTEST" value="${LOG_DIR_BASE}/selftest"/>
+	<property name="LOG_DIR_CALIBRATION" value="${LOG_DIR_BASE}/calibration"/>
+	<property name="LOG_DIR_DATADUMPER" value="${LOG_DIR_BASE}/data-dumper"/>
+	
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="frc.robot.lib.logback.ConsoleFilter" />
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE_SELFTEST" class="ch.qos.logback.core.FileAppender">
+		<file>${LOG_DIR_SELFTEST}/${TIME_BY_DAY}/session-log-${TIME_BY_SECOND}.log</file>
+		<filter class="frc.robot.lib.logback.DrivetrainSelftestFilter" />
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE_CALIBRATION" class="ch.qos.logback.core.FileAppender">
+		<file>${LOG_DIR_CALIBRATION}/${TIME_BY_DAY}/session-log-${TIME_BY_SECOND}.log</file>
+		<filter class="frc.robot.lib.logback.DrivetrainCalibrationFilter" />
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE_DATADUMPER" class="ch.qos.logback.core.FileAppender">
+		<file>${LOG_DIR_DATADUMPER}/${TIME_BY_DAY}/session-log-${TIME_BY_SECOND}.log</file>
+		<filter class="frc.robot.lib.logback.DataDumperFilter" />
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE_BY_SECOND" class="ch.qos.logback.core.FileAppender">
+		<file>${LOG_DIR_SESSION}/${TIME_BY_DAY}/session-log-${TIME_BY_SECOND}.log</file>
+		<filter class="frc.robot.lib.logback.ConsoleFilter" />
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE_BY_DAY" class="ch.qos.logback.core.FileAppender">
+		<file>${LOG_DIR_DAILY}/${TIME_BY_MONTH}/daily-log-${TIME_BY_DAY}.log</file>
+		<filter class="frc.robot.lib.logback.ConsoleFilter" />
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="FILE_SELFTEST"/>
+		<appender-ref ref="FILE_CALIBRATION"/>
+		<appender-ref ref="FILE_DATADUMPER"/>
+		<appender-ref ref="FILE_BY_SECOND"/>
+		<appender-ref ref="FILE_BY_DAY"/>
+	</root>
+
+</configuration>
