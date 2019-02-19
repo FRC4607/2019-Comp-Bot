@@ -3,13 +3,23 @@ package frc.robot;
 public class RobotMap {
 
   // Drivetrain
-  public static final int kLeftDriveMasterId = 20;
-  public static final int kLeftDriveFollowerAId = 21;
-  public static final int kLeftDriveFollowerBId = 22;
-  public static final int kRightDriveMasterId = 35;
-  public static final int kRightDriveFollowerAId = 34;
-  public static final int kRightDriveFollowerBId = 33;
+  public static final int kLeftDriveMasterId = 25;
+  public static final int kLeftDriveFollowerAId = 24;
+  public static final int kLeftDriveFollowerBId = 23;
+  public static final int kRightDriveMasterId = 10;
+  public static final int kRightDriveFollowerAId = 11;
+  public static final int kRightDriveFollowerBId = 12;
   
+  // Elevator
+  public static int kElevatorMotorAId = 22;
+  public static int kElevatorMotorBId = 21;
+
+  // Cargo
+  public static int kCargoMotorID = 14;
+  
+  // Wrist
+  public static int kWristMotorID = 13;
+
   // Use the drivetrain CalibrateTurningDeadband() method to measure these
   public static final double kDeadbandHighGear = 0.18;
   public static final double kDeadbandLowGear = 0.16;
@@ -32,6 +42,5 @@ public class RobotMap {
   public static final double kScaleHorizontalToTarget = 1.0 / 27.0;  // Limelight has 54deg FOV
   public static final double kTurningGain = 0.5;
   public static final double kStopTurningDeg = 1.0;
-
 
 }
