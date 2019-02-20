@@ -24,8 +24,8 @@ public class DrivetrainTest {
   WPI_VictorSPX leftFollowerAMock = mock(WPI_VictorSPX.class);
   WPI_VictorSPX leftFollowerBMock = mock(WPI_VictorSPX.class);
   WPI_TalonSRX rightLeaderMock = mock(WPI_TalonSRX.class);
-  WPI_VictorSPX rightFollowerAMock = mock(WPI_VictorSPX.class);
-  WPI_VictorSPX rightFollowerBMock = mock(WPI_VictorSPX.class);
+  WPI_TalonSRX rightFollowerAMock = mock(WPI_TalonSRX.class);
+  WPI_TalonSRX rightFollowerBMock = mock(WPI_TalonSRX.class);
   DifferentialDrive diffDriveMock = mock(DifferentialDrive.class);
   Vision visionMock = mock(Vision.class);
   DoubleSolenoid shifterMock = mock(DoubleSolenoid.class);
@@ -55,11 +55,11 @@ public class DrivetrainTest {
                                            rightLeaderMock, rightFollowerAMock, rightFollowerBMock,
                                            shifterMock, visionMock, compressorMock, diffDriveMock);
     // Should start off inverted
-    boolean invertedValue = true;
+    boolean invertedValue = false;
     assertEquals(invertedValue, drivetrain.isInverted());
     
     // .setInverted(true)
-    invertedValue = false;
+    invertedValue = true;
     drivetrain.InvertOutput(invertedValue);
     verify(leftLeaderMock, times(1)).setInverted(invertedValue);
     verify(leftFollowerAMock, times(1)).setInverted(invertedValue);
@@ -70,7 +70,7 @@ public class DrivetrainTest {
     assertEquals(invertedValue, drivetrain.isInverted());
 
     // .setInverted(true)
-    invertedValue = true;
+    invertedValue = false;
     drivetrain.InvertOutput(invertedValue);
     verify(leftLeaderMock, times(2)).setInverted(invertedValue);
     verify(leftFollowerAMock, times(2)).setInverted(invertedValue);

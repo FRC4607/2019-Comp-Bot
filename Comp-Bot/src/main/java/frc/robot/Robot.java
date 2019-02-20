@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
 public class Robot extends TimedRobot {
 
   public static Drivetrain mDrivetrain = Drivetrain.create();
+  public static Elevator mElevator = Elevator.create();
   public static OI mOI = new OI();
   private boolean mStartSelftestOrCalibration;
   private final Logger mLogger = LoggerFactory.getLogger(Robot.class);
@@ -72,7 +75,7 @@ public class Robot extends TimedRobot {
     if (mStartSelftestOrCalibration) {
       mLogger.info("Starting Robot Selftest/Calibration");
       mStartSelftestOrCalibration = false;
-      //mDrivetrain.SelfTest();
+      // mDrivetrain.SelfTest();
       mDrivetrain.CalibrateTurningDeadband();
     }
 

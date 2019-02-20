@@ -34,8 +34,8 @@ public class Drivetrain extends Subsystem {
   private static final double kDeadbandLowGearScalar = (1.0 - RobotMap.kDeadbandLowGear) / 1.0;
 
   // Hardware
-  private final WPI_TalonSRX mLeftLeader, mRightLeader;
-  private final WPI_VictorSPX mLeftFollowerA, mLeftFollowerB, mRightFollowerA, mRightFollowerB;   
+  private final WPI_TalonSRX mLeftLeader, mRightLeader, mRightFollowerA, mRightFollowerB;
+  private final WPI_VictorSPX mLeftFollowerA, mLeftFollowerB;   
   private final DoubleSolenoid mShifter;
   private final Compressor mCompressor;
 
@@ -240,7 +240,7 @@ public class Drivetrain extends Subsystem {
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
   public Drivetrain(WPI_TalonSRX leftLeader, WPI_VictorSPX leftFollowerA, WPI_VictorSPX leftFollowerB,
-                    WPI_TalonSRX rightLeader, WPI_VictorSPX rightFollowerA, WPI_VictorSPX rightFollowerB,
+                    WPI_TalonSRX rightLeader, WPI_TalonSRX rightFollowerA, WPI_TalonSRX rightFollowerB,
                     DoubleSolenoid shifter, Vision vision, Compressor compressor, DifferentialDrive diffDrive) {
   
     mLeftLeader = leftLeader;
@@ -271,9 +271,11 @@ public class Drivetrain extends Subsystem {
 
     // The Differential drive will invert the output going to the right side to get the left and right sides
     // in phase with one-another.  To get Charleston going "forward", invert all of the motors.  
-    mIsInverted = false;
-    InvertOutput(true);
+    mIsInverted = true;
+    InvertOutput(false);
 
+    mLeftLeader.setSensorPhase(false);
+    mRightLeader.setSensorPhase(true);
   }
 
   public static Drivetrain create() {
@@ -283,14 +285,14 @@ public class Drivetrain extends Subsystem {
     WPI_VictorSPX leftFollowerB = VictorSPX.createVictorSPX(RobotMap.kLeftDriveFollowerBId, RobotMap.kLeftDriveMasterId);
     
     WPI_TalonSRX rightLeader = TalonSRX.createTalonSRX(RobotMap.kRightDriveMasterId, true);
-    WPI_VictorSPX rightFollowerA = VictorSPX.createVictorSPX(RobotMap.kRightDriveFollowerAId, RobotMap.kRightDriveMasterId);
-    WPI_VictorSPX rightFollowerB = VictorSPX.createVictorSPX(RobotMap.kRightDriveFollowerBId, RobotMap.kRightDriveMasterId);
-
-    DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.kPCM, RobotMap.kShifterHighGearSolenoidId, RobotMap.kShifterLowGearSolenoidId);
+    WPI_TalonSRX rightFollowerA = TalonSRX.createTalonSRX(RobotMap.kRightDriveFollowerAId, RobotMap.kRightDriveMasterId);
+    WPI_TalonSRX rightFollowerB = TalonSRX.createTalonSRX(RobotMap.kRightDriveFollowerBId, RobotMap.kRightDriveMasterId);
+    
+    DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.kPCMId, RobotMap.kShifterHighGearSolenoidId, RobotMap.kShifterLowGearSolenoidId);
 
     Vision vision = Vision.create();
 
-    Compressor compressor = new Compressor(RobotMap.kPCM);
+    Compressor compressor = new Compressor(RobotMap.kPCMId);
 
     DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader);
 
@@ -346,6 +348,26 @@ public class Drivetrain extends Subsystem {
       mSelftestLogger.info("VictorSPX_{},{},{},{},{},{},{}", victorId, wantsHighGear, setMotorOutputPercent, motorOutputPercent, motorOutputVoltage, sensorPosition, sensorVelocity);
     } while (Timer.getFPGATimestamp() < endTime);   
     victor.set(0.0);
+  }
+
+  private void MeasureMotorHealth(WPI_TalonSRX talonfollow, boolean posPolarity, boolean wantsHighGear, WPI_TalonSRX talon) {
+    int sensorPosition, sensorVelocity;
+    double motorOutputPercent, motorOutputVoltage, endTime; 
+    int talonID = talonfollow.getDeviceID();
+    double setMotorOutputPercent = posPolarity ? 0.5 : -0.5;
+
+    setHighGear(wantsHighGear);
+    zeroSensorPosition(talon);
+    talonfollow.set(setMotorOutputPercent);
+    endTime = Timer.getFPGATimestamp() + 2.0;
+    do {
+      sensorPosition = talon.getSelectedSensorPosition();
+      sensorVelocity = talon.getSelectedSensorVelocity();
+      motorOutputPercent = talonfollow.getMotorOutputPercent();
+      motorOutputVoltage = talonfollow.getMotorOutputVoltage();
+      mSelftestLogger.info("VictorSPX_{},{},{},{},{},{},{}", talonID, wantsHighGear, setMotorOutputPercent, motorOutputPercent, motorOutputVoltage, sensorPosition, sensorVelocity);
+    } while (Timer.getFPGATimestamp() < endTime);   
+    talonfollow.set(0.0);
   }
 
   public void SelfTest() {

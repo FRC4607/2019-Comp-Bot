@@ -11,7 +11,7 @@ import frc.robot.commands.drivetrain.DriveJoystickWithVisionAssistTurning;
 public class OI {
 
   public static Joystick mDriverJoystick = new Joystick(RobotMap.kDriverJoystick);
-  //public static Joystick mOperatorJoystick = new Joystick(RobotMap.kOperatorJoystick);
+  public static Joystick mOperatorJoystick = new Joystick(RobotMap.kOperatorJoystick);
   public static Button mShift = new JoystickButton(mDriverJoystick, 1);
   //public static Button mTurnToTarget = new JoystickButton(mDriverJoystick, 2);
   public static Button mVisionAssistedTurning = new JoystickButton(mDriverJoystick, 2);
