@@ -15,7 +15,6 @@ public class DriveJoystick extends Command {
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
   public DriveJoystick() {
-    super();
     requires(Robot.mDrivetrain);
   }
 
@@ -26,7 +25,7 @@ public class DriveJoystick extends Command {
   protected void execute() {
 
     double throttle = OI.mDriverJoystick.getY();
-    double turn = -OI.mDriverJoystick.getX();
+    double turn = OI.mDriverJoystick.getX();
 
     // Apply a deadband to the joystick
     if (throttle < RobotMap.kDeadbandJoystick && throttle > -RobotMap.kDeadbandJoystick) {
