@@ -283,13 +283,13 @@ public class Drivetrain extends Subsystem {
 
   public static Drivetrain create() {
 
-    WPI_TalonSRX leftLeader = TalonSRX.createTalonSRX(RobotMap.kLeftDriveMasterId, true);
-    WPI_VictorSPX leftFollowerA = VictorSPX.createVictorSPX(RobotMap.kLeftDriveFollowerAId, RobotMap.kLeftDriveMasterId);
-    WPI_VictorSPX leftFollowerB = VictorSPX.createVictorSPX(RobotMap.kLeftDriveFollowerBId, RobotMap.kLeftDriveMasterId);
+    WPI_TalonSRX leftLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kLeftDriveMasterId));
+    WPI_VictorSPX leftFollowerA = VictorSPX.createVictorSPX(new WPI_VictorSPX(RobotMap.kLeftDriveFollowerAId), RobotMap.kLeftDriveMasterId);
+    WPI_VictorSPX leftFollowerB = VictorSPX.createVictorSPX(new WPI_VictorSPX(RobotMap.kLeftDriveFollowerBId), RobotMap.kLeftDriveMasterId);
     
-    WPI_TalonSRX rightLeader = TalonSRX.createTalonSRX(RobotMap.kRightDriveMasterId, true);
-    WPI_TalonSRX rightFollowerA = TalonSRX.createTalonSRX(RobotMap.kRightDriveFollowerAId, RobotMap.kRightDriveMasterId);
-    WPI_TalonSRX rightFollowerB = TalonSRX.createTalonSRX(RobotMap.kRightDriveFollowerBId, RobotMap.kRightDriveMasterId);
+    WPI_TalonSRX rightLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kRightDriveMasterId));
+    WPI_TalonSRX rightFollowerA = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerAId), RobotMap.kRightDriveMasterId);
+    WPI_TalonSRX rightFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerBId), RobotMap.kRightDriveMasterId);
     
     DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.kPCMId, RobotMap.kShifterHighGearSolenoidId, RobotMap.kShifterLowGearSolenoidId);
 

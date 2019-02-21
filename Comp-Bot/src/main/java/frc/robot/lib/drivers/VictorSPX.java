@@ -20,27 +20,27 @@ public class VictorSPX {
     victor.configVoltageCompSaturation(12.0, RobotMap.kLongCANTimeoutMs);
   }
 
-  public static void createLeader(WPI_VictorSPX victor) {
+  /****************************************************************************************************************************** 
+  ** CREATE VICTORSPX LEADER
+  ******************************************************************************************************************************/
+  public static WPI_VictorSPX createVictorSPX(WPI_VictorSPX victor) {
+
     setDefaultConfig(victor);
     victor.set(ControlMode.PercentOutput, 0.0);
-  }
+    mLogger.info("Created leader VictorSPX [{}]", victor.getDeviceID());
 
-  public static void createFollower(WPI_VictorSPX victor, int leaderId) {
+    return victor;
+  }
+  
+  /****************************************************************************************************************************** 
+  ** CREATE VICTORSPX FOLLOWER
+  ******************************************************************************************************************************/
+  public static WPI_VictorSPX createVictorSPX(WPI_VictorSPX victor, int leaderId) {
+       
     setDefaultConfig(victor);
     victor.set(ControlMode.Follower, leaderId);
-  }
-
-  public static WPI_VictorSPX createVictorSPX(int deviceId) {
-    final WPI_VictorSPX victor = new WPI_VictorSPX(deviceId);
-    createLeader(victor);
-    mLogger.info("Created leader VictorSPX [{}]", deviceId);
+    mLogger.info("Created follower VictorSPX [{}]", victor.getDeviceID());
     return victor;
   }
 
-  public static WPI_VictorSPX createVictorSPX(int deviceId, int leaderId) {
-    final WPI_VictorSPX victor = new WPI_VictorSPX(deviceId);
-    createFollower(victor, leaderId);
-    mLogger.info("Created follower VictorSPX [{}]", deviceId);
-    return victor;
-  }
 }

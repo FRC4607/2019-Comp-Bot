@@ -33,11 +33,11 @@ public class VictorSPXTest {
   }    
 
   @Test
-  public void shouldCreateDefaultLeaderTalons() {
+  public void shouldCreateVictorSPXLeader() {
     
     WPI_VictorSPX mLeaderMock = mock(WPI_VictorSPX.class);
 
-    VictorSPX.createLeader(mLeaderMock);
+    VictorSPX.createVictorSPX(mLeaderMock);
 
     verify(mLeaderMock, times(1)).set(ControlMode.PercentOutput, 0.0);
     verify(mLeaderMock, times(1)).configFactoryDefault();
@@ -48,11 +48,11 @@ public class VictorSPXTest {
   }
 
   @Test
-  public void shouldCreateDefaultFollowerTalons() {
+  public void shouldCreateVictorSPXFollower() {
     
     WPI_VictorSPX mFollowerMock = mock(WPI_VictorSPX.class);
   
-    VictorSPX.createFollower(mFollowerMock, RobotMap.kLeftDriveMasterId);
+    VictorSPX.createVictorSPX(mFollowerMock, RobotMap.kLeftDriveMasterId);
   
     verify(mFollowerMock, times(1)).set(ControlMode.Follower, RobotMap.kLeftDriveMasterId);
     verify(mFollowerMock, times(1)).configFactoryDefault();

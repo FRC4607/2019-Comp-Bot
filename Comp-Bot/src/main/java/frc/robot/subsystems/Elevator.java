@@ -78,7 +78,7 @@ public class Elevator extends Subsystem {
   /****************************************************************************************************************************** 
   ** APPLY MOTOR OUTPUT
   ******************************************************************************************************************************/
-  // The bonus is on the caller to ensure that the sum of the drive signal is between -1.0 and 1.0
+  // The onus is on the caller to ensure that the sum of the drive signal is between -1.0 and 1.0
   public void ApplyDriveSignal(double throttle) {
     double mThrottle = 0.0;
     
@@ -143,8 +143,8 @@ public class Elevator extends Subsystem {
   }
 
   public static Elevator create() {
-    WPI_TalonSRX master = TalonSRX.createTalonSRX(RobotMap.kElevatorMotorMasterId, true);
-    WPI_TalonSRX follower = TalonSRX.createTalonSRX(RobotMap.kElevatorMotorFollowerId, RobotMap.kElevatorMotorMasterId);
+    WPI_TalonSRX master = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kElevatorMotorMasterId));
+    WPI_TalonSRX follower = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kElevatorMotorFollowerId), RobotMap.kElevatorMotorMasterId);
     
     return new Elevator(master, follower);
   }
