@@ -143,8 +143,8 @@ public class Elevator extends Subsystem {
   }
 
   public static Elevator create() {
-    WPI_TalonSRX master = TalonSRX.createTalonSRX(RobotMap.kElevatorMotorMasterId);
-    WPI_TalonSRX follower = TalonSRX.createTalonSRX(RobotMap.kElevatorMotorFollowerId, RobotMap.kElevatorMotorMasterId, true);
+    WPI_TalonSRX master = TalonSRX.createTalonSRX(RobotMap.kElevatorMotorMasterId, true);
+    WPI_TalonSRX follower = TalonSRX.createTalonSRX(RobotMap.kElevatorMotorFollowerId, RobotMap.kElevatorMotorMasterId);
     
     return new Elevator(master, follower);
   }
