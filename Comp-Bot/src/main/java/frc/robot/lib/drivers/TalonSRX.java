@@ -32,7 +32,7 @@ public class TalonSRX {
     talon.setSensorPhase(true);
     talon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_50Ms, RobotMap.kLongCANTimeoutMs);
     talon.configVelocityMeasurementWindow(1, RobotMap.kLongCANTimeoutMs);
-
+    talon.configClosedloopRamp(0.0, RobotMap.kLongCANTimeoutMs);
   }
 
   public static void createLeader(WPI_TalonSRX talon) {
@@ -46,7 +46,6 @@ public class TalonSRX {
     setSensorConfig(talon);
     talon.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20, RobotMap.kLongCANTimeoutMs);
     talon.set(ControlMode.PercentOutput, 0.0);
-    talon.configClosedloopRamp(0.0, RobotMap.kLongCANTimeoutMs);
   }
 
   public static void createFollower(WPI_TalonSRX talon, int leaderId) {
