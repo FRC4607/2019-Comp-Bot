@@ -24,7 +24,17 @@ public class TalonSRX {
     talon.configVoltageCompSaturation(12.0, RobotMap.kLongCANTimeoutMs);
   }
 
-  public static void setSensorConfig(WPI_TalonSRX talon) {
+  public static void createLeader(WPI_TalonSRX talon) {
+    setDefaultConfig(talon);
+    talon.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20, RobotMap.kLongCANTimeoutMs);
+    talon.set(ControlMode.PercentOutput, 0.0);
+  }
+
+  public static void createLeader(WPI_TalonSRX talon, boolean hasSensor) {
+    setDefaultConfig(talon);
+    talon.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20, RobotMap.kLongCANTimeoutMs);
+    talon.set(ControlMode.PercentOutput, 0.0);
+
     final ErrorCode sensorPresent = talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
     if (sensorPresent != ErrorCode.OK) {
       mLogger.error("Could not detect encoder due EC: [{}]", sensorPresent);
@@ -35,30 +45,10 @@ public class TalonSRX {
     talon.configClosedloopRamp(0.0, RobotMap.kLongCANTimeoutMs);
   }
 
-  public static void createLeader(WPI_TalonSRX talon) {
-    setDefaultConfig(talon);
-    talon.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20, RobotMap.kLongCANTimeoutMs);
-    talon.set(ControlMode.PercentOutput, 0.0);
-  }
-
-  public static void createLeader(WPI_TalonSRX talon, boolean hasSensor) {
-    setDefaultConfig(talon);
-    setSensorConfig(talon);
-    talon.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20, RobotMap.kLongCANTimeoutMs);
-    talon.set(ControlMode.PercentOutput, 0.0);
-  }
-
   public static void createFollower(WPI_TalonSRX talon, int leaderId) {
     setDefaultConfig(talon);
     talon.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 160, RobotMap.kLongCANTimeoutMs);
     talon.set(ControlMode.Follower, leaderId);
-  }
-
-  public static void createFollower(WPI_TalonSRX talon, int leaderId, boolean hasSensor) {
-    setDefaultConfig(talon);
-    setSensorConfig(talon);
-    talon.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 160, RobotMap.kLongCANTimeoutMs);
-    talon.set(ControlMode.Follower, leaderId);  
   }
 
   public static WPI_TalonSRX createTalonSRX(int deviceId) {
@@ -79,13 +69,6 @@ public class TalonSRX {
     final WPI_TalonSRX talon = new WPI_TalonSRX(deviceId);
     createFollower(talon, leaderId);
     mLogger.info("Created follower TalonSRX {}]", deviceId);
-    return talon;
-  }
-
-  public static WPI_TalonSRX createTalonSRX(int deviceId, int leaderId, boolean hasSensor) {
-    final WPI_TalonSRX talon = new WPI_TalonSRX(deviceId);
-    createFollower(talon, leaderId, hasSensor);
-    mLogger.info("Created follower TalonSRX [{}] with an encoder", deviceId);
     return talon;
   }
 }
