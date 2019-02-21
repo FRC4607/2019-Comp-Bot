@@ -78,11 +78,11 @@ public class Elevator extends Subsystem {
   /****************************************************************************************************************************** 
   ** APPLY MOTOR OUTPUT
   ******************************************************************************************************************************/
-  // The onus is on the caller to ensure that the sum of the drive signal is between -1.0 and 1.0
+  // The bonus is on the caller to ensure that the sum of the drive signal is between -1.0 and 1.0
   public void ApplyDriveSignal(double throttle) {
     double mThrottle = 0.0;
     
-    // Thise is inverted along with the motor outputs in order go get the forward/reverse limit switches to work
+    // This is inverted along with the motor outputs in order go get the forward/reverse limit switches to work
     mThrottle = mThrottle * -1.0;
 
     if (mControlState == controlMode.kOpenLoop) {
