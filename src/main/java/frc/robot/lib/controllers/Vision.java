@@ -32,7 +32,7 @@ public class Vision {
         mStatus = Status.kTargeting;
       }
 
-      // Process the current states
+      // Process the vision data to return the turning error
       if (mState == State.kTurn) {
         mTurningErrorDeg = mLimelight.horizontalToTargetDeg();
         mTurn = mTurningErrorDeg * RobotMap.kScaleHorizontalToTarget * RobotMap.kTurningGain;
