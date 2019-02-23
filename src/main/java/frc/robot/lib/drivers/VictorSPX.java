@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 ********************************************************************************************************************************/
 public class VictorSPX {
 
-  private static final Logger mLogger = LoggerFactory.getLogger(TalonSRX.class);
+  private static final Logger mLogger = LoggerFactory.getLogger(VictorSPX.class);
 
   /****************************************************************************************************************************** 
   ** TALONSRX DEFAULT CONFIGURATION
