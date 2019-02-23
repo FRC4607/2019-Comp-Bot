@@ -61,6 +61,7 @@ public class VictorSPX {
   public static WPI_VictorSPX createVictorSPX(WPI_VictorSPX victor, int leaderId) {
        
     setDefaultConfig(victor);
+  
     victor.set(ControlMode.Follower, leaderId);
     mLogger.info("Created follower VictorSPX [{}]", victor.getDeviceID());
     return victor;
