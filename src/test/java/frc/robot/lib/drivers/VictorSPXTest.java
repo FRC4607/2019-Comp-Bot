@@ -41,7 +41,6 @@ public class VictorSPXTest {
 
     verify(mLeaderMock, times(1)).set(ControlMode.PercentOutput, 0.0);
     verify(mLeaderMock, times(1)).configFactoryDefault();
-    verify(mLeaderMock, times(1)).configNeutralDeadband(0.04, RobotMap.kLongCANTimeoutMs);
     verify(mLeaderMock, times(1)).enableVoltageCompensation(true);
     verify(mLeaderMock, times(1)).configVoltageCompSaturation(12.0, RobotMap.kLongCANTimeoutMs);
 
@@ -56,7 +55,6 @@ public class VictorSPXTest {
   
     verify(mFollowerMock, times(1)).set(ControlMode.Follower, RobotMap.kLeftDriveMasterId);
     verify(mFollowerMock, times(1)).configFactoryDefault();
-    verify(mFollowerMock, times(1)).configNeutralDeadband(0.04, RobotMap.kLongCANTimeoutMs);
     verify(mFollowerMock, times(1)).enableVoltageCompensation(true);
     verify(mFollowerMock, times(1)).configVoltageCompSaturation(12.0, RobotMap.kLongCANTimeoutMs);
   }

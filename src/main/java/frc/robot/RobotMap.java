@@ -25,6 +25,12 @@ public class RobotMap {
   public static final double kDeadbandHighGear = 0.10;  // TODO: Measure this in Duluth
   public static final double kDeadbandLowGear = 0.10;  // TODO: Measure this in Duluth
 
+  // Use the drivetrain CalibrateMaxTurnVelocity() and CalibrateMaxTurnAcceleration() method to measure these
+  public static final double kDrivetrainHighGearMaxTurnVelocity = 5.0;  // TODO: Measure this in Duluth
+  public static final double kDrivetrainHighGearMaxTurnAcceleration = 10.0;  // TODO: Measure this in Duluth
+  public static final double kDrivetrainLowGearMaxTurnVelocity = 5.0;  // TODO: Measure this in Duluth
+  public static final double kDrivetrainLowGearMaxTurnAcceleration = 10.0;  // TODO: Measure this in Duluth
+
   /******************************************************************************************************************************** 
   ** ELEVATOR SUBSYSTEM
   ********************************************************************************************************************************/

@@ -43,7 +43,6 @@ public class TalonSRXTest {
     TalonSRX.createTalonSRX(mLeaderMock);
 
     verify(mLeaderMock, times(1)).configFactoryDefault();
-    verify(mLeaderMock, times(1)).configNeutralDeadband(0.04, RobotMap.kLongCANTimeoutMs);
     verify(mLeaderMock, times(1)).enableVoltageCompensation(true);
     verify(mLeaderMock, times(1)).configVoltageCompSaturation(12.0, RobotMap.kLongCANTimeoutMs);
     verify(mLeaderMock, times(1)).setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20, RobotMap.kLongCANTimeoutMs);
@@ -58,7 +57,6 @@ public class TalonSRXTest {
     TalonSRX.createTalonSRX(mFollowerMock, RobotMap.kLeftDriveMasterId);
 
     verify(mFollowerMock, times(1)).configFactoryDefault();
-    verify(mFollowerMock, times(1)).configNeutralDeadband(0.04, RobotMap.kLongCANTimeoutMs);
     verify(mFollowerMock, times(1)).enableVoltageCompensation(true);
     verify(mFollowerMock, times(1)).configVoltageCompSaturation(12.0, RobotMap.kLongCANTimeoutMs);
     verify(mFollowerMock, times(1)).setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 160, RobotMap.kLongCANTimeoutMs);
@@ -73,7 +71,6 @@ public class TalonSRXTest {
     TalonSRX.createTalonSRXWithEncoder(mLeaderMock);
 
     verify(mLeaderMock, times(1)).configFactoryDefault();
-    verify(mLeaderMock, times(1)).configNeutralDeadband(0.04, RobotMap.kLongCANTimeoutMs);
     verify(mLeaderMock, times(1)).enableVoltageCompensation(true);
     verify(mLeaderMock, times(1)).configVoltageCompSaturation(12.0, RobotMap.kLongCANTimeoutMs);
     verify(mLeaderMock, times(1)).setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20, RobotMap.kLongCANTimeoutMs);
@@ -92,7 +89,6 @@ public class TalonSRXTest {
     TalonSRX.createTalonSRXWithEncoder(mFollowerMock, RobotMap.kLeftDriveMasterId);
 
     verify(mFollowerMock, times(1)).configFactoryDefault();
-    verify(mFollowerMock, times(1)).configNeutralDeadband(0.04, RobotMap.kLongCANTimeoutMs);
     verify(mFollowerMock, times(1)).enableVoltageCompensation(true);
     verify(mFollowerMock, times(1)).configVoltageCompSaturation(12.0, RobotMap.kLongCANTimeoutMs);
     verify(mFollowerMock, times(1)).setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20, RobotMap.kLongCANTimeoutMs);
