@@ -25,23 +25,25 @@ public class Vision {
   Runnable mVisionProcessor = new Runnable() {
     @Override
     public void run() {
-      // Process state changes
-      if (mState != mDesiredState) {
-        mLogger.info("Vision processing state change request: [{}]", mDesiredState);
-        mState = mDesiredState;
-        mStatus = Status.kTargeting;
-      }
-
-      // Process the vision data to return the turning error
-      if (mState == State.kTurn) {
-        mTurningErrorDeg = mLimelight.horizontalToTargetDeg();
-        mTurn = mTurningErrorDeg * RobotMap.kScaleHorizontalToTarget * RobotMap.kTurningGain;
-        if (!mLimelight.foundTarget()) {
-          mStatus = Status.kLostTarget;
-        } else if (Math.abs(mTurningErrorDeg) < RobotMap.kStopTurningDeg) {
-          mStatus = Status.kReachedTarget;
-        } else {
+      synchronized(this) {
+        // Process state changes
+        if (mState != mDesiredState) {
+          mLogger.info("Vision processing state change request: [{}]", mDesiredState);
+          mState = mDesiredState;
           mStatus = Status.kTargeting;
+        }
+
+        // Process the current states
+        if (mState == State.kTurn) {
+          mTurningErrorDeg = mLimelight.horizontalToTargetDeg();
+          mTurn = mTurningErrorDeg * RobotMap.kScaleHorizontalToTarget * RobotMap.kTurningGain;
+          if (!mLimelight.foundTarget()) {
+            mStatus = Status.kLostTarget;
+          } else if (Math.abs(mTurningErrorDeg) < RobotMap.kStopTurningDeg) {
+            mStatus = Status.kReachedTarget;
+          } else {
+            mStatus = Status.kTargeting;
+          }
         }
       }
     }
@@ -51,7 +53,7 @@ public class Vision {
   private double mTurn = 0.0;
   private State mState = State.kTurn;
   private State mDesiredState = State.kTurn;
-  private Status mStatus = Status.kTargeting;
+  private Status mStatus = Status.kLostTarget;
 
   private Limelight mLimelight;
 

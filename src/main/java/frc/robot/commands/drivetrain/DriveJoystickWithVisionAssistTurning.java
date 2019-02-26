@@ -4,8 +4,7 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.OI;
-import frc.robot.lib.controllers.Vision.State;
-import frc.robot.lib.controllers.Vision.Status;
+import frc.robot.lib.controllers.Vision;
 
 /******************************************************************************************************************************** 
 ** DRIVEJOYSTICKWITHVISIONASSIST DRIVETRAIN COMMAND
@@ -13,8 +12,9 @@ import frc.robot.lib.controllers.Vision.Status;
 public class DriveJoystickWithVisionAssistTurning extends InstantCommand {
 
   private double mThrottle;
-  private double mTturn;
-  private Status mStatus;
+  private double mTurn;
+  private Vision.Status mStatus;
+  private Vision.State mState;
 
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
@@ -30,8 +30,9 @@ public class DriveJoystickWithVisionAssistTurning extends InstantCommand {
   @Override
   protected void initialize() {
     mThrottle = OI.mDriverJoystick.getY();
-    mTturn = 0.0;
+    mTurn = Robot.mDrivetrain.mVision.getOutput();
     mStatus = Robot.mDrivetrain.mVision.getStatus();
+    mState = Robot.mDrivetrain.mVision.getState();
 
     // Apply a deadband to the joystick
     if (mThrottle < RobotMap.kDeadbandJoystick && mThrottle > -RobotMap.kDeadbandJoystick) {
@@ -39,11 +40,10 @@ public class DriveJoystickWithVisionAssistTurning extends InstantCommand {
     }
 
     // Make sure the vision thread is processing the turning output and it is valid
-    if (Robot.mDrivetrain.mVision.getState() == State.kTurn && mStatus == Status.kTargeting) {
-      mTturn = Robot.mDrivetrain.mVision.getOutput();   
+    if (mState != Vision.State.kTurn || mStatus != Vision.Status.kTargeting) {
+      mTurn = 0.0;   
     }
-
-    Robot.mDrivetrain.setOpenLoopOutput(mThrottle, mTturn);
+    Robot.mDrivetrain.ApplyDriveSignal(mThrottle, mTurn);
   }
 
 }

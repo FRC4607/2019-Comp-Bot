@@ -164,33 +164,32 @@ public class Drivetrain extends Subsystem {
     double mThrottle = 0.0;
     double mTurn = 0.0;
     
+    // Apply calibrated motor deadband
+    if (mIsHighGear) {
+      if (turn > 0.0) {
+        mTurn = RobotMap.kDeadbandHighGear + kDeadbandHighGearScalar * turn;
+        mThrottle = RobotMap.kDeadbandHighGear + kDeadbandHighGearScalar * throttle;
+      } else {
+        mTurn = -1.0 * RobotMap.kDeadbandHighGear + kDeadbandHighGearScalar * turn;
+        mThrottle = -1.0 * RobotMap.kDeadbandHighGear + kDeadbandHighGearScalar * throttle;
+      }
+    } else if (!mIsHighGear) {
+      if (turn > 0.0) {
+        mTurn = RobotMap.kDeadbandLowGear + kDeadbandLowGearScalar * turn;
+        mThrottle = RobotMap.kDeadbandLowGear + kDeadbandLowGearScalar * throttle;
+      } else {
+        mTurn = -1.0 * RobotMap.kDeadbandLowGear + kDeadbandLowGearScalar * turn;
+        mThrottle = -1.0 * RobotMap.kDeadbandLowGear + kDeadbandLowGearScalar * throttle;
+      }
+    } else {
+      mLogger.error("Unknown state of shifter [{}]", mIsHighGear);
+    }
+
     if (mControlState == controlMode.kOpenLoop) {
       // Invert the turn signal to get the DifferentialDrive to turn right/left correctly
-      mDiffDrive.arcadeDrive(throttle, -turn);   
+      mDiffDrive.arcadeDrive(mThrottle, -mTurn);   
     
     } else if (mControlState == controlMode.kVelocity) {
-
-      // Apply calibrated motor deadband
-      if (mIsHighGear) {
-        if (turn > 0.0) {
-          mTurn = RobotMap.kDeadbandHighGear + kDeadbandHighGearScalar * turn;
-          mThrottle = RobotMap.kDeadbandHighGear + kDeadbandHighGearScalar * throttle;
-        } else {
-          mTurn = -1.0 * RobotMap.kDeadbandHighGear + kDeadbandHighGearScalar * turn;
-          mThrottle = -1.0 * RobotMap.kDeadbandHighGear + kDeadbandHighGearScalar * throttle;
-        }
-      } else if (!mIsHighGear) {
-        if (turn > 0.0) {
-          mTurn = RobotMap.kDeadbandLowGear + kDeadbandLowGearScalar * turn;
-          mThrottle = RobotMap.kDeadbandLowGear + kDeadbandLowGearScalar * throttle;
-        } else {
-          mTurn = -1.0 * RobotMap.kDeadbandLowGear + kDeadbandLowGearScalar * turn;
-          mThrottle = -1.0 * RobotMap.kDeadbandLowGear + kDeadbandLowGearScalar * throttle;
-        }
-      } else {
-        mLogger.error("Unknown state of shifter [{}]", mIsHighGear);
-      }
-
       // Set the motor output
       mLeftLeader.set(mTurn + mThrottle);
       mRightLeader.set(mTurn + (mThrottle * -1.0));  
@@ -212,17 +211,6 @@ public class Drivetrain extends Subsystem {
   public void setClosedLoopControl() {
     setBrakeMode(true);
     mControlState = controlMode.kVelocity;
-  }
-
-  /****************************************************************************************************************************** 
-  ** 
-  ******************************************************************************************************************************/
-  public void setOpenLoopOutput(double throttle, double turn) {
-    if (mControlState == controlMode.kOpenLoop) {
-      ApplyDriveSignal(throttle, turn);
-    } else {
-      mLogger.warn("Expected control mode kOpenLoop, got: [{}]", mControlState);
-    }
   }
 
   /****************************************************************************************************************************** 
