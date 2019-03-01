@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Wrist;
 import frc.robot.lib.controllers.Vision;
 import frc.robot.lib.controllers.LEDs;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ public class Robot extends TimedRobot {
 
   public static Drivetrain mDrivetrain = Drivetrain.create();
   public static Elevator mElevator = Elevator.create();
+  public static Wrist mWrist = Wrist.create();
   public static OI mOI = new OI();
   public static LEDs mLeds = LEDs.create();
   private Vision.Status mVisionStatus;  
