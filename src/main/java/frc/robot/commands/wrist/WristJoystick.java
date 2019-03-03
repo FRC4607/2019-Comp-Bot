@@ -2,7 +2,6 @@ package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 import frc.robot.OI;
 
 /******************************************************************************************************************************** 
@@ -22,14 +21,14 @@ public class WristJoystick extends Command {
   ******************************************************************************************************************************/
   @Override
   protected void execute() {
-/*     double zWrist = OI.mOperatorJoystick.getY();
+    double zWrist = -(OI.mOperatorJoystick.getY() * 0.5);
 
     // Apply a deadband to the joystick
     if (zWrist < 0.05 && zWrist > -0.05) {
       zWrist = 0.0;
     }
 
-    Robot.mWrist.ApplyOutputSignal(zWrist); */
+    Robot.mWrist.setOpenOutput(zWrist);
   }
 
   @Override

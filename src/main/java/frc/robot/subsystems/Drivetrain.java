@@ -35,7 +35,13 @@ public class Drivetrain extends Subsystem {
 
   // Hardware
   private final WPI_TalonSRX mLeftLeader, mRightLeader, mRightFollowerA, mRightFollowerB;
-  private final WPI_VictorSPX mLeftFollowerA, mLeftFollowerB;   
+  
+  //                               PRACTICE BOT
+  private final WPI_TalonSRX mLeftFollowerA, mLeftFollowerB;   
+
+  //                               COMPETITION BOT
+  // private final WPI_VictorSPX mLeftFollowerA, mLeftFollowerB;
+
   private final DoubleSolenoid mShifter;
   private final Compressor mCompressor;
 
@@ -229,7 +235,9 @@ public class Drivetrain extends Subsystem {
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
-  public Drivetrain(WPI_TalonSRX leftLeader, WPI_VictorSPX leftFollowerA, WPI_VictorSPX leftFollowerB,
+  //                                          PRACTICE BOT
+  
+  public Drivetrain(WPI_TalonSRX leftLeader, WPI_TalonSRX leftFollowerA, WPI_TalonSRX leftFollowerB,
                     WPI_TalonSRX rightLeader, WPI_TalonSRX rightFollowerA, WPI_TalonSRX rightFollowerB,
                     DoubleSolenoid shifter, Vision vision, Compressor compressor, DifferentialDrive diffDrive) {
   
@@ -270,11 +278,9 @@ public class Drivetrain extends Subsystem {
   }
 
   public static Drivetrain create() {
-
     WPI_TalonSRX leftLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kLeftDriveMasterId));
-    WPI_VictorSPX leftFollowerA = VictorSPX.createVictorSPX(new WPI_VictorSPX(RobotMap.kLeftDriveFollowerAId), RobotMap.kLeftDriveMasterId);
-    WPI_VictorSPX leftFollowerB = VictorSPX.createVictorSPX(new WPI_VictorSPX(RobotMap.kLeftDriveFollowerBId), RobotMap.kLeftDriveMasterId);
-    
+    WPI_TalonSRX leftFollowerA = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kLeftDriveFollowerAId), RobotMap.kLeftDriveMasterId);
+    WPI_TalonSRX leftFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kLeftDriveFollowerBId), RobotMap.kLeftDriveMasterId);
     WPI_TalonSRX rightLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kRightDriveMasterId));
     WPI_TalonSRX rightFollowerA = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerAId), RobotMap.kRightDriveMasterId);
     WPI_TalonSRX rightFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerBId), RobotMap.kRightDriveMasterId);
@@ -288,7 +294,67 @@ public class Drivetrain extends Subsystem {
     DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader);
 
     return new Drivetrain(leftLeader, leftFollowerA, leftFollowerB, rightLeader, rightFollowerA, rightFollowerB, shifter, vision, compressor, diffDrive);
-  }
+  } 
+
+//                                            COMPETITION BOT
+//   public Drivetrain(WPI_TalonSRX leftLeader, WPI_VictorSPX leftFollowerA, WPI_VictorSPX leftFollowerB,
+//   WPI_TalonSRX rightLeader, WPI_TalonSRX rightFollowerA, WPI_TalonSRX rightFollowerB,
+//   DoubleSolenoid shifter, Vision vision, Compressor compressor, DifferentialDrive diffDrive) {
+
+//     mLeftLeader = leftLeader;
+//     mLeftFollowerA = leftFollowerA; 
+//     mLeftFollowerB = leftFollowerB;
+
+//     mRightLeader = rightLeader; 
+//     mRightFollowerA = rightFollowerA;
+//     mRightFollowerB = rightFollowerB;
+
+//     mVision = vision;
+//     mShifter = shifter;
+//     mCompressor = compressor;
+
+//     mDiffDrive = diffDrive;
+//     mDiffDrive.setSafetyEnabled(false);
+
+//     // Add Pigeon IMU
+
+//     // Start off in open-loop
+//     mControlState = controlMode.kOpenLoop;
+//     mIsHighGear = false;
+//     setHighGear(true);
+//     mIsCompressorClosedLoop = false;
+//     setCompressorClosedLoop(true);
+//     mIsBrakeMode = true;
+//     setBrakeMode(false);
+
+//     // The Differential drive will invert the output going to the right side to get the left and right sides
+//     // in phase with one-another.  For the comp bot, no inversion is needed to get the robot to move forward
+//     // with positive joystick values.
+//     mIsInverted = true;
+//     InvertOutput(false);
+
+//     mLeftLeader.setSensorPhase(false);
+//     mRightLeader.setSensorPhase(true);
+// }
+
+//   public static Drivetrain create() {
+//     WPI_TalonSRX leftLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kLeftDriveMasterId));
+//     WPI_VictorSPX leftFollowerA = VictorSPX.createVictorSPX(new WPI_VictorSPX(RobotMap.kLeftDriveFollowerAId), RobotMap.kLeftDriveMasterId);
+//     WPI_VictorSPX leftFollowerB = VictorSPX.createVictorSPX(new WPI_VictorSPX(RobotMap.kLeftDriveFollowerBId), RobotMap.kLeftDriveMasterId);
+//     WPI_TalonSRX rightLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kRightDriveMasterId));
+//     WPI_TalonSRX rightFollowerA = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerAId), RobotMap.kRightDriveMasterId);
+//     WPI_TalonSRX rightFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerBId), RobotMap.kRightDriveMasterId);
+
+//     DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.kPCMId, RobotMap.kShifterHighGearSolenoidId, RobotMap.kShifterLowGearSolenoidId);
+
+//     Vision vision = Vision.create();
+
+//     Compressor compressor = new Compressor(RobotMap.kPCMId);
+
+//     DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader);
+
+//     return new Drivetrain(leftLeader, leftFollowerA, leftFollowerB, rightLeader, rightFollowerA, rightFollowerB, shifter, vision, compressor, diffDrive);
+//  }
 
   /****************************************************************************************************************************** 
   ** OVERRIDE DEFAULT SUBSYSTEM COMMAND

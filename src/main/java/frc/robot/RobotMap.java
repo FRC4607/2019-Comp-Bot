@@ -2,6 +2,10 @@ package frc.robot;
 
 public class RobotMap {
 
+  // This is the 'compile flag' that we will be using to change the code for COMPBOT or PRACTICEBOT
+  // Set this value to 'true' if the code will be used on the competition robot, set to 'false' for practice bot
+  public static final boolean COMP_BOT = false;
+
   public static final int kPCMId = 30;
   public static final int kCANTimeoutMs = 10;
   public static final int kLongCANTimeoutMs = 50;
@@ -34,26 +38,26 @@ public class RobotMap {
   /******************************************************************************************************************************** 
   ** ELEVATOR SUBSYSTEM
   ********************************************************************************************************************************/
-  public static final int kElevatorMotorMasterId = 13;                            // Has REV limit switch attached
-  public static final int kElevatorMotorFollowerId = 22;                          // Has CTRE mag encoder attached
+  public static final int kElevatorMotorMasterId = 22;                            // Has REV limit switch attached
+  public static final int kElevatorMotorFollowerId = 13;                          // Has CTRE mag encoder attached
 
   // Use the elevator CalibrateDeadband() method to measure these
   public static final double kElevatorDeadband = 0.10;                            // TODO: Calibrate this in Duluth
   
-  public static final double kElevatorOpenLoopGain = 0.50;
+  public static final double kElevatorOpenLoopGain = 1.0;
 
   /******************************************************************************************************************************** 
   ** WRIST SUBSYSTEM
   ********************************************************************************************************************************/
-  public static final int kWristMotorId = 1000;                                   // Has US Digital MA3-A10-250-N absulute encoder
+  public static final int kWristMotorId = 16;      //TODO: Put on CompBot         // Has US Digital MA3-A10-250-N absulute encoder
   public static final int kPIDLoopIdx = 0;
   public static final int kMotionMagicSlotIdx = 0;
   public static final int kPositionSlotIdx = 1;
-  public static final double kPWrist = 0.5;                                       // TODO: Tune-up before Duluth
+  public static final double kPWrist = 0.0;                                       // TODO: Tune-up before Duluth
   public static final double kIWrist = 0.0;                                       // TODO: Tune-up before Duluth
   public static final double kDWrist = 0.0;                                       // TODO: Tune-up before Duluth
   public static final double kFWrist = 0.0;                                       // TODO: Tune-up before Duluth
-  public static final double kWristFFGravityComponent = 0.1;                      // TODO: Tune-up before Duluth
+  public static final double kWristFFGravityComponent = 0.3;                      // TODO: Tune-up before Duluth
   public static final int kWristMaxIntegralAccumulator = 500000;                  // TODO: Tune-up before Duluth
   public static final int kWristIZone = 500;                                      // TODO: Tune-up before Duluth
   public static final int kWristDeadband = 5;                                     // TODO: Calibrate before Duluth
@@ -64,12 +68,13 @@ public class RobotMap {
   public static final int kVelocityWrist = 2500;                                  // TODO: Calibrate before Duluth
   public static final int kAccelerationWrist = 2500;                              // TODO: Calibrate before Duluth
   
-  public static final int kWristEncoderZeroTick = 0;                              // TODO: Calibrate before Duluth
+  // This is the encoder position for the horizontal on the wrist. The first number is a measured value when facing directly down (-90)
+  public static final int kWristEncoderZeroTick = 340 + 256;                      // TODO: Calibrate before Duluth
 
   /******************************************************************************************************************************** 
   ** MULTI-MANIPULATOR SUBSYSTEM
   ********************************************************************************************************************************/
-  public static final int kCargoMotorId = 1000;                                   // TODO: Connect in Duluth
+  public static final int kCargoMotorId = 14;                                   // TODO: Connect in Duluth
   public static final int kPanelForwardId = 2;
   public static final int kPanelReverseId = 3;  
 

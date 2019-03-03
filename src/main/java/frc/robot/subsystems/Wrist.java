@@ -35,7 +35,7 @@ public class Wrist extends Subsystem {
   private controlMode mControlState;
 
   // Logger
-  private final Logger mLogger = LoggerFactory.getLogger(Elevator.class);
+  private final Logger mLogger = LoggerFactory.getLogger(Wrist.class);
 
   /****************************************************************************************************************************** 
   ** GETTERS
@@ -47,11 +47,20 @@ public class Wrist extends Subsystem {
   /****************************************************************************************************************************** 
   **
   ******************************************************************************************************************************/
+  public double degreesToSensorTicks(double angle) {
+    return ((angle / 180.0) * 512.0) + RobotMap.kWristEncoderZeroTick;
+  }
+ 
+ 
+ 
+  /****************************************************************************************************************************** 
+  **
+  ******************************************************************************************************************************/
   private double sensorTicksToDegrees(double ticks) {
     // The 0deg is straight out, -90deg is straight down, and +90 is straight up
     // The kWristEncoderZeroTick is the absolute encoders tick value at 0deg
     // The 10-bit encoder has 1024 ticks and we will use 512 for +'ve values and 512 for -'ve values
-    return ticks - RobotMap.kWristEncoderZeroTick / 512.0 * 180.0;
+    return ((ticks - RobotMap.kWristEncoderZeroTick) / 512.0) * 180.0;
   }
 
   /****************************************************************************************************************************** 
@@ -65,7 +74,9 @@ public class Wrist extends Subsystem {
   **
   ******************************************************************************************************************************/
   private int getEncoderPositionTicks() {
-    return mMaster.getSelectedSensorPosition(RobotMap.kPIDLoopIdx);
+    return mMaster.getSensorCollection().getAnalogInRaw();
+    //return mMaster.getSelectedSensorPosition(RobotMap.kPIDLoopIdx);
+
   }
 
   /****************************************************************************************************************************** 
@@ -82,9 +93,13 @@ public class Wrist extends Subsystem {
     } else {
       mWristFFGravityComponent = 0.0;
     }
+    mLogger.info("Encoder position: {}, target position: {}, Feed Forward: {}", mEncoderPositionTicks, targetPositionTicks, mWristFFGravityComponent);
     mMaster.set(ControlMode.MotionMagic, targetPositionTicks, DemandType.ArbitraryFeedForward, mWristFFGravityComponent);
   }
 
+  public void setOpenOutput(double zWrist) {
+    mMaster.set(zWrist);
+  }
  /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
@@ -99,7 +114,7 @@ public class Wrist extends Subsystem {
     mMaster.configSelectedFeedbackSensor(FeedbackDevice.Analog, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);
     mMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, RobotMap.kLongCANTimeoutMs);
     mMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.kLongCANTimeoutMs);
-    mMaster.setSelectedSensorPosition(0, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);    
+    // mMaster.setSelectedSensorPosition(0, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);    
 
     // Configure Talon for Motion Magic
 		mMaster.config_kP(RobotMap.kMotionMagicSlotIdx, RobotMap.kPWrist, RobotMap.kLongCANTimeoutMs);
