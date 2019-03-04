@@ -34,6 +34,7 @@ public class DriveJoystick extends Command {
     if (turn < RobotMap.kDeadbandJoystick && turn > -RobotMap.kDeadbandJoystick) {
       turn = 0.0;
     }
+    
     Robot.mDrivetrain.ApplyDriveSignal(throttle, turn);
   }
 

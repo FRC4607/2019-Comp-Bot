@@ -48,7 +48,7 @@ public class Wrist extends Subsystem {
   **
   ******************************************************************************************************************************/
   public double degreesToSensorTicks(double angle) {
-    return ((angle / 180.0) * 512.0) + RobotMap.kWristEncoderZeroTick;
+    return ((angle / 180.0) * 2048.0) + RobotMap.kWristEncoderZeroTick;
   }
  
  
@@ -59,8 +59,8 @@ public class Wrist extends Subsystem {
   private double sensorTicksToDegrees(double ticks) {
     // The 0deg is straight out, -90deg is straight down, and +90 is straight up
     // The kWristEncoderZeroTick is the absolute encoders tick value at 0deg
-    // The 10-bit encoder has 1024 ticks and we will use 512 for +'ve values and 512 for -'ve values
-    return ((ticks - RobotMap.kWristEncoderZeroTick) / 512.0) * 180.0;
+    // The 10-bit encoder has 1024 ticks and we will use 1024 for +'ve values and 1024 for -'ve values
+    return ((ticks - RobotMap.kWristEncoderZeroTick) / 1024.0) * 180.0;
   }
 
   /****************************************************************************************************************************** 
@@ -74,8 +74,8 @@ public class Wrist extends Subsystem {
   **
   ******************************************************************************************************************************/
   private int getEncoderPositionTicks() {
-    return mMaster.getSensorCollection().getAnalogInRaw();
-    //return mMaster.getSelectedSensorPosition(RobotMap.kPIDLoopIdx);
+    // return mMaster.getSensorCollection().getAnalogInRaw();
+    return mMaster.getSelectedSensorPosition(RobotMap.kPIDLoopIdx);
 
   }
 
@@ -110,11 +110,11 @@ public class Wrist extends Subsystem {
 
 
     // Configure the feedback sensor
-    //mMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);
-    mMaster.configSelectedFeedbackSensor(FeedbackDevice.Analog, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);
+    mMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);
+    // mMaster.configSelectedFeedbackSensor(FeedbackDevice.Analog, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);
     mMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, RobotMap.kLongCANTimeoutMs);
     mMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.kLongCANTimeoutMs);
-    // mMaster.setSelectedSensorPosition(0, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);    
+    mMaster.setSelectedSensorPosition(0, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);    
 
     // Configure Talon for Motion Magic
 		mMaster.config_kP(RobotMap.kMotionMagicSlotIdx, RobotMap.kPWrist, RobotMap.kLongCANTimeoutMs);
@@ -169,7 +169,7 @@ public class Wrist extends Subsystem {
   }
 
   public static Wrist create() {
-    WPI_TalonSRX master = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kWristMotorId));
+    WPI_TalonSRX master = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kWristMotorId));
         
     return new Wrist(master);
   }
