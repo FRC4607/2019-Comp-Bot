@@ -72,6 +72,12 @@ public class MultiManipulator extends Subsystem {
     mPanelActuator = panelActuator;
     shiftPanelIntake(true);
 
+    // Current limiting
+    mCargoMotor.configContinuousCurrentLimit(10, RobotMap.kLongCANTimeoutMs);
+    mCargoMotor.configPeakCurrentLimit(40, RobotMap.kLongCANTimeoutMs);
+    mCargoMotor.configPeakCurrentDuration(200, RobotMap.kLongCANTimeoutMs);
+    mCargoMotor.enableCurrentLimit(true);
+
     mLogger.info("Cargo Manipulator Created");
   }
 

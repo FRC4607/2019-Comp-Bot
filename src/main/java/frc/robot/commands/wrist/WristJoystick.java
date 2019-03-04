@@ -21,6 +21,7 @@ public class WristJoystick extends Command {
   ******************************************************************************************************************************/
   @Override
   protected void execute() {
+    // Note that on an Xbox Controller, a positive input is to the bottom-right
     double zWrist = -(OI.mOperatorJoystick.getY() * 0.5);
 
     // Apply a deadband to the joystick

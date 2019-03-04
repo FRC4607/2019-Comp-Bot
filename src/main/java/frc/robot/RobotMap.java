@@ -2,10 +2,6 @@ package frc.robot;
 
 public class RobotMap {
 
-  // This is the 'compile flag' that we will be using to change the code for COMPBOT or PRACTICEBOT
-  // Set this value to 'true' if the code will be used on the competition robot, set to 'false' for practice bot
-  public static final boolean COMP_BOT = false;
-
   public static final int kPCMId = 30;
   public static final int kCANTimeoutMs = 10;
   public static final int kLongCANTimeoutMs = 50;
@@ -26,8 +22,8 @@ public class RobotMap {
   public static final int kPigeonId = 11;
   
   // Use the drivetrain CalibrateTurningDeadband() method to measure these
-  public static final double kDeadbandHighGear = 0.35;                            // TODO: Calibrate this in Duluth
-  public static final double kDeadbandLowGear = 0.35;                             // TODO: Calibrate this in Duluth
+  public static final double kDeadbandHighGear = 0.3;                            // TODO: Calibrate this in Duluth
+  public static final double kDeadbandLowGear = 0.3;                             // TODO: Calibrate this in Duluth
 
   // Use the drivetrain CalibrateMaxTurnVelocity() and CalibrateMaxTurnAcceleration() method to measure these
   public static final double kDrivetrainHighGearMaxTurnVelocity = 5.0;

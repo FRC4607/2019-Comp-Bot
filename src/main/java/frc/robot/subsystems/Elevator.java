@@ -128,7 +128,7 @@ public class Elevator extends Subsystem {
  /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
-  //                                    PRACTICE ROBOT
+  //                                    PRACTICE BOT
   
   public Elevator(WPI_TalonSRX master, WPI_TalonSRX follower) {
     mMaster = master;
@@ -155,7 +155,7 @@ public class Elevator extends Subsystem {
     return new Elevator(master, follower);
   }
 
-//                                      COMPETITION ROBOT
+//                                      COMPETITION BOT
 
 // public Elevator(WPI_TalonSRX master, WPI_TalonSRX follower) {
 //     mMaster = master;

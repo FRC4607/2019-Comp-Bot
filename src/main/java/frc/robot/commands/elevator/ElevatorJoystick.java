@@ -28,6 +28,7 @@ public class ElevatorJoystick extends Command {
   ******************************************************************************************************************************/
   @Override
   protected void execute() {
+    // Note that on an Xbox Controller, a positive input is to the bottom-right
     double zElevator = -OI.mOperatorJoystick.getRawAxis(5);
 
     // Apply a deadband to the joystick
