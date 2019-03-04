@@ -22,7 +22,7 @@ public class MultiManipulator extends Subsystem {
   WPI_TalonSRX mCargoMotor;
   DoubleSolenoid mPanelActuator;
 
-  private boolean mPanelClosed;
+  private boolean mPanelOpen;
 
 
   // Logger
@@ -47,21 +47,21 @@ public class MultiManipulator extends Subsystem {
   /**
  Shifts the panel intake to the opposite position (i.e, if currently open will close)
  **/
-  public void shiftPanelIntake(boolean wantsPanelClosed) {
-    if (wantsPanelClosed == true) {
+  public void shiftPanelIntake(boolean wantsPanelOpen) {
+    if (wantsPanelOpen == true) {
       mPanelActuator.set(DoubleSolenoid.Value.kForward);
-      SmartDashboard.putBoolean("Panel Intake actuated:", wantsPanelClosed);
-      mPanelClosed = true;
-    } else if (wantsPanelClosed == false) {
+      SmartDashboard.putBoolean("Panel Intake actuated:", wantsPanelOpen);
+      mPanelOpen = true;
+    } else if (wantsPanelOpen == false) {
       mPanelActuator.set(DoubleSolenoid.Value.kReverse);
-      SmartDashboard.putBoolean("Panel Intake actuated:", wantsPanelClosed);
-      mPanelClosed = false;
+      SmartDashboard.putBoolean("Panel Intake actuated:", wantsPanelOpen);
+      mPanelOpen = false;
     }
     mLogger.info("Panel shifted");
   }
 
  public boolean isPanelClosed() {
-   return mPanelClosed;
+   return mPanelOpen;
  }
 
   public MultiManipulator(WPI_TalonSRX cargoMotor, DoubleSolenoid panelActuator) {
@@ -70,8 +70,7 @@ public class MultiManipulator extends Subsystem {
     mCargoMotor.setNeutralMode(NeutralMode.Coast);
 
     mPanelActuator = panelActuator;
-    mPanelActuator.set(DoubleSolenoid.Value.kForward);
-    mPanelClosed = false;
+    shiftPanelIntake(true);
 
     mLogger.info("Cargo Manipulator Created");
   }

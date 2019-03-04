@@ -26,8 +26,8 @@ public class RobotMap {
   public static final int kPigeonId = 11;
   
   // Use the drivetrain CalibrateTurningDeadband() method to measure these
-  public static final double kDeadbandHighGear = 0.10;                            // TODO: Calibrate this in Duluth
-  public static final double kDeadbandLowGear = 0.10;                             // TODO: Calibrate this in Duluth
+  public static final double kDeadbandHighGear = 0.35;                            // TODO: Calibrate this in Duluth
+  public static final double kDeadbandLowGear = 0.35;                             // TODO: Calibrate this in Duluth
 
   // Use the drivetrain CalibrateMaxTurnVelocity() and CalibrateMaxTurnAcceleration() method to measure these
   public static final double kDrivetrainHighGearMaxTurnVelocity = 5.0;
@@ -53,23 +53,24 @@ public class RobotMap {
   public static final int kPIDLoopIdx = 0;
   public static final int kMotionMagicSlotIdx = 0;
   public static final int kPositionSlotIdx = 1;
-  public static final double kPWrist = 0.0;                                       // TODO: Tune-up before Duluth
+  public static final double kPWrist = 0.7;                                       // TODO: Tune-up before Duluth
   public static final double kIWrist = 0.0;                                       // TODO: Tune-up before Duluth
   public static final double kDWrist = 0.0;                                       // TODO: Tune-up before Duluth
   public static final double kFWrist = 0.0;                                       // TODO: Tune-up before Duluth
-  public static final double kWristFFGravityComponent = 0.3;                      // TODO: Tune-up before Duluth
+  public static final double kWristFFGravityComponent = 0.2;                      // TODO: Tune-up before Duluth
   public static final int kWristMaxIntegralAccumulator = 500000;                  // TODO: Tune-up before Duluth
   public static final int kWristIZone = 500;                                      // TODO: Tune-up before Duluth
   public static final int kWristDeadband = 5;                                     // TODO: Calibrate before Duluth
   public static final int kSCurveStrengthWrist = 3;                               // TODO: Tune-up before Duluth
   public static final double kWristRampRate = 0.01;
-  
+
+
   //sensor units per 100ms
   public static final int kVelocityWrist = 2500;                                  // TODO: Calibrate before Duluth
   public static final int kAccelerationWrist = 2500;                              // TODO: Calibrate before Duluth
   
   // This is the encoder position for the horizontal on the wrist. The first number is a measured value when facing directly down (-90)
-  public static final int kWristEncoderZeroTick = 340 + 256;                      // TODO: Calibrate before Duluth
+  public static final int kWristEncoderZeroTick = 0 + 1024;                      // TODO: Calibrate before Duluth
 
   /******************************************************************************************************************************** 
   ** MULTI-MANIPULATOR SUBSYSTEM
@@ -83,7 +84,7 @@ public class RobotMap {
   ********************************************************************************************************************************/
   public static final int kDriverJoystick   = 0;
   public static final int kOperatorJoystick = 1;
-  public static final double kDeadbandJoystick = 0.05;
+  public static final double kDeadbandJoystick = 0.1;
 
   /******************************************************************************************************************************** 
   ** VISION CONTROLLER

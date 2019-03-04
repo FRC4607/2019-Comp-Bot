@@ -29,6 +29,7 @@ public class WristToAngle extends InstantCommand {
     // mLogger.info("Starting WristToAngle command: [{}]", mTargetAngle);
     // // setInterruptible(true);
     Robot.mWrist.MotionMagicOutput(Robot.mWrist.degreesToSensorTicks(mTargetAngle));
+    Robot.mWrist.MotionMagicOutput(3300);
   }
 
   // @Override
