@@ -2,6 +2,8 @@ package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +30,8 @@ public class WristToAngle extends InstantCommand {
   protected void initialize() {
     // mLogger.info("Starting WristToAngle command: [{}]", mTargetAngle);
     // // setInterruptible(true);
-    Robot.mWrist.MotionMagicOutput(Robot.mWrist.degreesToSensorTicks(mTargetAngle));
-    Robot.mWrist.MotionMagicOutput(3300);
+    Robot.mWrist.MotionMagicOutput(Robot.mWrist.degreesToSensorTicks(mTargetAngle) * RobotMap.kWristGearing);
+    // Robot.mWrist.MotionMagicOutput(3300);
   }
 
   // @Override

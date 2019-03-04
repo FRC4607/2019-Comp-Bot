@@ -71,7 +71,7 @@ public class RobotMap {
   
   // This is the encoder position for the horizontal on the wrist. The first number is a measured value when facing directly down (-90)
   public static final int kWristEncoderZeroTick = 0 + 1024;                      // TODO: Calibrate before Duluth
-
+  public static final double kWristGearing= 48 / 15;
   /******************************************************************************************************************************** 
   ** MULTI-MANIPULATOR SUBSYSTEM
   ********************************************************************************************************************************/
