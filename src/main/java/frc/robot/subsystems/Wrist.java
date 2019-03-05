@@ -50,8 +50,6 @@ public class Wrist extends Subsystem {
     return ((angle / 180.0) * 2048.0) + RobotMap.kWristEncoderZeroTick;
   }
  
- 
- 
   /****************************************************************************************************************************** 
   **
   ******************************************************************************************************************************/
@@ -76,6 +74,10 @@ public class Wrist extends Subsystem {
     // return mMaster.getSensorCollection().getAnalogInRaw();
     return mMaster.getSelectedSensorPosition(RobotMap.kPIDLoopIdx);
 
+  }
+
+  public void zeroEncoder() {
+    mMaster.setSelectedSensorPosition(0, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);    
   }
 
   /****************************************************************************************************************************** 

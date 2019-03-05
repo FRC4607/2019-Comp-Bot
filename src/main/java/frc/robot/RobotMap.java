@@ -59,7 +59,7 @@ public class RobotMap {
   public static final int kWristDeadband = 5;                                     // TODO: Calibrate before Duluth
   public static final int kSCurveStrengthWrist = 3;                               // TODO: Tune-up before Duluth
   public static final double kWristRampRate = 0.01;
-
+  public static final int kWristTickGain = 200;
 
   //sensor units per 100ms
   public static final int kVelocityWrist = 2500;                                  // TODO: Calibrate before Duluth
@@ -74,6 +74,10 @@ public class RobotMap {
   public static final int kCargoMotorId = 14;                                   // TODO: Connect in Duluth
   public static final int kPanelForwardId = 2;
   public static final int kPanelReverseId = 3;  
+
+  public static final double kCargoOutFast = -1.0;
+  public static final double kCargoOutSlow = -0.45;
+  public static final double kCargoIn = 1.0;
 
   /******************************************************************************************************************************** 
   ** JOYSTICKS

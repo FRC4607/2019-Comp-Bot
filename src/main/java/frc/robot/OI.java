@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import frc.robot.commands.drivetrain.Shift;
 import frc.robot.commands.drivetrain.DriveJoystickWithVisionAssistTurning;
 import frc.robot.commands.wrist.WristToAngle;
+import frc.robot.commands.wrist.ZeroWristEncoder;
 import frc.robot.commands.cargo.CargoIntake;
 import frc.robot.commands.cargo.CargoOutputFast;
 import frc.robot.commands.cargo.CargoOutputSlow;
@@ -31,6 +32,8 @@ public class OI {
   public static Button mCargoOutFast = new JoystickButton(mOperatorJoystick, 2);
   public static Button mCargoOutSlow = new JoystickButton(mOperatorJoystick, 3);  
   public static Button mWristToHorizontal = new JoystickButton(mOperatorJoystick, 4);
+
+  public static Button mWristEncoderReset = new JoystickButton(mOperatorJoystick, 5);
   
   public OI() {
     mShift.whenPressed(new Shift());
@@ -47,5 +50,9 @@ public class OI {
     mCargoOutSlow.whenPressed(new CargoOutputSlow());
     mCargoOutSlow.whenReleased(new CargoStop());
 
+    mWristEncoderReset.whenPressed(new ZeroWristEncoder());
+    // if (mOperatorJoystick.getPOV() == 0) {
+    //   new ZeroWristEncoder();
+    // }
   }
 }
