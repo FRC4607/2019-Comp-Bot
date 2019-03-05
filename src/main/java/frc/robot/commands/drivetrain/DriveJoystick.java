@@ -23,7 +23,7 @@ public class DriveJoystick extends Command {
   ******************************************************************************************************************************/
   @Override
   protected void execute() {
-
+    // Note that on an Xbox Controller, a positive input is to the bottom-right
     double throttle = OI.mDriverJoystick.getY();
     double turn = OI.mDriverJoystick.getX();
 
@@ -34,7 +34,7 @@ public class DriveJoystick extends Command {
     if (turn < RobotMap.kDeadbandJoystick && turn > -RobotMap.kDeadbandJoystick) {
       turn = 0.0;
     }
-    
+
     Robot.mDrivetrain.ApplyDriveSignal(throttle, turn);
   }
 

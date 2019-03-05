@@ -193,8 +193,9 @@ public class Drivetrain extends Subsystem {
     // } else {
     //   mLogger.error("Unknown state of shifter [{}]", mIsHighGear);
     // }
-    mLogger.info("Throttle: {}, Turn: {}", mThrottle, mTurn);
-    mLogger.info("Joystick Throttle: {}, Joystick Turn: {}", throttle, turn);
+    
+    // mLogger.info("Throttle: {}, Turn: {}", mThrottle, mTurn);
+    // mLogger.info("Joystick Throttle: {}, Joystick Turn: {}", throttle, turn);
     if (mControlState == controlMode.kOpenLoop) {
       // Invert the turn signal to get the DifferentialDrive to turn right/left correctly
       mDiffDrive.arcadeDrive(mThrottle, -mTurn);   
