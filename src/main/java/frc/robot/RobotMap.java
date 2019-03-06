@@ -73,4 +73,8 @@ public class RobotMap {
   public static final double kTurningGain = 0.5;
   public static final double kStopTurningDeg = 1.0;
 
+  /******************************************************************************************************************************** 
+  ** LEDS CONTROLLER
+  ********************************************************************************************************************************/
+  public static final int kCanifierId = 50;
 }
