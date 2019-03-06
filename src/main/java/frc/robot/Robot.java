@@ -21,8 +21,6 @@ public class Robot extends TimedRobot {
   public static Elevator mElevator = Elevator.create();
   public static Wrist mWrist = Wrist.create();
   // public static LEDs mLeds = LEDs.create();
-  // public static Cargo mCargo = Cargo.create();
-  // public static Panel mPanel = Panel.create();
   public static MultiManipulator mMultiManipulator = MultiManipulator.create();
   public static OI mOI = new OI();
   private Vision.Status mVisionStatus;  
