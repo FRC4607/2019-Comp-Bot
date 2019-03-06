@@ -46,6 +46,7 @@ public class RobotMap {
   ** WRIST SUBSYSTEM
   ********************************************************************************************************************************/
   public static final int kWristMotorId = 16;      //TODO: Put on CompBot         // Has US Digital MA3-A10-250-N absulute encoder
+  public static final double kWristGain = 0.5;
   public static final int kPIDLoopIdx = 0;
   public static final int kMotionMagicSlotIdx = 0;
   public static final int kPositionSlotIdx = 1;
@@ -84,7 +85,7 @@ public class RobotMap {
   ********************************************************************************************************************************/
   public static final int kDriverJoystick   = 0;
   public static final int kOperatorJoystick = 1;
-  public static final double kDeadbandJoystick = 0.1;
+  public static final double kDeadbandJoystick = 0.05;
 
   /******************************************************************************************************************************** 
   ** VISION CONTROLLER

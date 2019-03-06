@@ -32,7 +32,7 @@ public class ElevatorJoystick extends Command {
     double zElevator = -OI.mOperatorJoystick.getRawAxis(5);
 
     // Apply a deadband to the joystick
-    if (zElevator < 0.05 && zElevator > -0.05) {
+    if (zElevator < RobotMap.kDeadbandJoystick && zElevator > -RobotMap.kDeadbandJoystick) {
       zElevator = 0.0;
     }
 
