@@ -35,7 +35,13 @@ public class Drivetrain extends Subsystem {
 
   // Hardware
   private final WPI_TalonSRX mLeftLeader, mRightLeader, mRightFollowerA, mRightFollowerB;
-  private final WPI_VictorSPX mLeftFollowerA, mLeftFollowerB;   
+  
+  //                               PRACTICE BOT
+  private final WPI_TalonSRX mLeftFollowerA, mLeftFollowerB;   
+
+  //                               COMPETITION BOT
+  // private final WPI_VictorSPX mLeftFollowerA, mLeftFollowerB;
+
   private final DoubleSolenoid mShifter;
   private final Compressor mCompressor;
 
@@ -165,26 +171,31 @@ public class Drivetrain extends Subsystem {
     double mTurn = 0.0;
     
     // Apply calibrated motor deadband
-    if (mIsHighGear) {
-      if (turn > 0.0) {
-        mTurn = RobotMap.kDeadbandHighGear + kDeadbandHighGearScalar * turn;
-        mThrottle = RobotMap.kDeadbandHighGear + kDeadbandHighGearScalar * throttle;
-      } else {
-        mTurn = -1.0 * RobotMap.kDeadbandHighGear + kDeadbandHighGearScalar * turn;
-        mThrottle = -1.0 * RobotMap.kDeadbandHighGear + kDeadbandHighGearScalar * throttle;
-      }
-    } else if (!mIsHighGear) {
-      if (turn > 0.0) {
-        mTurn = RobotMap.kDeadbandLowGear + kDeadbandLowGearScalar * turn;
-        mThrottle = RobotMap.kDeadbandLowGear + kDeadbandLowGearScalar * throttle;
-      } else {
-        mTurn = -1.0 * RobotMap.kDeadbandLowGear + kDeadbandLowGearScalar * turn;
-        mThrottle = -1.0 * RobotMap.kDeadbandLowGear + kDeadbandLowGearScalar * throttle;
-      }
-    } else {
-      mLogger.error("Unknown state of shifter [{}]", mIsHighGear);
+    // if (mIsHighGear) {
+    if (turn > 0.0) {
+      mTurn = RobotMap.kDeadbandHighGear + kDeadbandHighGearScalar * turn;
+    } else if (turn < -0.0) {
+      mTurn = -1.0 * RobotMap.kDeadbandHighGear + kDeadbandHighGearScalar * turn;
     }
-
+    if (throttle > 0.0) {
+      mThrottle = RobotMap.kDeadbandHighGear + kDeadbandHighGearScalar * throttle;
+    } else if (throttle < 0.0) {
+      mThrottle = -1.0 * RobotMap.kDeadbandHighGear + kDeadbandHighGearScalar * throttle;
+    }
+    //  } else if (!mIsHighGear) {
+    //   if (turn > 0.0) {
+    //     mTurn = RobotMap.kDeadbandLowGear + kDeadbandLowGearScalar * turn;
+    //     mThrottle = RobotMap.kDeadbandLowGear + kDeadbandLowGearScalar * throttle;
+    //   } else if (turn < -0.0){
+    //     mTurn = -1.0 * RobotMap.kDeadbandLowGear + kDeadbandLowGearScalar * turn;
+    //     mThrottle = -1.0 * RobotMap.kDeadbandLowGear + kDeadbandLowGearScalar * throttle;
+    //   }
+    // } else {
+    //   mLogger.error("Unknown state of shifter [{}]", mIsHighGear);
+    // }
+    
+    // mLogger.info("Throttle: {}, Turn: {}", mThrottle, mTurn);
+    // mLogger.info("Joystick Throttle: {}, Joystick Turn: {}", throttle, turn);
     if (mControlState == controlMode.kOpenLoop) {
       // Invert the turn signal to get the DifferentialDrive to turn right/left correctly
       mDiffDrive.arcadeDrive(mThrottle, -mTurn);   
@@ -229,7 +240,9 @@ public class Drivetrain extends Subsystem {
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
-  public Drivetrain(WPI_TalonSRX leftLeader, WPI_VictorSPX leftFollowerA, WPI_VictorSPX leftFollowerB,
+  //                                          PRACTICE BOT
+  
+  public Drivetrain(WPI_TalonSRX leftLeader, WPI_TalonSRX leftFollowerA, WPI_TalonSRX leftFollowerB,
                     WPI_TalonSRX rightLeader, WPI_TalonSRX rightFollowerA, WPI_TalonSRX rightFollowerB,
                     DoubleSolenoid shifter, Vision vision, Compressor compressor, DifferentialDrive diffDrive) {
   
@@ -256,8 +269,8 @@ public class Drivetrain extends Subsystem {
     setHighGear(true);
     mIsCompressorClosedLoop = false;
     setCompressorClosedLoop(true);
-    mIsBrakeMode = true;
-    setBrakeMode(false);
+    mIsBrakeMode = false;
+    setBrakeMode(true);
 
     // The Differential drive will invert the output going to the right side to get the left and right sides
     // in phase with one-another.  For the comp bot, no inversion is needed to get the robot to move forward
@@ -270,11 +283,9 @@ public class Drivetrain extends Subsystem {
   }
 
   public static Drivetrain create() {
-
     WPI_TalonSRX leftLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kLeftDriveMasterId));
-    WPI_VictorSPX leftFollowerA = VictorSPX.createVictorSPX(new WPI_VictorSPX(RobotMap.kLeftDriveFollowerAId), RobotMap.kLeftDriveMasterId);
-    WPI_VictorSPX leftFollowerB = VictorSPX.createVictorSPX(new WPI_VictorSPX(RobotMap.kLeftDriveFollowerBId), RobotMap.kLeftDriveMasterId);
-    
+    WPI_TalonSRX leftFollowerA = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kLeftDriveFollowerAId), RobotMap.kLeftDriveMasterId);
+    WPI_TalonSRX leftFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kLeftDriveFollowerBId), RobotMap.kLeftDriveMasterId);
     WPI_TalonSRX rightLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kRightDriveMasterId));
     WPI_TalonSRX rightFollowerA = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerAId), RobotMap.kRightDriveMasterId);
     WPI_TalonSRX rightFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerBId), RobotMap.kRightDriveMasterId);
@@ -288,7 +299,67 @@ public class Drivetrain extends Subsystem {
     DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader);
 
     return new Drivetrain(leftLeader, leftFollowerA, leftFollowerB, rightLeader, rightFollowerA, rightFollowerB, shifter, vision, compressor, diffDrive);
-  }
+  } 
+
+//                                            COMPETITION BOT
+//   public Drivetrain(WPI_TalonSRX leftLeader, WPI_VictorSPX leftFollowerA, WPI_VictorSPX leftFollowerB,
+//   WPI_TalonSRX rightLeader, WPI_TalonSRX rightFollowerA, WPI_TalonSRX rightFollowerB,
+//   DoubleSolenoid shifter, Vision vision, Compressor compressor, DifferentialDrive diffDrive) {
+
+//     mLeftLeader = leftLeader;
+//     mLeftFollowerA = leftFollowerA; 
+//     mLeftFollowerB = leftFollowerB;
+
+//     mRightLeader = rightLeader; 
+//     mRightFollowerA = rightFollowerA;
+//     mRightFollowerB = rightFollowerB;
+
+//     mVision = vision;
+//     mShifter = shifter;
+//     mCompressor = compressor;
+
+//     mDiffDrive = diffDrive;
+//     mDiffDrive.setSafetyEnabled(false);
+
+//     // Add Pigeon IMU
+
+//     // Start off in open-loop
+//     mControlState = controlMode.kOpenLoop;
+//     mIsHighGear = false;
+//     setHighGear(true);
+//     mIsCompressorClosedLoop = false;
+//     setCompressorClosedLoop(true);
+//     mIsBrakeMode = true;
+//     setBrakeMode(false);
+
+//     // The Differential drive will invert the output going to the right side to get the left and right sides
+//     // in phase with one-another.  For the comp bot, no inversion is needed to get the robot to move forward
+//     // with positive joystick values.
+//     mIsInverted = true;
+//     InvertOutput(false);
+
+//     mLeftLeader.setSensorPhase(false);
+//     mRightLeader.setSensorPhase(true);
+// }
+
+//   public static Drivetrain create() {
+//     WPI_TalonSRX leftLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kLeftDriveMasterId));
+//     WPI_VictorSPX leftFollowerA = VictorSPX.createVictorSPX(new WPI_VictorSPX(RobotMap.kLeftDriveFollowerAId), RobotMap.kLeftDriveMasterId);
+//     WPI_VictorSPX leftFollowerB = VictorSPX.createVictorSPX(new WPI_VictorSPX(RobotMap.kLeftDriveFollowerBId), RobotMap.kLeftDriveMasterId);
+//     WPI_TalonSRX rightLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kRightDriveMasterId));
+//     WPI_TalonSRX rightFollowerA = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerAId), RobotMap.kRightDriveMasterId);
+//     WPI_TalonSRX rightFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerBId), RobotMap.kRightDriveMasterId);
+
+//     DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.kPCMId, RobotMap.kShifterHighGearSolenoidId, RobotMap.kShifterLowGearSolenoidId);
+
+//     Vision vision = Vision.create();
+
+//     Compressor compressor = new Compressor(RobotMap.kPCMId);
+
+//     DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader);
+
+//     return new Drivetrain(leftLeader, leftFollowerA, leftFollowerB, rightLeader, rightFollowerA, rightFollowerB, shifter, vision, compressor, diffDrive);
+//  }
 
   /****************************************************************************************************************************** 
   ** OVERRIDE DEFAULT SUBSYSTEM COMMAND
@@ -425,7 +496,7 @@ public class Drivetrain extends Subsystem {
     setMotorOutput = 0.0;
     setHighGear(wantsHighGear);
     do {
-      setMotorOutput += (0.01 * turnMultiplier);
+      setMotorOutput += (0.02 * turnMultiplier);
       mLogger.info("Testing motor output: [{}]", setMotorOutput);
 
       // Drive motors for 2 seconds to remove shifting slop, then zero sensors and drive
@@ -448,9 +519,9 @@ public class Drivetrain extends Subsystem {
       lOutputPercent = mLeftLeader.getMotorOutputPercent();
       lOutputVoltage = mLeftLeader.getMotorOutputVoltage();
       mCalibrationLogger.info("{},{},{},{},{},{},{},{},{},{},{}", wantsHighGear, wantsTurnRight, setMotorOutput, lOutputPercent, lOutputVoltage, lPosition, lVelocity, rOutputPercent, rOutputVoltage, rPosition, rVelocity);
-    } while ((Math.abs(lPosition) < 200) && (Math.abs(rPosition) < 200) && (setMotorOutput <= 0.30) && (setMotorOutput >= -0.30));    
+    } while ((Math.abs(lPosition) < 200) && (Math.abs(rPosition) < 200) && (setMotorOutput <= 0.44) && (setMotorOutput >= -0.44));    
 
-    if (setMotorOutput > 0.30 || setMotorOutput < -0.30) {
+    if (setMotorOutput > 0.40 || setMotorOutput < -0.40) {
       mLogger.warn("Failed to calibrate deadband: High Gear[{}], Right Turn[{}]", wantsHighGear, wantsTurnRight);
     } else {
       mLogger.info("Calibrated deadband: High Gear[{}], Right Turn[{}], Deadband[{}]", wantsHighGear, wantsTurnRight, setMotorOutput);
@@ -463,7 +534,7 @@ public class Drivetrain extends Subsystem {
 
     // Set to brake mode and turn off the compressor
     setBrakeMode(true);
-    setCompressorClosedLoop(false);
+    setCompressorClosedLoop(true);
     
     mCalibrationLogger.info("<========= CALIBRATING MOTOR TURNING DEADBAND =========>");
     mCalibrationLogger.info("High Gear, Right Turn, Desired Motor Output Percent, Left Output Percent, Left Output Voltage, Left Position, Left Velocity, Right Output Percent, Right Output Voltage, Right Position, Right Velocity");

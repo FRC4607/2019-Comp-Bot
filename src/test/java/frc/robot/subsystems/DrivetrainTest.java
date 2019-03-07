@@ -21,8 +21,15 @@ import ch.qos.logback.core.util.StatusPrinter;
 public class DrivetrainTest {
 
   WPI_TalonSRX leftLeaderMock = mock(WPI_TalonSRX.class);
-  WPI_VictorSPX leftFollowerAMock = mock(WPI_VictorSPX.class);
-  WPI_VictorSPX leftFollowerBMock = mock(WPI_VictorSPX.class);
+
+  //                        PRACTICE BOT
+  WPI_TalonSRX leftFollowerAMock = mock(WPI_TalonSRX.class);
+  WPI_TalonSRX leftFollowerBMock = mock(WPI_TalonSRX.class);
+
+  //                        COMPETITION BOT
+  // WPI_VictorSPX leftFollowerAMock = mock(WPI_VictorSPX.class);
+  // WPI_VictorSPX leftFollowerBMock = mock(WPI_VictorSPX.class);
+
   WPI_TalonSRX rightLeaderMock = mock(WPI_TalonSRX.class);
   WPI_TalonSRX rightFollowerAMock = mock(WPI_TalonSRX.class);
   WPI_TalonSRX rightFollowerBMock = mock(WPI_TalonSRX.class);
@@ -146,29 +153,29 @@ public class DrivetrainTest {
                                            rightLeaderMock, rightFollowerAMock, rightFollowerBMock,
                                            shifterMock, visionMock, compressorMock, diffDriveMock);
     // Should start off in coast mode
-    boolean brakeMode = false;
+    boolean brakeMode = true;
     assertEquals(brakeMode, drivetrain.isBrakeMode());
 
     // Set brake mode
-    brakeMode = true;
+    brakeMode = false;
     drivetrain.setBrakeMode(brakeMode);
-    verify(leftLeaderMock, times(1)).setNeutralMode(NeutralMode.Brake);
-    verify(leftFollowerAMock, times(1)).setNeutralMode(NeutralMode.Brake);
-    verify(leftFollowerBMock, times(1)).setNeutralMode(NeutralMode.Brake);
-    verify(rightLeaderMock, times(1)).setNeutralMode(NeutralMode.Brake);
-    verify(rightFollowerAMock, times(1)).setNeutralMode(NeutralMode.Brake);
-    verify(rightFollowerBMock, times(1)).setNeutralMode(NeutralMode.Brake);
+    verify(leftLeaderMock, times(1)).setNeutralMode(NeutralMode.Coast);
+    verify(leftFollowerAMock, times(1)).setNeutralMode(NeutralMode.Coast);
+    verify(leftFollowerBMock, times(1)).setNeutralMode(NeutralMode.Coast);
+    verify(rightLeaderMock, times(1)).setNeutralMode(NeutralMode.Coast);
+    verify(rightFollowerAMock, times(1)).setNeutralMode(NeutralMode.Coast);
+    verify(rightFollowerBMock, times(1)).setNeutralMode(NeutralMode.Coast);
     assertEquals(brakeMode, drivetrain.isBrakeMode());
 
     // Set back to coast mode
-    brakeMode = false;
+    brakeMode = true;
     drivetrain.setBrakeMode(brakeMode);
-    verify(leftLeaderMock, times(2)).setNeutralMode(NeutralMode.Coast);
-    verify(leftFollowerAMock, times(2)).setNeutralMode(NeutralMode.Coast);
-    verify(leftFollowerBMock, times(2)).setNeutralMode(NeutralMode.Coast);
-    verify(rightLeaderMock, times(2)).setNeutralMode(NeutralMode.Coast);
-    verify(rightFollowerAMock, times(2)).setNeutralMode(NeutralMode.Coast);
-    verify(rightFollowerBMock, times(2)).setNeutralMode(NeutralMode.Coast);
+    verify(leftLeaderMock, times(2)).setNeutralMode(NeutralMode.Brake);
+    verify(leftFollowerAMock, times(2)).setNeutralMode(NeutralMode.Brake);
+    verify(leftFollowerBMock, times(2)).setNeutralMode(NeutralMode.Brake);
+    verify(rightLeaderMock, times(2)).setNeutralMode(NeutralMode.Brake);
+    verify(rightFollowerAMock, times(2)).setNeutralMode(NeutralMode.Brake);
+    verify(rightFollowerBMock, times(2)).setNeutralMode(NeutralMode.Brake);
     assertEquals(brakeMode, drivetrain.isBrakeMode());
 
     drivetrain.close();

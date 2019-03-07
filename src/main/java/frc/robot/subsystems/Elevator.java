@@ -82,8 +82,13 @@ public class Elevator extends Subsystem {
   public void ApplyDriveSignal(double throttle) {
     double mThrottle = 0.0;
     
-    // This is inverted along with the motor outputs in order go get the forward/reverse limit switches to work
-    mThrottle = mThrottle * -1.0;
+    // This is inverted/not inverted along with the motor outputs in order go get the forward/reverse limit switches to work
+    
+    //                          COMPETITION BOT
+    // mThrottle = throttle * -1.0;
+
+    //                          PRACTICE BOT
+    mThrottle = throttle * 1.0;
 
     if (mControlState == controlMode.kOpenLoop) {
       mMaster.set(mThrottle);   
@@ -123,6 +128,8 @@ public class Elevator extends Subsystem {
  /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
+  //                                    PRACTICE BOT
+  
   public Elevator(WPI_TalonSRX master, WPI_TalonSRX follower) {
     mMaster = master;
     mFollow = follower;
@@ -132,8 +139,8 @@ public class Elevator extends Subsystem {
     setBrakeMode(false);
 
     // These are inverted along with the joystick inputs in order go get the forward/reverse limit switches to work
-    mMaster.setInverted(true);
-    mFollow.setInverted(true);
+    mMaster.setInverted(false);
+    mFollow.setInverted(false);
 
     // Get the mag encoder sensor in-phase with the motors
     mFollow.setSensorPhase(true);
@@ -144,10 +151,36 @@ public class Elevator extends Subsystem {
 
   public static Elevator create() {
     WPI_TalonSRX master = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kElevatorMotorMasterId));
-    WPI_TalonSRX follower = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kElevatorMotorFollowerId), RobotMap.kElevatorMotorMasterId);
-    
+    WPI_TalonSRX follower = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kElevatorMotorFollowerId), RobotMap.kElevatorMotorMasterId);
     return new Elevator(master, follower);
   }
+
+//                                      COMPETITION BOT
+
+// public Elevator(WPI_TalonSRX master, WPI_TalonSRX follower) {
+//     mMaster = master;
+//     mFollow = follower;
+
+//     // Force a brake mode message
+//     mIsBrakeMode = true;
+//     setBrakeMode(false);
+
+//     // These are inverted along with the joystick inputs in order go get the forward/reverse limit switches to work
+//     mMaster.setInverted(true);
+//     mFollow.setInverted(true);
+
+//     // Get the mag encoder sensor in-phase with the motors
+//     mFollow.setSensorPhase(true);
+
+//     // Start off in open loop control
+//     setOpenLoopControl();
+//   }
+
+//   public static Elevator create() {
+//     WPI_TalonSRX master = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kElevatorMotorMasterId));
+//     WPI_TalonSRX follower = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kElevatorMotorFollowerId), RobotMap.kElevatorMotorMasterId);
+//     return new Elevator(master, follower);
+// }
 
   /****************************************************************************************************************************** 
   ** OVERRIDE DEFAULT SUBSYSTEM COMMAND

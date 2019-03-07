@@ -38,11 +38,11 @@ public class Limelight {
   }
 
   private void defaultConfiguration() {    
-    setLedMode(ledMode.kOff);
+    setLedMode(ledMode.kOn);
     setCamMode(camMode.kDriver);
     setPipeline(pipeline.k0);
     setSnapshot(snapshot.stop);
-    setStream(stream.kStandard);
+    setStream(stream.kPipMain);
   }
 
   /****************************************************************************************************************************** 
