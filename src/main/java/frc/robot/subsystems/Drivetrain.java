@@ -318,8 +318,8 @@ public class Drivetrain extends Subsystem {
     setHighGear(true);
     mIsCompressorClosedLoop = false;
     setCompressorClosedLoop(true);
-    mIsBrakeMode = true;
-    setBrakeMode(false);
+    mIsBrakeMode = false;
+    setBrakeMode(true);
 
     // The Differential drive will invert the output going to the right side to get the left and right sides
     // in phase with one-another.  For the comp bot, no inversion is needed to get the robot to move forward
@@ -508,9 +508,9 @@ public class Drivetrain extends Subsystem {
       lOutputPercent = mLeftLeader.getMotorOutputPercent();
       lOutputVoltage = mLeftLeader.getMotorOutputVoltage();
       mCalibrationLogger.info("{},{},{},{},{},{},{},{},{},{},{}", wantsHighGear, wantsTurnRight, setMotorOutput, lOutputPercent, lOutputVoltage, lPosition, lVelocity, rOutputPercent, rOutputVoltage, rPosition, rVelocity);
-    } while ((Math.abs(lPosition) < 200) && (Math.abs(rPosition) < 200) && (setMotorOutput <= 0.44) && (setMotorOutput >= -0.44));    
+    } while ((Math.abs(lPosition) < 200) && (Math.abs(rPosition) < 200) && (setMotorOutput <= 0.60) && (setMotorOutput >= -0.60));    
 
-    if (setMotorOutput > 0.40 || setMotorOutput < -0.40) {
+    if (setMotorOutput > 0.62 || setMotorOutput < -0.62) {
       mLogger.warn("Failed to calibrate deadband: High Gear[{}], Right Turn[{}]", wantsHighGear, wantsTurnRight);
     } else {
       mLogger.info("Calibrated deadband: High Gear[{}], Right Turn[{}], Deadband[{}]", wantsHighGear, wantsTurnRight, setMotorOutput);
