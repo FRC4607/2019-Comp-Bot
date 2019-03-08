@@ -56,9 +56,9 @@ public class RobotMap {
   ** WRIST SUBSYSTEM
   ********************************************************************************************************************************/
   //                          Practice Bot
-  // public static final int kWristMotorId = 21;      //TODO: Put on CompBot         // Has US Digital MA3-A10-250-N absulute encoder
+  // public static final int kWristMotorId = 21;      //TODO: Put on CompBot         // Has CTRE mag encoder
   //                          Competition Bot
-  public static final int kWristMotorId = 16;      //TODO: Put on CompBot         // Has US Digital MA3-A10-250-N absulute encoder
+  public static final int kWristMotorId = 16;      //TODO: Put on CompBot         // Has CTRE mag encoder
   
   public static final double kWristGain = 0.5;
   public static final int kPIDLoopIdx = 0;
