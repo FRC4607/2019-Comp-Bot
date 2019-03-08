@@ -85,7 +85,7 @@ public class Elevator extends Subsystem {
     // This is inverted/not inverted along with the motor outputs in order go get the forward/reverse limit switches to work
     
     //                          COMPETITION BOT
-    mThrottle = throttle * -1.0;
+    mThrottle = throttle * 1.0;
 
     //                          PRACTICE BOT
     // mThrottle = throttle * 1.0;

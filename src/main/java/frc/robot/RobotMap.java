@@ -16,13 +16,14 @@ public class RobotMap {
   public static final int kRightDriveFollowerAId = 11;                              // Has Pigeon attached
   public static final int kRightDriveFollowerBId = 12;
 
-  public static final int kShifterHighGearSolenoidId = 0;
-  public static final int kShifterLowGearSolenoidId = 1;
+//                              COMPETITION
+  public static final int kShifterHighGearSolenoidId = 3;
+  public static final int kShifterLowGearSolenoidId = 2;
 
   public static final int kPigeonId = 11;
   
   // Use the drivetrain CalibrateTurningDeadband() method to measure these
-  public static final double kDeadbandHighGear = 0.3;                            // TODO: Calibrate this in Duluth
+  public static final double kDeadbandHighGear = 0.22;                            // TODO: Calibrate this in Duluth
   public static final double kDeadbandLowGear = 0.3;                             // TODO: Calibrate this in Duluth
 
   // Use the drivetrain CalibrateMaxTurnVelocity() and CalibrateMaxTurnAcceleration() method to measure these
@@ -34,8 +35,13 @@ public class RobotMap {
   /******************************************************************************************************************************** 
   ** ELEVATOR SUBSYSTEM
   ********************************************************************************************************************************/
-  public static final int kElevatorMotorMasterId = 22;                            // Has REV limit switch attached
-  public static final int kElevatorMotorFollowerId = 13;                          // Has CTRE mag encoder attached
+  //                                              COMPETITION BOT
+  public static final int kElevatorMotorMasterId = 13;                            // Has REV limit switch attached
+  public static final int kElevatorMotorFollowerId = 22;                          // Has CTRE mag encoder attached
+
+  //                                              Practice bot
+  // public static final int kElevatorMotorMasterId = 22;                            // Has REV limit switch attached
+  // public static final int kElevatorMotorFollowerId = 13;                          // Has CTRE mag encoder attached
 
   // Use the elevator CalibrateDeadband() method to measure these
   public static final double kElevatorDeadband = 0.10;                            // TODO: Calibrate this in Duluth
@@ -45,7 +51,11 @@ public class RobotMap {
   /******************************************************************************************************************************** 
   ** WRIST SUBSYSTEM
   ********************************************************************************************************************************/
+  //                          Practice Bot
+  // public static final int kWristMotorId = 21;      //TODO: Put on CompBot         // Has US Digital MA3-A10-250-N absulute encoder
+  //                          Competition Bot
   public static final int kWristMotorId = 16;      //TODO: Put on CompBot         // Has US Digital MA3-A10-250-N absulute encoder
+  
   public static final double kWristGain = 0.5;
   public static final int kPIDLoopIdx = 0;
   public static final int kMotionMagicSlotIdx = 0;
@@ -60,7 +70,7 @@ public class RobotMap {
   public static final int kWristDeadband = 5;                                     // TODO: Calibrate before Duluth
   public static final int kSCurveStrengthWrist = 3;                               // TODO: Tune-up before Duluth
   public static final double kWristRampRate = 0.01;
-  public static final int kWristTickGain = 200;
+  public static final int kWristTickOffset = 300;
 
   //sensor units per 100ms
   public static final int kVelocityWrist = 2500;                                  // TODO: Calibrate before Duluth
@@ -72,9 +82,11 @@ public class RobotMap {
   /******************************************************************************************************************************** 
   ** MULTI-MANIPULATOR SUBSYSTEM
   ********************************************************************************************************************************/
-  public static final int kCargoMotorId = 14;                                   // TODO: Connect in Duluth
-  public static final int kPanelForwardId = 2;
-  public static final int kPanelReverseId = 3;  
+  public static final int kCargoMotorId = 20;                                   // TODO: Connect in Duluth
+  
+  //                      COMPETITION
+  public static final int kPanelForwardId = 0;
+  public static final int kPanelReverseId = 1;  
 
   public static final double kCargoOutFast = -1.0;
   public static final double kCargoOutSlow = -0.45;
@@ -85,7 +97,7 @@ public class RobotMap {
   ********************************************************************************************************************************/
   public static final int kDriverJoystick   = 0;
   public static final int kOperatorJoystick = 1;
-  public static final double kDeadbandJoystick = 0.05;
+  public static final double kDeadbandJoystick = 0.1;
 
   /******************************************************************************************************************************** 
   ** VISION CONTROLLER

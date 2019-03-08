@@ -70,7 +70,8 @@ public class MultiManipulator extends Subsystem {
     mCargoMotor.setNeutralMode(NeutralMode.Coast);
 
     mPanelActuator = panelActuator;
-    shiftPanelIntake(true);
+    // Should be false on Comp-Bot
+    shiftPanelIntake(false);
 
     // Current limiting
     mCargoMotor.configContinuousCurrentLimit(10, RobotMap.kLongCANTimeoutMs);
