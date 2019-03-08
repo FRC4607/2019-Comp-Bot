@@ -26,6 +26,10 @@ public class RobotMap {
   public static final double kDeadbandHighGear = 0.22;                            // TODO: Calibrate this in Duluth
   public static final double kDeadbandLowGear = 0.3;                             // TODO: Calibrate this in Duluth
 
+  // This is an experimental value to assist with the Competition Robot's turning
+  public static final double kLeftTurnGain = 1.0;
+  public static final double kRightTurnGain = 1.0;
+
   // Use the drivetrain CalibrateMaxTurnVelocity() and CalibrateMaxTurnAcceleration() method to measure these
   public static final double kDrivetrainHighGearMaxTurnVelocity = 5.0;
   public static final double kDrivetrainHighGearMaxTurnAcceleration = 10.0;
