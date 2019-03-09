@@ -98,8 +98,8 @@ public class Robot extends TimedRobot {
     if (mStartSelftestOrCalibration) {
       mLogger.info("Starting Robot Selftest/Calibration");
       mStartSelftestOrCalibration = false;
-      // mDrivetrain.SelfTest();
-      mDrivetrain.CalibrateTurningDeadband();
+      mDrivetrain.SelfTest();
+      // mDrivetrain.CalibrateTurningDeadband();
     }
 
   }

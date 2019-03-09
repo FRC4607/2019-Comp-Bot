@@ -74,7 +74,7 @@ public class RobotMap {
   public static final int kWristDeadband = 5;                                     // TODO: Calibrate before Duluth
   public static final int kSCurveStrengthWrist = 3;                               // TODO: Tune-up before Duluth
   public static final double kWristRampRate = 0.01;
-  public static final int kWristTickOffset = 300;
+  public static final int kWristTickOffset = 250;
 
   //sensor units per 100ms
   public static final int kVelocityWrist = 2500;                                  // TODO: Calibrate before Duluth
@@ -107,7 +107,7 @@ public class RobotMap {
   ** VISION CONTROLLER
   ********************************************************************************************************************************/
   public static final double kScaleHorizontalToTarget = 1.0 / 27.0;                // Limelight has 54deg FOV
-  public static final double kTurningGain = 0.5;
+  public static final double kTurningGain = 1.0;
   public static final double kStopTurningDeg = 1.0;
 
   /******************************************************************************************************************************** 
