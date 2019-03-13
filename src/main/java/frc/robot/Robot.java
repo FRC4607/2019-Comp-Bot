@@ -43,12 +43,14 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     mDrivetrain.mVision.mVisionThread.stop();
-    // mLeds.mLEDThread.stop();
+    mLeds.mLEDThread.stop();
   }
 
   @Override
   public void autonomousInit() {
     mLogger.info("<=========== AUTONOMOUS INIT ===========>");
+    mDrivetrain.mVision.mVisionThread.startPeriodic(0.01);
+    mLeds.mLEDThread.startPeriodic(0.02);
   }
 
   @Override

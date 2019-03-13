@@ -25,7 +25,7 @@ public class LEDs {
       // Process state changes
       synchronized(this) {
         if (mState != mDesiredState) {
-          mLogger.info("LEDs processing state change request: [{}]", mDesiredState);
+          // mLogger.info("LEDs processing state change request: [{}]", mDesiredState);
           mState = mDesiredState;
         }
         

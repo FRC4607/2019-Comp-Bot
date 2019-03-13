@@ -174,6 +174,18 @@ public Elevator(WPI_TalonSRX master, WPI_TalonSRX follower) {
 
     // Start off in open loop control
     setOpenLoopControl();
+
+    mMaster.configContinuousCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
+    mMaster.configPeakCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
+    mMaster.configPeakCurrentDuration(200, RobotMap.kLongCANTimeoutMs);
+    mMaster.enableCurrentLimit(true);
+
+    mFollow.configContinuousCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
+    mFollow.configPeakCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
+    mFollow.configPeakCurrentDuration(200, RobotMap.kLongCANTimeoutMs);
+    mFollow.enableCurrentLimit(true);
+
+
   }
 
   public static Elevator create() {

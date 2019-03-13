@@ -320,8 +320,8 @@ public class Drivetrain extends Subsystem {
     setHighGear(true);
     mIsCompressorClosedLoop = false;
     setCompressorClosedLoop(true);
-    mIsBrakeMode = true;
-    setBrakeMode(false);
+    mIsBrakeMode = false;
+    setBrakeMode(true);
 
     // The Differential drive will invert the output going to the right side to get the left and right sides
     // in phase with one-another.  For the comp bot, no inversion is needed to get the robot to move forward
