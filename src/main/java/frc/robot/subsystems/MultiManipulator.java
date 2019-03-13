@@ -9,6 +9,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.cargo.IntakeJoystick;
+
 
 // Creates the elevator subsystem
 public class MultiManipulator extends Subsystem {
@@ -16,14 +18,13 @@ public class MultiManipulator extends Subsystem {
   public enum SystemState {
     Autonomous,
     OpenLoop,
-    Testing
+    Testing,
   }
 
   WPI_TalonSRX mCargoMotor;
   DoubleSolenoid mPanelActuator;
 
   private boolean mPanelOpen;
-
 
   // Logger
   private final Logger mLogger = LoggerFactory.getLogger(MultiManipulator.class);
@@ -42,6 +43,18 @@ public class MultiManipulator extends Subsystem {
 
   public void CargoStop() {
     mCargoMotor.set(0.0);
+  }
+
+  public void OpenLoop() {
+    mCargoMotor.set(RobotMap.kCargoOutFast);
+  }  
+
+  public void setOpenLoopIntake(double xCargoIntake) {
+    mCargoMotor.set(xCargoIntake);
+  }
+
+  public void setOpenLoopOutake(double xCargoOuttake) {
+    mCargoMotor.set(xCargoOuttake);
   }
 
   /**
@@ -70,11 +83,12 @@ public class MultiManipulator extends Subsystem {
     mCargoMotor.setNeutralMode(NeutralMode.Coast);
 
     mPanelActuator = panelActuator;
-    shiftPanelIntake(true);
+    // Should be false on Comp-Bot
+    shiftPanelIntake(false);
 
     // Current limiting
-    mCargoMotor.configContinuousCurrentLimit(10, RobotMap.kLongCANTimeoutMs);
-    mCargoMotor.configPeakCurrentLimit(40, RobotMap.kLongCANTimeoutMs);
+    mCargoMotor.configContinuousCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
+    mCargoMotor.configPeakCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
     mCargoMotor.configPeakCurrentDuration(200, RobotMap.kLongCANTimeoutMs);
     mCargoMotor.enableCurrentLimit(true);
 
@@ -90,5 +104,7 @@ public class MultiManipulator extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+    setDefaultCommand(new IntakeJoystick());
   }
+
 }

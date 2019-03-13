@@ -26,9 +26,9 @@ public class DrivetrainTest {
   WPI_TalonSRX leftFollowerAMock = mock(WPI_TalonSRX.class);
   WPI_TalonSRX leftFollowerBMock = mock(WPI_TalonSRX.class);
 
-  //                        COMPETITION BOT
+  // //                        COMPETITION BOT
   // WPI_VictorSPX leftFollowerAMock = mock(WPI_VictorSPX.class);
-  // WPI_VictorSPX leftFollowerBMock = mock(WPI_VictorSPX.class);
+  // // WPI_VictorSPX leftFollowerBMock = mock(WPI_VictorSPX.class);
 
   WPI_TalonSRX rightLeaderMock = mock(WPI_TalonSRX.class);
   WPI_TalonSRX rightFollowerAMock = mock(WPI_TalonSRX.class);

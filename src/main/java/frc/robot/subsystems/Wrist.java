@@ -141,8 +141,8 @@ public class Wrist extends Subsystem {
     mMaster.configClosedloopRamp(RobotMap.kWristRampRate, RobotMap.kLongCANTimeoutMs);
 
     // Current limiting
-    mMaster.configContinuousCurrentLimit(10, RobotMap.kLongCANTimeoutMs);
-    mMaster.configPeakCurrentLimit(40, RobotMap.kLongCANTimeoutMs);
+    mMaster.configContinuousCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
+    mMaster.configPeakCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
     mMaster.configPeakCurrentDuration(200, RobotMap.kLongCANTimeoutMs);
     mMaster.enableCurrentLimit(true);
 
