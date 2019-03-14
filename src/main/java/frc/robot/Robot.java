@@ -20,7 +20,7 @@ public class Robot extends TimedRobot {
   public static Drivetrain mDrivetrain = Drivetrain.create();
   public static Elevator mElevator = Elevator.create();
   public static Wrist mWrist = Wrist.create();
-  public static LEDs mLeds = LEDs.create();
+  // public static LEDs mLeds = LEDs.create();
   public static MultiManipulator mMultiManipulator = MultiManipulator.create();
   public static OI mOI = new OI();
   private Vision.Status mVisionStatus;  
@@ -43,14 +43,14 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     mDrivetrain.mVision.mVisionThread.stop();
-    mLeds.mLEDThread.stop();
+    // mLeds.mLEDThread.stop();
   }
 
   @Override
   public void autonomousInit() {
     mLogger.info("<=========== AUTONOMOUS INIT ===========>");
     mDrivetrain.mVision.mVisionThread.startPeriodic(0.01);
-    mLeds.mLEDThread.startPeriodic(0.02);
+    // mLeds.mLEDThread.startPeriodic(0.02);
   }
 
   @Override
@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     mLogger.info("<=========== TELEOP INIT ===========>");
     mDrivetrain.mVision.mVisionThread.startPeriodic(0.01);
-    mLeds.mLEDThread.startPeriodic(0.02);
+    // mLeds.mLEDThread.startPeriodic(0.02);
   }
 
   @Override
@@ -71,17 +71,17 @@ public class Robot extends TimedRobot {
 
     // Update LEDs
     mVisionStatus = mDrivetrain.mVision.getStatus();
-    switch (mVisionStatus) {
-       case kTargeting:
-         mLeds.setState(LEDs.State.kDisplayTargetAcquired);
-         break;
-       case kReachedTarget:
-         mLeds.setState(LEDs.State.kDisplayTargetAcquired);
-         break;
-       case kLostTarget:
-         mLeds.setState(LEDs.State.kDisplayTargetNotAcquired);
-         break;
-     }    
+    // switch (mVisionStatus) {
+    //    case kTargeting:
+    //      mLeds.setState(LEDs.State.kDisplayTargetAcquired);
+    //      break;
+    //    case kReachedTarget:
+    //      mLeds.setState(LEDs.State.kDisplayTargetAcquired);
+    //      break;
+    //    case kLostTarget:
+    //      mLeds.setState(LEDs.State.kDisplayTargetNotAcquired);
+    //      break;
+    //  }    
   }
 
   @Override

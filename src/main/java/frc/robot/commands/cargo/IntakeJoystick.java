@@ -3,6 +3,7 @@ package frc.robot.commands.cargo;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.OI;
+import frc.robot.RobotMap;
 
 /******************************************************************************************************************************** 
 ** CARGOJOYSTICK COMMAND
@@ -22,11 +23,16 @@ public class IntakeJoystick extends Command {
   @Override
   protected void execute() {
 
-    double xCargoIntake = OI.mOperatorJoystick.getRawAxis(2);
-    double xCargoOuttake = OI.mOperatorJoystick.getRawAxis(3);
+    double xCargoIntake = OI.mOperatorJoystick.getRawAxis(3);
+    double xCargoOuttake = -OI.mOperatorJoystick.getRawAxis(2);
 
-    Robot.mMultiManipulator.setOpenLoopIntake(xCargoIntake);
-    Robot.mMultiManipulator.setOpenLoopOutake(xCargoOuttake);
+    if (xCargoOuttake < -RobotMap.kDeadbandJoystick) {
+      Robot.mMultiManipulator.setOpenLoop(xCargoOuttake);
+    } else if (xCargoIntake > RobotMap.kDeadbandJoystick) {
+      Robot.mMultiManipulator.setOpenLoop(xCargoIntake);
+    } else {
+      Robot.mMultiManipulator.CargoStop();
+    }
 
   }
 

@@ -36,12 +36,6 @@ public class Drivetrain extends Subsystem {
   // Hardware
   private final WPI_TalonSRX mLeftLeader, mRightLeader, mRightFollowerA, mRightFollowerB,  mLeftFollowerA, mLeftFollowerB;
   
-  //                               PRACTICE BOT
-  // private final WPI_TalonSRX mLeftFollowerA, mLeftFollowerB;   
-
-  //                               COMPETITION BOT
-  // private final WPI_VictorSPX mLeftFollowerA ; // , mLeftFollowerB;
-
   private final DoubleSolenoid mShifter;
   private final Compressor mCompressor;
 
@@ -331,14 +325,16 @@ public class Drivetrain extends Subsystem {
 
     mLeftLeader.setSensorPhase(false);
     mRightLeader.setSensorPhase(true);
+
+    mLeftLeader.configOpenloopRamp(RobotMap.kDriveRampRate);
+    mRightLeader.configOpenloopRamp(RobotMap.kDriveRampRate);
+    
 }
 
   public static Drivetrain create() {
     WPI_TalonSRX leftLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kLeftDriveMasterId));
     WPI_TalonSRX leftFollowerA = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kLeftDriveFollowerAId), RobotMap.kLeftDriveMasterId);
-    // WPI_VictorSPX leftFollowerA = VictorSPX.createVictorSPX(new WPI_VictorSPX(RobotMap.kLeftDriveFollowerAId), RobotMap.kLeftDriveMasterId);
     WPI_TalonSRX leftFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kLeftDriveFollowerBId), RobotMap.kLeftDriveMasterId);
-    // WPI_VictorSPX leftFollowerB = VictorSPX.createVictorSPX(new WPI_VictorSPX(RobotMap.kLeftDriveFollowerBId), RobotMap.kLeftDriveMasterId);
     WPI_TalonSRX rightLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kRightDriveMasterId));
     WPI_TalonSRX rightFollowerA = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerAId), RobotMap.kRightDriveMasterId);
     WPI_TalonSRX rightFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerBId), RobotMap.kRightDriveMasterId);

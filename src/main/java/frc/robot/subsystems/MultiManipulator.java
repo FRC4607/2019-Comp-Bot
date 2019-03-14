@@ -45,16 +45,8 @@ public class MultiManipulator extends Subsystem {
     mCargoMotor.set(0.0);
   }
 
-  public void OpenLoop() {
-    mCargoMotor.set(RobotMap.kCargoOutFast);
-  }  
-
-  public void setOpenLoopIntake(double xCargoIntake) {
-    mCargoMotor.set(xCargoIntake);
-  }
-
-  public void setOpenLoopOutake(double xCargoOuttake) {
-    mCargoMotor.set(xCargoOuttake);
+  public void setOpenLoop(double xCargo) {
+    mCargoMotor.set(xCargo);
   }
 
   /**

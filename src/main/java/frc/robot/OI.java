@@ -28,9 +28,9 @@ public class OI {
   public static Button mVisionAssistedTurning = new JoystickButton(mDriverJoystick, 3);
   
   // Operator control
-  public static Button mCargoIn = new JoystickButton(mOperatorJoystick, 1);
-  public static Button mCargoOutFast = new JoystickButton(mOperatorJoystick, 2);
-  public static Button mCargoOutSlow = new JoystickButton(mOperatorJoystick, 3);  
+  
+  public static Button mWristToIntake = new JoystickButton(mOperatorJoystick, 1);
+  public static Button mWristToUp = new JoystickButton(mOperatorJoystick, 2);
   public static Button mWristToHorizontal = new JoystickButton(mOperatorJoystick, 4);
 
   public static Button mWristEncoderReset = new JoystickButton(mOperatorJoystick, 5);
@@ -38,17 +38,12 @@ public class OI {
   public OI() {
     mShift.whenPressed(new Shift());
     mVisionAssistedTurning.whileHeld(new DriveJoystickWithVisionAssistTurning());
-    mWristToHorizontal.whileHeld(new WristToAngle(0.0));
+    
+    mWristToIntake.whileHeld(new WristToAngle(RobotMap.kWristDownAngle));
+    mWristToUp.whileHeld(new WristToAngle(RobotMap.kWristUpAngle));
+    mWristToHorizontal.whileHeld(new WristToAngle(RobotMap.kWristHorizontalAngle));
 
     mPanelShift.whenPressed(new PanelIntakeShift());
-
-    mCargoIn.whenPressed(new CargoIntake());
-    mCargoOutFast.whenPressed(new CargoOutputFast());
-    mCargoIn.whenReleased(new CargoStop());
-    mCargoOutFast.whenReleased(new CargoStop());
-
-    mCargoOutSlow.whenPressed(new CargoOutputSlow());
-    mCargoOutSlow.whenReleased(new CargoStop());
 
     mWristEncoderReset.whenPressed(new ZeroWristEncoder());
     // if (mOperatorJoystick.getPOV() == 0) {

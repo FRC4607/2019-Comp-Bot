@@ -161,8 +161,14 @@ public class Wrist extends Subsystem {
     mMaster.selectProfileSlot(RobotMap.kMotionMagicSlotIdx, RobotMap.kPIDLoopIdx);
 
     // A +'ve motor ouptut needs to move the wrist up and a -'ve output needs to move the wrist down
-    mMaster.setInverted(false);
-    mMaster.setSensorPhase(false);
+   
+    //                                 COMPETITION
+    // mMaster.setInverted(false);
+    // mMaster.setSensorPhase(false);
+    //                                PRACTICE BOT
+    mMaster.setInverted(true);
+    mMaster.setSensorPhase(true);
+
     mMaster.setNeutralMode(NeutralMode.Brake);
     
     mMaster.set(ControlMode.PercentOutput, 0.0);
