@@ -29,18 +29,6 @@ public class MultiManipulator extends Subsystem {
   // Logger
   private final Logger mLogger = LoggerFactory.getLogger(MultiManipulator.class);
 
-  public void CargoOutputFast() {
-    mCargoMotor.set(RobotMap.kCargoOutFast);
-  }  
-
-  public void CargoOutputSlow() {
-    mCargoMotor.set(RobotMap.kCargoOutSlow);
-  }
-
-  public void CargoIntake() {
-    mCargoMotor.set(RobotMap.kCargoIn);
-  }
-
   public void CargoStop() {
     mCargoMotor.set(0.0);
   }

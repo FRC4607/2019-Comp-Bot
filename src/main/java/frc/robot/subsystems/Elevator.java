@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.commands.elevator.ElevatorJoystick;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 
 /******************************************************************************************************************************** 
 ** ELEVATOR SUBSYSTEM CLASS
@@ -123,12 +125,13 @@ public class Elevator extends Subsystem {
     } else {
       mLogger.warn("Expected control mode kOpenLoop, got: [{}]", mControlState);
     }    
+    int sensorpos = mFollow.getSelectedSensorPosition();
+    mLogger.info("Sensor Position: {} ", sensorpos);
   }
 
  /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
-  //                                    PRACTICE BOT
   
   public Elevator(WPI_TalonSRX master, WPI_TalonSRX follower) {
     mMaster = master;
@@ -138,12 +141,48 @@ public class Elevator extends Subsystem {
     mIsBrakeMode = true;
     setBrakeMode(false);
 
-    // These are inverted along with the joystick inputs in order go get the forward/reverse limit switches to work
+    //                                  PRACTICE BOT
     mMaster.setInverted(false);
     mFollow.setInverted(false);
-
     // Get the mag encoder sensor in-phase with the motors
-    mFollow.setSensorPhase(true);
+    mFollow.setSensorPhase(false);
+
+    // //                                 COMPETITIONN BOT
+    // // These are inverted along with the joystick inputs in order go get the forward/reverse limit switches to work
+    // mMaster.setInverted(true);
+    // mFollow.setInverted(true);
+    // // Get the mag encoder sensor in-phase with the motors
+    // mFollow.setSensorPhase(true);
+
+        // Configure the feedback sensor
+    mFollow.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);
+    // mMaster.configSelectedFeedbackSensor(FeedbackDevice.Analog, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);
+    mFollow.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, RobotMap.kLongCANTimeoutMs);
+    mFollow.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.kLongCANTimeoutMs);
+    mFollow.setSelectedSensorPosition(0, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);    
+
+    // Configure Talon for Motion Magic
+		mFollow.config_kP(RobotMap.kMotionMagicSlotIdx, RobotMap.kPElevator, RobotMap.kLongCANTimeoutMs);
+		mFollow.config_kI(RobotMap.kMotionMagicSlotIdx, RobotMap.kIElevator, RobotMap.kLongCANTimeoutMs);
+		mFollow.config_kD(RobotMap.kMotionMagicSlotIdx, RobotMap.kDElevator, RobotMap.kLongCANTimeoutMs);
+		mFollow.config_kF(RobotMap.kMotionMagicSlotIdx, RobotMap.kFElevator, RobotMap.kLongCANTimeoutMs);   
+    mFollow.configMaxIntegralAccumulator(RobotMap.kMotionMagicSlotIdx, RobotMap.kElevatorMaxIntegralAccumulator);
+    mFollow.config_IntegralZone(RobotMap.kMotionMagicSlotIdx, RobotMap.kElevatorIZone);
+    mFollow.configAllowableClosedloopError(RobotMap.kMotionMagicSlotIdx, RobotMap.kElevatorSensorDeadband, RobotMap.kLongCANTimeoutMs);
+    mFollow.configMotionCruiseVelocity(RobotMap.kVelocityElevator, RobotMap.kLongCANTimeoutMs);
+    mFollow.configMotionAcceleration(RobotMap.kAccelerationElevator, RobotMap.kLongCANTimeoutMs);
+    mFollow.configMotionSCurveStrength(RobotMap.kSCurveStrengthElevator);
+
+    // Configure Talon for position PID
+		mFollow.config_kP(RobotMap.kPositionSlotIdx, RobotMap.kPElevator, RobotMap.kLongCANTimeoutMs);
+		mFollow.config_kI(RobotMap.kPositionSlotIdx, RobotMap.kIElevator, RobotMap.kLongCANTimeoutMs);
+		mFollow.config_kD(RobotMap.kPositionSlotIdx, RobotMap.kDElevator, RobotMap.kLongCANTimeoutMs);
+    mFollow.configMaxIntegralAccumulator(RobotMap.kPositionSlotIdx, RobotMap.kElevatorMaxIntegralAccumulator);
+    mFollow.config_IntegralZone(RobotMap.kPositionSlotIdx, RobotMap.kElevatorIZone);
+    mFollow.configAllowableClosedloopError(RobotMap.kPositionSlotIdx, RobotMap.kElevatorSensorDeadband, RobotMap.kLongCANTimeoutMs);
+
+    // Ramp-Rate limiting
+    mMaster.configClosedloopRamp(RobotMap.kElevatorRampRate, RobotMap.kLongCANTimeoutMs);
 
     mMaster.configContinuousCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
     mMaster.configPeakCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
@@ -164,45 +203,6 @@ public class Elevator extends Subsystem {
     WPI_TalonSRX follower = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kElevatorMotorFollowerId), RobotMap.kElevatorMotorMasterId);
     return new Elevator(master, follower);
   }
-
-//                                      COMPETITION BOT
-
-// public Elevator(WPI_TalonSRX master, WPI_TalonSRX follower) {
-//     mMaster = master;
-//     mFollow = follower;
-
-//     // Force a brake mode message
-//     mIsBrakeMode = true;
-//     setBrakeMode(false);
-
-//     // These are inverted along with the joystick inputs in order go get the forward/reverse limit switches to work
-//     mMaster.setInverted(true);
-//     mFollow.setInverted(true);
-
-//     // Get the mag encoder sensor in-phase with the motors
-//     mFollow.setSensorPhase(true);
-
-//     // Start off in open loop control
-//     setOpenLoopControl();
-
-//     mMaster.configContinuousCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
-//     mMaster.configPeakCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
-//     mMaster.configPeakCurrentDuration(200, RobotMap.kLongCANTimeoutMs);
-//     mMaster.enableCurrentLimit(true);
-
-//     mFollow.configContinuousCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
-//     mFollow.configPeakCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
-//     mFollow.configPeakCurrentDuration(200, RobotMap.kLongCANTimeoutMs);
-//     mFollow.enableCurrentLimit(true);
-
-
-//   }
-
-//   public static Elevator create() {
-//     WPI_TalonSRX master = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kElevatorMotorMasterId));
-//     WPI_TalonSRX follower = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kElevatorMotorFollowerId), RobotMap.kElevatorMotorMasterId);
-//     return new Elevator(master, follower);
-// }
 
   /****************************************************************************************************************************** 
   ** OVERRIDE DEFAULT SUBSYSTEM COMMAND

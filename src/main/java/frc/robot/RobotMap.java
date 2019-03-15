@@ -62,6 +62,19 @@ public class RobotMap {
   
   public static final double kElevatorOpenLoopGain = 1.0;
 
+  public static final double kPElevator = 0.2;                                       // TODO: Tune-up before Duluth
+  public static final double kIElevator = 0.0;                                       // TODO: Tune-up before Duluth
+  public static final double kDElevator = 0.0;                                       // TODO: Tune-up before Duluth
+  public static final double kFElevator = 0.0;                                       // TODO: Tune-up before Duluth
+  public static final int kElevatorMaxIntegralAccumulator = 500000;                  // TODO: Tune-up before Duluth
+  public static final int kElevatorSensorDeadband = 5;
+  public static final int kElevatorIZone = 500;                                      // TODO: Tune-up before Duluth
+  public static final int kSCurveStrengthElevator = 3;                               // TODO: Tune-up before Duluth
+  public static final double kElevatorRampRate = 0.01;
+  
+  public static final int kVelocityElevator = 2500;                                  // TODO: Calibrate before Duluth
+  public static final int kAccelerationElevator = 2500;                              // TODO: Calibrate before Duluth
+  
   /******************************************************************************************************************************** 
   ** WRIST SUBSYSTEM
   ********************************************************************************************************************************/
@@ -118,11 +131,6 @@ public class RobotMap {
   //                      PRAACTICE
   public static final int kPanelForwardId = 2;
   public static final int kPanelReverseId = 3;  
-
-
-  public static final double kCargoOutFast = -1.0;
-  public static final double kCargoOutSlow = -0.45;
-  public static final double kCargoIn = 1.0;
 
   /******************************************************************************************************************************** 
   ** JOYSTICKS

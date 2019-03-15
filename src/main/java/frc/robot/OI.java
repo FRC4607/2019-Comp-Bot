@@ -8,10 +8,6 @@ import frc.robot.commands.drivetrain.Shift;
 import frc.robot.commands.drivetrain.DriveJoystickWithVisionAssistTurning;
 import frc.robot.commands.wrist.WristToAngle;
 import frc.robot.commands.wrist.ZeroWristEncoder;
-import frc.robot.commands.cargo.CargoIntake;
-import frc.robot.commands.cargo.CargoOutputFast;
-import frc.robot.commands.cargo.CargoOutputSlow;
-import frc.robot.commands.cargo.CargoStop;
 import frc.robot.commands.panel.PanelIntakeShift;
 
 /******************************************************************************************************************************** 
@@ -28,7 +24,6 @@ public class OI {
   public static Button mVisionAssistedTurning = new JoystickButton(mDriverJoystick, 3);
   
   // Operator control
-  
   public static Button mWristToIntake = new JoystickButton(mOperatorJoystick, 1);
   public static Button mWristToUp = new JoystickButton(mOperatorJoystick, 2);
   public static Button mWristToHorizontal = new JoystickButton(mOperatorJoystick, 4);
