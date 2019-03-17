@@ -62,19 +62,31 @@ public class RobotMap {
   
   public static final double kElevatorOpenLoopGain = 1.0;
 
+  public static final int kElevatorPIDLoopIdx = 0;
+  public static final int kElevatorMotionMagicSlotIdx = 0;
+  public static final int kElevatorPositionSlotIdx = 1;
+
   public static final double kPElevator = 0.2;                                       // TODO: Tune-up before Duluth
   public static final double kIElevator = 0.0;                                       // TODO: Tune-up before Duluth
   public static final double kDElevator = 0.0;                                       // TODO: Tune-up before Duluth
   public static final double kFElevator = 0.0;                                       // TODO: Tune-up before Duluth
+  public static final double kElevatorFeedForward = 0;
   public static final int kElevatorMaxIntegralAccumulator = 500000;                  // TODO: Tune-up before Duluth
   public static final int kElevatorSensorDeadband = 5;
   public static final int kElevatorIZone = 500;                                      // TODO: Tune-up before Duluth
   public static final int kSCurveStrengthElevator = 3;                               // TODO: Tune-up before Duluth
   public static final double kElevatorRampRate = 0.01;
-  
+
   public static final int kVelocityElevator = 2500;                                  // TODO: Calibrate before Duluth
   public static final int kAccelerationElevator = 2500;                              // TODO: Calibrate before Duluth
   
+  // From Ground: 1st = 19in, 2nd = 50in, 3rd = 76in
+  // Elevator positions for closed loop in encoder ticks
+  public static final int kElevatorFirstLevel = 4200;                              // TODO: Measure correct encoder position   
+  public static final int kElevatorSecondLevel = 19500;                            // TODO: Measure correct encoder position 
+  public static final int kElevatorThirdLevel = 28000;                            // TODO: Measure correct encoder position 
+  public static final int kElevatorLowerLimit = 0;
+
   /******************************************************************************************************************************** 
   ** WRIST SUBSYSTEM
   ********************************************************************************************************************************/
@@ -145,9 +157,11 @@ public class RobotMap {
   public static final double kScaleHorizontalToTarget = 1.0 / 27.0;                // Limelight has 54deg FOV
   public static final double kTurningGain = 1.0;
   public static final double kStopTurningDeg = 1.0;
+  public static final double kVisionTime = 0.01;
 
   /******************************************************************************************************************************** 
   ** LEDS CONTROLLER
   ********************************************************************************************************************************/
   public static final int kCanifierId = 50;
+  public static final double kLEDTime = 0.02;
 }

@@ -44,7 +44,7 @@ public class Wrist extends Subsystem {
   }
 
   /****************************************************************************************************************************** 
-  **
+  ** 
   ******************************************************************************************************************************/
   public double degreesToSensorTicks(double angle) {
     return ((angle / 180.0) * 2048.0) + RobotMap.kWristEncoderZeroTick;
@@ -73,7 +73,6 @@ public class Wrist extends Subsystem {
   private int getEncoderPositionTicks() {
     // return mMaster.getSensorCollection().getAnalogInRaw();
     return mMaster.getSelectedSensorPosition(RobotMap.kPIDLoopIdx);
-
   }
 
   public void zeroEncoder() {
@@ -81,7 +80,7 @@ public class Wrist extends Subsystem {
   }
 
   /****************************************************************************************************************************** 
-  **
+  ** SET MOTION MAGIC OUTPUT
   ******************************************************************************************************************************/
   public void MotionMagicOutput(double targetPositionTicks) {
     if (mControlState != controlMode.kMotionMagic) {
@@ -101,14 +100,13 @@ public class Wrist extends Subsystem {
   public void setOpenOutput(double zWrist) {
     mMaster.set(zWrist);
   }
- /****************************************************************************************************************************** 
+  /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
   public Wrist(WPI_TalonSRX master) {
     mMaster = master;
 
-    //ErrorCode errorCode;
-
+    // ErrorCode errorCode;
 
     // Configure the feedback sensor
     mMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);

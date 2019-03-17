@@ -8,7 +8,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.MultiManipulator;
 import frc.robot.subsystems.Wrist;
 import frc.robot.lib.controllers.Vision;
-import frc.robot.lib.controllers.LEDs;
+// import frc.robot.lib.controllers.LEDs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,8 +49,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     mLogger.info("<=========== AUTONOMOUS INIT ===========>");
-    mDrivetrain.mVision.mVisionThread.startPeriodic(0.01);
-    // mLeds.mLEDThread.startPeriodic(0.02);
+    mDrivetrain.mVision.mVisionThread.startPeriodic(RobotMap.kVisionTime);
+    // mLeds.mLEDThread.startPeriodic(RobotMap.kLEDTime);
   }
 
   @Override
@@ -61,8 +61,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     mLogger.info("<=========== TELEOP INIT ===========>");
-    mDrivetrain.mVision.mVisionThread.startPeriodic(0.01);
-    // mLeds.mLEDThread.startPeriodic(0.02);
+    mDrivetrain.mVision.mVisionThread.startPeriodic(RobotMap.kVisionTime);
+    // mLeds.mLEDThread.startPeriodic(RobotMap.kLEDTime);
   }
 
   @Override

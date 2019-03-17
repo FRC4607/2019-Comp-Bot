@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
 import frc.robot.lib.drivers.TalonSRX;
-import frc.robot.lib.drivers.VictorSPX;
+// import frc.robot.lib.drivers.VictorSPX;
 import frc.robot.lib.controllers.Vision;
 import frc.robot.commands.drivetrain.DriveJoystick;
 import edu.wpi.first.wpilibj.Timer;
@@ -14,7 +14,7 @@ import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+// import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +57,6 @@ public class Drivetrain extends Subsystem {
   private final Logger mSelftestLogger = LoggerFactory.getLogger("Drivetrain_Selftest");
   private final Logger mCalibrationLogger = LoggerFactory.getLogger("Drivetrain_Calibration");
   //private final Logger mDataDumper = LoggerFactory.getLogger("Data_Dumper");
-
 
   /****************************************************************************************************************************** 
   ** GETTERS
@@ -165,7 +164,6 @@ public class Drivetrain extends Subsystem {
     double mTurn = 0.0;
     
     // Apply calibrated motor deadband
-    
     if (turn > 0.0) {
       mTurn = (RobotMap.kDeadbandHighGear + (kDeadbandHighGearScalar * turn));
     } else if (turn < -0.0) {
@@ -381,25 +379,26 @@ public class Drivetrain extends Subsystem {
     talon.set(0.0);
   }
 
-  private void MeasureMotorHealth(WPI_VictorSPX victor, boolean posPolarity, boolean wantsHighGear, WPI_TalonSRX talon) {
-    int sensorPosition, sensorVelocity;
-    double motorOutputPercent, motorOutputVoltage, endTime; 
-    int victorId = victor.getDeviceID();
-    double setMotorOutputPercent = posPolarity ? 0.5 : -0.5;
+  // do not need this block as drivetrain no longer has any victors
+  // private void MeasureMotorHealth(WPI_VictorSPX victor, boolean posPolarity, boolean wantsHighGear, WPI_TalonSRX talon) {
+  //   int sensorPosition, sensorVelocity;
+  //   double motorOutputPercent, motorOutputVoltage, endTime; 
+  //   int victorId = victor.getDeviceID();
+  //   double setMotorOutputPercent = posPolarity ? 0.5 : -0.5;
 
-    setHighGear(wantsHighGear);
-    zeroSensorPosition(talon);
-    victor.set(setMotorOutputPercent);
-    endTime = Timer.getFPGATimestamp() + 2.0;
-    do {
-      sensorPosition = talon.getSelectedSensorPosition();
-      sensorVelocity = talon.getSelectedSensorVelocity();
-      motorOutputPercent = victor.getMotorOutputPercent();
-      motorOutputVoltage = victor.getMotorOutputVoltage();
-      mSelftestLogger.info("VictorSPX_{},{},{},{},{},{},{}", victorId, wantsHighGear, setMotorOutputPercent, motorOutputPercent, motorOutputVoltage, sensorPosition, sensorVelocity);
-    } while (Timer.getFPGATimestamp() < endTime);   
-    victor.set(0.0);
-  }
+  //   setHighGear(wantsHighGear);
+  //   zeroSensorPosition(talon);
+  //   victor.set(setMotorOutputPercent);
+  //   endTime = Timer.getFPGATimestamp() + 2.0;
+  //   do {
+  //     sensorPosition = talon.getSelectedSensorPosition();
+  //     sensorVelocity = talon.getSelectedSensorVelocity();
+  //     motorOutputPercent = victor.getMotorOutputPercent();
+  //     motorOutputVoltage = victor.getMotorOutputVoltage();
+  //     mSelftestLogger.info("VictorSPX_{},{},{},{},{},{},{}", victorId, wantsHighGear, setMotorOutputPercent, motorOutputPercent, motorOutputVoltage, sensorPosition, sensorVelocity);
+  //   } while (Timer.getFPGATimestamp() < endTime);   
+  //   victor.set(0.0);
+  // }
 
   private void MeasureMotorHealth(WPI_TalonSRX talonfollow, boolean posPolarity, boolean wantsHighGear, WPI_TalonSRX talon) {
     int sensorPosition, sensorVelocity;
@@ -416,7 +415,8 @@ public class Drivetrain extends Subsystem {
       sensorVelocity = talon.getSelectedSensorVelocity();
       motorOutputPercent = talonfollow.getMotorOutputPercent();
       motorOutputVoltage = talonfollow.getMotorOutputVoltage();
-      mSelftestLogger.info("VictorSPX_{},{},{},{},{},{},{}", talonID, wantsHighGear, setMotorOutputPercent, motorOutputPercent, motorOutputVoltage, sensorPosition, sensorVelocity);
+      mSelftestLogger.info("TalonSRX_{},{},{},{},{},{},{}", 
+                           talonID, wantsHighGear, setMotorOutputPercent, motorOutputPercent, motorOutputVoltage, sensorPosition, sensorVelocity);
     } while (Timer.getFPGATimestamp() < endTime);   
     talonfollow.set(0.0);
   }
@@ -536,7 +536,5 @@ public class Drivetrain extends Subsystem {
     setOpenLoopControl();
     setCompressorClosedLoop(true);
   }
-
-
 
 }

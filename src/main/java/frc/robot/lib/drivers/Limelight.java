@@ -186,6 +186,4 @@ public class Limelight {
     return mTable.getEntry("tcorny").getDoubleArray(defValue);
   }
 
-
-
 }
