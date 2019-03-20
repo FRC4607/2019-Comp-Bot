@@ -66,11 +66,12 @@ public class RobotMap {
   public static final int kElevatorMotionMagicSlotIdx = 0;
   public static final int kElevatorPositionSlotIdx = 1;
 
-  public static final double kPElevator = 0.2;                                       // TODO: Tune-up before Duluth
+  public static final double kPElevator = 0.5;                                       // TODO: Tune-up before Duluth
   public static final double kIElevator = 0.0;                                       // TODO: Tune-up before Duluth
   public static final double kDElevator = 0.0;                                       // TODO: Tune-up before Duluth
   public static final double kFElevator = 0.0;                                       // TODO: Tune-up before Duluth
-  public static final double kElevatorFeedForward = 0;
+
+  public static final double kElevatorFeedForward = 0.35;
   public static final int kElevatorMaxIntegralAccumulator = 500000;                  // TODO: Tune-up before Duluth
   public static final int kElevatorSensorDeadband = 5;
   public static final int kElevatorIZone = 500;                                      // TODO: Tune-up before Duluth
@@ -157,11 +158,11 @@ public class RobotMap {
   public static final double kScaleHorizontalToTarget = 1.0 / 27.0;                // Limelight has 54deg FOV
   public static final double kTurningGain = 1.0;
   public static final double kStopTurningDeg = 1.0;
-  public static final double kVisionTime = 0.01;
+  public static final double kVisionThreadTime = 0.01;
 
   /******************************************************************************************************************************** 
   ** LEDS CONTROLLER
   ********************************************************************************************************************************/
   public static final int kCanifierId = 50;
-  public static final double kLEDTime = 0.02;
+  public static final double kLEDThreadTime = 0.25;
 }

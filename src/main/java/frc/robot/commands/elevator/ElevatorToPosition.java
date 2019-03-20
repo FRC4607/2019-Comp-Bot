@@ -2,10 +2,10 @@ package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
+// import frc.robot.RobotMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /******************************************************************************************************************************** 
 ** ELEVATOR JOYSTICK COMMAND
@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 public class ElevatorToPosition extends InstantCommand {
 
   private double mTargetPosition;
-  private final Logger mLogger = LoggerFactory.getLogger(ElevatorToPosition.class);
+  // private final Logger mLogger = LoggerFactory.getLogger(ElevatorToPosition.class);
 
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR

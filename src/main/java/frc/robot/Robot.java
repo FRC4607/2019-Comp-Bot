@@ -7,8 +7,9 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.MultiManipulator;
 import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.Drivetrain.controlMode;
 import frc.robot.lib.controllers.Vision;
-// import frc.robot.lib.controllers.LEDs;
+import frc.robot.lib.controllers.LEDs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,10 +21,12 @@ public class Robot extends TimedRobot {
   public static Drivetrain mDrivetrain = Drivetrain.create();
   public static Elevator mElevator = Elevator.create();
   public static Wrist mWrist = Wrist.create();
-  // public static LEDs mLeds = LEDs.create();
+  public static LEDs mLeds = LEDs.create();
   public static MultiManipulator mMultiManipulator = MultiManipulator.create();
   public static OI mOI = new OI();
-  private Vision.Status mVisionStatus;  
+  private Vision.Status mVisionStatus;
+  private Drivetrain.controlMode mDrivetrainState;
+  private boolean mDrivetraiHighGear;
   private boolean mStartSelftestOrCalibration;
   private final Logger mLogger = LoggerFactory.getLogger(Robot.class);
   
@@ -49,8 +52,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     mLogger.info("<=========== AUTONOMOUS INIT ===========>");
-    mDrivetrain.mVision.mVisionThread.startPeriodic(RobotMap.kVisionTime);
-    // mLeds.mLEDThread.startPeriodic(RobotMap.kLEDTime);
+    mDrivetrain.mVision.mVisionThread.startPeriodic(RobotMap.kVisionThreadTime);
+    // mLeds.mLEDThread.startPeriodic(RobotMap.kLEDThreadTime);
   }
 
   @Override
@@ -61,8 +64,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     mLogger.info("<=========== TELEOP INIT ===========>");
-    mDrivetrain.mVision.mVisionThread.startPeriodic(RobotMap.kVisionTime);
-    // mLeds.mLEDThread.startPeriodic(RobotMap.kLEDTime);
+    mDrivetrain.mVision.mVisionThread.startPeriodic(RobotMap.kVisionThreadTime);
+    // mLeds.mLEDThread.startPeriodic(RobotMap.kLEDThreadTime);
   }
 
   @Override
@@ -71,17 +74,29 @@ public class Robot extends TimedRobot {
 
     // Update LEDs
     mVisionStatus = mDrivetrain.mVision.getStatus();
-    // switch (mVisionStatus) {
-    //    case kTargeting:
-    //      mLeds.setState(LEDs.State.kDisplayTargetAcquired);
-    //      break;
-    //    case kReachedTarget:
-    //      mLeds.setState(LEDs.State.kDisplayTargetAcquired);
-    //      break;
-    //    case kLostTarget:
-    //      mLeds.setState(LEDs.State.kDisplayTargetNotAcquired);
-    //      break;
-    //  }    
+    mDrivetrainState = mDrivetrain.getControlState();
+    mDrivetraiHighGear = mDrivetrain.isHighGear();
+    if (mDrivetrainState == controlMode.kDriveWithTurningAssist) {
+      switch (mVisionStatus) {
+        case kTargeting:
+          mLeds.setState(LEDs.colorState.kDisplayTargetAcquired);
+          break;
+        case kReachedTarget:
+         mLeds.setState(LEDs.colorState.kDisplayTargetNotAcquired);
+         break;
+        case kLostTarget:
+          mLeds.setState(LEDs.colorState.kDisplayTargetNotAcquired);
+          break;
+      }
+    } else {
+      if (mDrivetraiHighGear == true) {
+        mLeds.setState(LEDs.colorState.kDisplayHighGear);
+      } else {
+        mLeds.setState(LEDs.colorState.kDisplayLowGear);
+      }
+    }
+  
+  
   }
 
   @Override

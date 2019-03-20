@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /******************************************************************************************************************************** 
 ** ELEVATOR JOYSTICK COMMAND
@@ -13,7 +11,6 @@ import org.slf4j.LoggerFactory;
 public class WristToAngle extends InstantCommand {
 
   private double mTargetAngle;
-  private final Logger mLogger = LoggerFactory.getLogger(WristToAngle.class);
 
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR

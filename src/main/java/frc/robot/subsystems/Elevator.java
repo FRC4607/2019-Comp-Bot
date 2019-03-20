@@ -7,12 +7,12 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.ErrorCode;
+// import com.ctre.phoenix.ErrorCode;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.Timer;
+// import edu.wpi.first.wpilibj.Timer;
 import frc.robot.commands.elevator.ElevatorJoystick;
-import frc.robot.commands.elevator.ElevatorToPosition;
+// import frc.robot.commands.elevator.ElevatorToPosition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +40,7 @@ public class Elevator extends Subsystem {
   private int mEncoderPositionTicks;
 
   // Scalars to remove the motor deadband
-  private static final double kElevatorDeadbandScalar = (1.0 - RobotMap.kElevatorDeadband) / 1.0;
+  // private static final double kElevatorDeadbandScalar = (1.0 - RobotMap.kElevatorDeadband) / 1.0;
 
   // Hardware
   private final WPI_TalonSRX mMaster, mFollow;
@@ -135,8 +135,6 @@ public class Elevator extends Subsystem {
       mLogger.error("Unexpected control state: [{}]", mControlState);
     }
     mEncoderPositionTicks = mFollow.getSelectedSensorPosition();
-    mLogger.info("Encoder position: {}", mEncoderPositionTicks);
-    
   }
 
   /****************************************************************************************************************************** 
@@ -191,7 +189,7 @@ public class Elevator extends Subsystem {
     mIsBrakeMode = false;
     setBrakeMode(true);
 
-    //                                  PRACTICE BOT
+    //                                  PRACTICE BOT TODO: fix
     mMaster.setInverted(false);
     mFollow.setInverted(false);
     // Get the mag encoder sensor in-phase with the motors
@@ -200,12 +198,11 @@ public class Elevator extends Subsystem {
     mIsInverted = true;
     InvertOutput(false);
 
-
-    // //                                 COMPETITIONN BOT
-    // // These are inverted along with the joystick inputs in order go get the forward/reverse limit switches to work
+    //                                 COMPETITIONN BOT
+    // These are inverted along with the joystick inputs in order go get the forward/reverse limit switches to work
     // mMaster.setInverted(true);
     // mFollow.setInverted(true);
-    // // Get the mag encoder sensor in-phase with the motors
+    // Get the mag encoder sensor in-phase with the motors
     // mFollow.setSensorPhase(true);
 
     // Configure the feedback sensor

@@ -5,7 +5,6 @@ import frc.robot.lib.drivers.Canifier;
 import com.ctre.phoenix.CANifier;
 import com.ctre.phoenix.CANifier.LEDChannel;
 import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.Timer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,99 +13,88 @@ import org.slf4j.LoggerFactory;
 ********************************************************************************************************************************/
 public class LEDs {
 
-  private boolean mBlink = true;
+  private final Logger mLogger = LoggerFactory.getLogger(LEDs.class);
 
-  public static enum State {
-    kIdle,
-    kDisplayTargetAcquiredAndActuated,
-    kDisplayTargetNotAcquiredAndActuated,
-    kDisplayTargetAcquiredAndNotActuated,
-    kDisplayTargetNotAcquiredAndNotActuated
+  public static enum colorState {
+    kDisplayTargetAcquired,
+    kDisplayTargetNotAcquired,
+    kDisplayHighGear,
+    kDisplayLowGear
   }
+
+  private boolean mIsBlinkLEDOn = false;
+  private boolean mWantBlinking = false;
+  private double[] mCurrentColor = {0.0, 0.0, 0.0};
 
   Runnable mLEDProcessor = new Runnable() {
     @Override
     public void run() {
 
-      mBlink = false;
-
-      // Process state changes
+      // Process color state changes
       synchronized(this) {
-        if (mState != mDesiredState) {
-          // mLogger.info("LEDs processing state change request: [{}]", mDesiredState);
-          mState = mDesiredState;
+        if (mColorState != mDesiredColorState) {
+          mLogger.info("LEDs processing state change request: [{}]", mDesiredColorState);
+          mColorState = mDesiredColorState;
         }
 
         // Process the LED state
-        switch (mState) {
-          // when getting no input, display LEDs as white
-          case kIdle:
-            mCanifier.setLEDOutput(0.5, LEDChannel.LEDChannelA);
-            mCanifier.setLEDOutput(0.5, LEDChannel.LEDChannelB);
-            mCanifier.setLEDOutput(0.5, LEDChannel.LEDChannelC);
-            break;
+        switch (mColorState) {
 
-          case kDisplayTargetAcquiredAndNotActuated:
-            mCanifier.setLEDOutput(0.0, LEDChannel.LEDChannelA);
-            mCanifier.setLEDOutput(0.0, LEDChannel.LEDChannelB);
-            mCanifier.setLEDOutput(0.5, LEDChannel.LEDChannelC);
+          case kDisplayTargetAcquired:
+            setColor(0.0, 0.0, 0.5);
             break;
-
-          case kDisplayTargetNotAcquiredAndNotActuated:
-            mCanifier.setLEDOutput(0.0, LEDChannel.LEDChannelA);
-            mCanifier.setLEDOutput(0.5, LEDChannel.LEDChannelB);
-            mCanifier.setLEDOutput(0.0, LEDChannel.LEDChannelC);
+          case kDisplayTargetNotAcquired:
+            setColor(0.0, 0.5, 0.0);
             break;
-
-          case kDisplayTargetAcquiredAndActuated:
-            if (mBlink == true) {
-              mCanifier.setLEDOutput(0.0, LEDChannel.LEDChannelA);
-              mCanifier.setLEDOutput(0.0, LEDChannel.LEDChannelB);
-              mCanifier.setLEDOutput(0.5, LEDChannel.LEDChannelC);
-              Timer.delay(0.25);
-              mBlink = false;
-            } else if (mBlink == false) {
-              mCanifier.setLEDOutput(0.0, LEDChannel.LEDChannelA);
-              mCanifier.setLEDOutput(0.0, LEDChannel.LEDChannelB);
-              mCanifier.setLEDOutput(0.0, LEDChannel.LEDChannelC); 
-              Timer.delay(0.25);
-              mBlink = true;
-            }
-            break;
-
-          case kDisplayTargetNotAcquiredAndActuated:
-            if (mBlink == true) {
-              mCanifier.setLEDOutput(0.0, LEDChannel.LEDChannelA);
-              mCanifier.setLEDOutput(0.5, LEDChannel.LEDChannelB);
-              mCanifier.setLEDOutput(0.0, LEDChannel.LEDChannelC);
-              Timer.delay(0.25);
-              mBlink = false;
-            } else if (mBlink == false) {
-              mCanifier.setLEDOutput(0.0, LEDChannel.LEDChannelA);
-              mCanifier.setLEDOutput(0.0, LEDChannel.LEDChannelB);
-              mCanifier.setLEDOutput(0.0, LEDChannel.LEDChannelC);
-              Timer.delay(0.25);
-              mBlink = true;
-            }
-            break;
+          case kDisplayHighGear:
+              setColor(0.0, 0.5, 0.5);
+              break;
+          case kDisplayLowGear:
+              setColor(0.5, 0.5, 0.0);
+              break;
         }
+
+        // Process the LED state
+        if (mWantBlinking) {
+          if (mIsBlinkLEDOn) {
+            setColor(0.0, 0.0, 0.0);
+            mIsBlinkLEDOn = false;
+          } else {
+            mIsBlinkLEDOn = true;
+          }
+        }
+
       }
     }
   };
 
-  private State mState = State.kIdle;
-  private State mDesiredState = State.kIdle;
+  private colorState mColorState = colorState.kDisplayLowGear;
+  private colorState mDesiredColorState = colorState.kDisplayLowGear;
   private CANifier mCanifier;
+
+  private void setColor(double blue, double red, double green) {
+    mCanifier.setLEDOutput(blue, LEDChannel.LEDChannelA);
+    mCanifier.setLEDOutput(red, LEDChannel.LEDChannelB);
+    mCanifier.setLEDOutput(green, LEDChannel.LEDChannelC);
+    mCurrentColor[0] = blue;
+    mCurrentColor[1] = red;
+    mCurrentColor[2] = green;
+  }
+
 
   public Notifier mLEDThread = new Notifier(mLEDProcessor);
 
-  private final Logger mLogger = LoggerFactory.getLogger(LEDs.class);
+  // private final Logger mLogger = LoggerFactory.getLogger(LEDs.class);
 
   /****************************************************************************************************************************** 
   ** SETTERS AND GETTERS
   ******************************************************************************************************************************/
-  public synchronized void setState(State state) {
-    mDesiredState = state;
+  public synchronized void setState(colorState state) {
+    mDesiredColorState = state;
+  }
+
+  public synchronized void setBlinking(boolean wantsBlinking) {
+    mWantBlinking = wantsBlinking;
   }
 
   /****************************************************************************************************************************** 
@@ -121,4 +109,4 @@ public class LEDs {
     return new LEDs(mCanifier);
   }
 
-}
+} 

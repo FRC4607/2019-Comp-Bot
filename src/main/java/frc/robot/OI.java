@@ -32,10 +32,10 @@ public class OI {
   public static Button mWristToUp = new JoystickButton(mOperatorJoystick, 2);
   public static Button mWristToHorizontal = new JoystickButton(mOperatorJoystick, 4);
 
-  public static Button mWristEncoderReset = new JoystickButton(mOperatorJoystick, 5);
+  // public static Button mWristEncoderReset = new JoystickButton(mOperatorJoystick, 5);
   
   // elevator
-  public static Button mElevatorToFirstLevel = new JoystickButton(mOperatorJoystick, 3);
+  public static Button mElevatorToFirstLevel = new JoystickButton(mOperatorJoystick, 5);
   public static Button mElevatorToSecondLevel = new JoystickButton(mOperatorJoystick, 6);
   public static Button mElevatorToThirdLevel = new JoystickButton(mOperatorJoystick, 7);
 
@@ -57,10 +57,7 @@ public class OI {
 
     mPanelShift.whenPressed(new PanelIntakeShift());
 
-    mWristEncoderReset.whenPressed(new ZeroWristEncoder());
+    // mWristEncoderReset.whenPressed(new ZeroWristEncoder());
     mElevatorEncoderReset.whenPressed(new ZeroElevatorEncoder());
-    // if (mOperatorJoystick.getPOV() == 0) {
-    //   new ZeroWristEncoder();
-    // }
   }
 }
