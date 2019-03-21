@@ -30,9 +30,8 @@ public class OI {
   // Wrist 
   public static Button mWristToIntake = new JoystickButton(mOperatorJoystick, 1);
   public static Button mWristToUp = new JoystickButton(mOperatorJoystick, 2);
-  public static Button mWristToHorizontal = new JoystickButton(mOperatorJoystick, 4);
-
-  // public static Button mWristEncoderReset = new JoystickButton(mOperatorJoystick, 5);
+  public static Button mWristToHorizontal = new JoystickButton(mOperatorJoystick, 3);
+  public static Button mWristEncoderReset = new JoystickButton(mOperatorJoystick, 4);
   
   // elevator
   public static Button mElevatorToFirstLevel = new JoystickButton(mOperatorJoystick, 5);

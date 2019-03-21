@@ -139,7 +139,6 @@ public class Elevator extends Subsystem {
       mLogger.error("Unexpected control state: [{}]", mControlState);
     }
     mEncoderPositionTicks = mMaster.getSelectedSensorPosition();
-    mLogger.info("Signal strength: {}", throttle);
   }
 
   /****************************************************************************************************************************** 

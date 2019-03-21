@@ -118,11 +118,11 @@ public class DrivetrainTest {
                                            rightLeaderMock, rightFollowerAMock, rightFollowerBMock,
                                            shifterMock, visionMock, compressorMock, diffDriveMock);
     // Should start off in closed loop mode
-    boolean wantsClosedLoop = false;
+    boolean wantsClosedLoop = true;
     assertEquals(wantsClosedLoop, drivetrain.isCompressorClosedLoop());
 
     // Set to open loop (which also turns off the compressor)
-    wantsClosedLoop = true;
+    wantsClosedLoop = false;
     drivetrain.setCompressorClosedLoop(wantsClosedLoop);
     verify(compressorMock, times(1)).stop();
     assertEquals(wantsClosedLoop, drivetrain.isCompressorClosedLoop());
