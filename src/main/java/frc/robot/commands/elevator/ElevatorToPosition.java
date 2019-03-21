@@ -12,13 +12,13 @@ import frc.robot.Robot;
 ********************************************************************************************************************************/
 public class ElevatorToPosition extends InstantCommand {
 
-  private double mTargetPosition;
+  private int mTargetPosition;
   // private final Logger mLogger = LoggerFactory.getLogger(ElevatorToPosition.class);
 
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
-  public ElevatorToPosition(double targetPosition) {
+  public ElevatorToPosition(int targetPosition) {
     mTargetPosition = targetPosition;
     requires(Robot.mElevator);
   }
@@ -29,16 +29,7 @@ public class ElevatorToPosition extends InstantCommand {
   @Override
   protected void initialize() {
     // TODO: add gain for gearing 
-    Robot.mElevator.MotionMagicOutput(Robot.mElevator.distanceToSensorTicks(mTargetPosition));
-  }
-
-  @Override
-  protected void execute() {
     Robot.mElevator.MotionMagicOutput(mTargetPosition);
-  }
-
-  @Override
-  protected boolean isFinished() {
-    return false;
+    Robot.mElevator.setOpenLoopControl();
   }
 }

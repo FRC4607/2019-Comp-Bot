@@ -44,7 +44,7 @@ public class ElevatorTest {
     assertEquals(invertedValue, elevator.isInverted());
     
     // .setInverted(true)
-    invertedValue = true;
+    invertedValue = false;
     elevator.InvertOutput(invertedValue);
     verify(masterMock, times(1)).setInverted(invertedValue);
     verify(followerMock, times(1)).setInverted(invertedValue);
@@ -67,7 +67,7 @@ public class ElevatorTest {
   public void testBrakeMode() {
     Elevator elevator = new Elevator(masterMock, followerMock);
     // Should start off in coast mode
-    boolean brakeMode = false;
+    boolean brakeMode = true;
     assertEquals(brakeMode, elevator.isBrakeMode());
 
     // Set brake mode

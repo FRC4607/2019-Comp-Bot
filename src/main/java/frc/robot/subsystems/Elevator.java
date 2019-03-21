@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import frc.robot.lib.drivers.TalonSRX;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -13,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 // import edu.wpi.first.wpilibj.Timer;
 import frc.robot.commands.elevator.ElevatorJoystick;
 // import frc.robot.commands.elevator.ElevatorToPosition;
+import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,8 +76,10 @@ public class Elevator extends Subsystem {
   /****************************************************************************************************************************** 
   ** GET DISTANCE TO POSITION
   ******************************************************************************************************************************/
-  public double distanceToSensorTicks(double distance) {
+  public int distanceToSensorTicks(int mTargetPositionTicks) {
     // Find formula for converting encoder ticks to elevator distance
+    mEncoderPositionTicks = getSensorPosition();
+    int distance = mTargetPositionTicks - mEncoderPositionTicks;
     return distance; 
   }
 
@@ -93,7 +97,7 @@ public class Elevator extends Subsystem {
 
   // 
   private int getEncoderPositionTicks() {
-    return mFollow.getSelectedSensorPosition(RobotMap.kElevatorPIDLoopIdx);
+    return mMaster.getSelectedSensorPosition(RobotMap.kElevatorPIDLoopIdx);
   }
 
   /****************************************************************************************************************************** 
@@ -134,27 +138,32 @@ public class Elevator extends Subsystem {
     } else {
       mLogger.error("Unexpected control state: [{}]", mControlState);
     }
-    mEncoderPositionTicks = mFollow.getSelectedSensorPosition();
+    mEncoderPositionTicks = mMaster.getSelectedSensorPosition();
+    mLogger.info("Signal strength: {}", throttle);
   }
 
   /****************************************************************************************************************************** 
   ** SET MOTION MAGIC OUTPUT
   ******************************************************************************************************************************/
-  public void MotionMagicOutput(double targetPositionTicks) {
+  public void MotionMagicOutput(int targetPositionTicks) {
     if (mControlState != controlMode.kMotionMagic) {
       mControlState = controlMode.kMotionMagic;
       mMaster.selectProfileSlot(RobotMap.kElevatorMotionMagicSlotIdx, RobotMap.kElevatorPIDLoopIdx);
     }
-    mEncoderPositionTicks = getEncoderPositionTicks();
-    mLogger.info("Encoder position: {}, target position: {}", mEncoderPositionTicks, targetPositionTicks);
-    mMaster.set(ControlMode.MotionMagic, targetPositionTicks, DemandType.ArbitraryFeedForward, RobotMap.kElevatorFeedForward);
+    if (distanceToSensorTicks(targetPositionTicks) >= 0) {
+      mMaster.set(ControlMode.MotionMagic, targetPositionTicks, DemandType.ArbitraryFeedForward, RobotMap.kElevatorFeedForwardUpwards);
+    } else if (distanceToSensorTicks(targetPositionTicks) < 0) {
+      mMaster.set(ControlMode.MotionMagic, targetPositionTicks, DemandType.ArbitraryFeedForward, RobotMap.kElevatorFeedForwardDownwards);
+    }
+    mEncoderPositionTicks = getSensorPosition();
+    mLogger.info("Current Position: {}, Target Position: {}", mEncoderPositionTicks, targetPositionTicks);
   }
 
   /****************************************************************************************************************************** 
   ** SET OPEN-LOOP MODE
   ******************************************************************************************************************************/
   public void setOpenLoopControl() {
-    setBrakeMode(false);
+    setBrakeMode(true);
     mControlState = controlMode.kOpenLoop;
     mControlPosition = controlPosition.kUnknown;
   }
@@ -177,6 +186,10 @@ public class Elevator extends Subsystem {
     mFollow.setSelectedSensorPosition(0);     
   }
 
+public int getSensorPosition() {
+  mEncoderPositionTicks = getEncoderPositionTicks();
+  return mEncoderPositionTicks;
+}
  /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
@@ -190,10 +203,10 @@ public class Elevator extends Subsystem {
     setBrakeMode(true);
 
     //                                  PRACTICE BOT TODO: fix
-    mMaster.setInverted(false);
-    mFollow.setInverted(false);
+    mMaster.setInverted(true);
+    mFollow.setInverted(true);
     // Get the mag encoder sensor in-phase with the motors
-    mFollow.setSensorPhase(false);
+    mFollow.setSensorPhase(true);
 
     mIsInverted = true;
     InvertOutput(false);
@@ -207,30 +220,32 @@ public class Elevator extends Subsystem {
 
     // Configure the feedback sensor
     mFollow.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.kElevatorPIDLoopIdx, RobotMap.kLongCANTimeoutMs);
+    mMaster.configRemoteFeedbackFilter(RobotMap.kElevatorMotorFollowerId, RemoteSensorSource.TalonSRX_SelectedSensor , 0);
+    mMaster.configSelectedFeedbackSensor(RemoteFeedbackDevice.RemoteSensor0, RobotMap.kElevatorPIDLoopIdx, RobotMap.kLongCANTimeoutMs);
     // mMaster.configSelectedFeedbackSensor(FeedbackDevice.Analog, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);
-    mFollow.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, RobotMap.kLongCANTimeoutMs);
-    mFollow.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.kLongCANTimeoutMs);
-    mFollow.setSelectedSensorPosition(0, RobotMap.kElevatorPIDLoopIdx, RobotMap.kLongCANTimeoutMs);    
+    mMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, RobotMap.kLongCANTimeoutMs);
+    mMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.kLongCANTimeoutMs);
+    mMaster.setSelectedSensorPosition(0, RobotMap.kElevatorPIDLoopIdx, RobotMap.kLongCANTimeoutMs);    
 
     // Configure Talon for Motion Magic
-		mFollow.config_kP(RobotMap.kElevatorMotionMagicSlotIdx, RobotMap.kPElevator, RobotMap.kLongCANTimeoutMs);
-		mFollow.config_kI(RobotMap.kElevatorMotionMagicSlotIdx, RobotMap.kIElevator, RobotMap.kLongCANTimeoutMs);
-		mFollow.config_kD(RobotMap.kElevatorMotionMagicSlotIdx, RobotMap.kDElevator, RobotMap.kLongCANTimeoutMs);
-		mFollow.config_kF(RobotMap.kElevatorMotionMagicSlotIdx, RobotMap.kFElevator, RobotMap.kLongCANTimeoutMs);   
-    mFollow.configMaxIntegralAccumulator(RobotMap.kElevatorMotionMagicSlotIdx, RobotMap.kElevatorMaxIntegralAccumulator);
-    mFollow.config_IntegralZone(RobotMap.kElevatorMotionMagicSlotIdx, RobotMap.kElevatorIZone);
-    mFollow.configAllowableClosedloopError(RobotMap.kElevatorMotionMagicSlotIdx, RobotMap.kElevatorSensorDeadband, RobotMap.kLongCANTimeoutMs);
-    mFollow.configMotionCruiseVelocity(RobotMap.kVelocityElevator, RobotMap.kLongCANTimeoutMs);
-    mFollow.configMotionAcceleration(RobotMap.kAccelerationElevator, RobotMap.kLongCANTimeoutMs);
-    mFollow.configMotionSCurveStrength(RobotMap.kSCurveStrengthElevator);
+		mMaster.config_kP(RobotMap.kElevatorMotionMagicSlotIdx, RobotMap.kPElevator, RobotMap.kLongCANTimeoutMs);
+		mMaster.config_kI(RobotMap.kElevatorMotionMagicSlotIdx, RobotMap.kIElevator, RobotMap.kLongCANTimeoutMs);
+		mMaster.config_kD(RobotMap.kElevatorMotionMagicSlotIdx, RobotMap.kDElevator, RobotMap.kLongCANTimeoutMs);
+		mMaster.config_kF(RobotMap.kElevatorMotionMagicSlotIdx, RobotMap.kFElevator, RobotMap.kLongCANTimeoutMs);   
+    mMaster.configMaxIntegralAccumulator(RobotMap.kElevatorMotionMagicSlotIdx, RobotMap.kElevatorMaxIntegralAccumulator);
+    mMaster.config_IntegralZone(RobotMap.kElevatorMotionMagicSlotIdx, RobotMap.kElevatorIZone);
+    mMaster.configAllowableClosedloopError(RobotMap.kElevatorMotionMagicSlotIdx, RobotMap.kElevatorSensorDeadband, RobotMap.kLongCANTimeoutMs);
+    mMaster.configMotionCruiseVelocity(RobotMap.kVelocityElevator, RobotMap.kLongCANTimeoutMs);
+    mMaster.configMotionAcceleration(RobotMap.kAccelerationElevator, RobotMap.kLongCANTimeoutMs);
+    mMaster.configMotionSCurveStrength(RobotMap.kSCurveStrengthElevator);
 
     // Configure Talon for position PID
-		mFollow.config_kP(RobotMap.kElevatorPositionSlotIdx, RobotMap.kPElevator, RobotMap.kLongCANTimeoutMs);
-		mFollow.config_kI(RobotMap.kElevatorPositionSlotIdx, RobotMap.kIElevator, RobotMap.kLongCANTimeoutMs);
-		mFollow.config_kD(RobotMap.kElevatorPositionSlotIdx, RobotMap.kDElevator, RobotMap.kLongCANTimeoutMs);
-    mFollow.configMaxIntegralAccumulator(RobotMap.kElevatorPositionSlotIdx, RobotMap.kElevatorMaxIntegralAccumulator);
-    mFollow.config_IntegralZone(RobotMap.kElevatorPositionSlotIdx, RobotMap.kElevatorIZone);
-    mFollow.configAllowableClosedloopError(RobotMap.kElevatorPositionSlotIdx, RobotMap.kElevatorSensorDeadband, RobotMap.kLongCANTimeoutMs);
+		mMaster.config_kP(RobotMap.kElevatorPositionSlotIdx, RobotMap.kPElevator, RobotMap.kLongCANTimeoutMs);
+		mMaster.config_kI(RobotMap.kElevatorPositionSlotIdx, RobotMap.kIElevator, RobotMap.kLongCANTimeoutMs);
+		mMaster.config_kD(RobotMap.kElevatorPositionSlotIdx, RobotMap.kDElevator, RobotMap.kLongCANTimeoutMs);
+    mMaster.configMaxIntegralAccumulator(RobotMap.kElevatorPositionSlotIdx, RobotMap.kElevatorMaxIntegralAccumulator);
+    mMaster.config_IntegralZone(RobotMap.kElevatorPositionSlotIdx, RobotMap.kElevatorIZone);
+    mMaster.configAllowableClosedloopError(RobotMap.kElevatorPositionSlotIdx, RobotMap.kElevatorSensorDeadband, RobotMap.kLongCANTimeoutMs);
 
     // Ramp-Rate limiting
     mMaster.configClosedloopRamp(RobotMap.kElevatorRampRate, RobotMap.kLongCANTimeoutMs);

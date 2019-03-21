@@ -5,10 +5,15 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.OI;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /******************************************************************************************************************************** 
 ** ELEVATOR JOYSTICK COMMAND
 ********************************************************************************************************************************/
 public class ElevatorJoystick extends Command {
+
+  private final Logger mLogger = LoggerFactory.getLogger(ElevatorJoystick.class);
 
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
@@ -23,7 +28,7 @@ public class ElevatorJoystick extends Command {
   @Override
   protected void execute() {
     // Note that on an Xbox Controller, a positive input is to the bottom-right
-    double zElevator = -OI.mOperatorJoystick.getRawAxis(5);
+    double zElevator = OI.mOperatorJoystick.getRawAxis(5);
 
     // Apply a deadband to the joystick
     if (zElevator < RobotMap.kDeadbandJoystick && zElevator > -RobotMap.kDeadbandJoystick) {
@@ -33,6 +38,8 @@ public class ElevatorJoystick extends Command {
     // Apply a gain to the elevator output
     zElevator = zElevator * RobotMap.kElevatorOpenLoopGain;
 
+    int Ticks = Robot.mElevator.getSensorPosition();
+    mLogger.info("Sensor position: {}", Ticks);
     Robot.mElevator.setOpenLoopOutput(zElevator);
   }
 
