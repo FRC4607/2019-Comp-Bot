@@ -34,7 +34,6 @@ public class ElevatorJoystick extends Command {
     // Apply a gain to the elevator output
     zElevator = zElevator * RobotMap.kElevatorOpenLoopGain;
 
-    int Ticks = Robot.mElevator.getSensorPosition();
     Robot.mElevator.setOpenLoopOutput(zElevator);
   }
 

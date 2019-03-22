@@ -56,7 +56,7 @@ public class OI {
 
     mPanelShift.whenPressed(new PanelIntakeShift());
 
-    // mWristEncoderReset.whenPressed(new ZeroWristEncoder());
+    mWristEncoderReset.whenPressed(new ZeroWristEncoder());
     mElevatorEncoderReset.whenPressed(new ZeroElevatorEncoder());
   }
 }
