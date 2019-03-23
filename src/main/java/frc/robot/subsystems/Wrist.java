@@ -93,7 +93,6 @@ public class Wrist extends Subsystem {
     } else {
       mWristFFGravityComponent = 0.0;
     }
-    mLogger.info("Encoder position: {}, target position: {}, Feed Forward: {}", mEncoderPositionTicks, targetPositionTicks, mWristFFGravityComponent);
     mMaster.set(ControlMode.MotionMagic, targetPositionTicks, DemandType.ArbitraryFeedForward, mWristFFGravityComponent);
   }
 

@@ -72,7 +72,7 @@ public class RobotMap {
   public static final double kFElevator = 0.0;                                       // TODO: Tune-up before Duluth
 
   public static final double kElevatorFeedForwardUpwards = -0.45;
-  public static final double kElevatorFeedForwardDownwards = 0.10;
+  public static final double kElevatorFeedForwardDownwards = 0.15;
   public static final int kElevatorMaxIntegralAccumulator = 500000;                  // TODO: Tune-up before Duluth
   public static final int kElevatorSensorDeadband = 5;
   public static final int kElevatorIZone = 500;                                      // TODO: Tune-up before Duluth
@@ -85,7 +85,7 @@ public class RobotMap {
   // From Ground: 1st = 19in, 2nd = 50in, 3rd = 76in
   // Elevator positions for closed loop in encoder ticks
   public static final int kElevatorFirstLevel = -4200;                              // TODO: Measure correct encoder position   
-  public static final int kElevatorSecondLevel = -19500;                            // TODO: Measure correct encoder position 
+  public static final int kElevatorSecondLevel = -16500;                            // TODO: Measure correct encoder position 
   public static final int kElevatorThirdLevel = -28000;                            // TODO: Measure correct encoder position 
   public static final int kElevatorLowerLimit = 0;
 
