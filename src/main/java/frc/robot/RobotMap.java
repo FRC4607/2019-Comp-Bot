@@ -67,7 +67,7 @@ public class RobotMap {
   public static final int kElevatorMotionMagicSlotIdx = 0;
   public static final int kElevatorPositionSlotIdx = 1;
 
-  public static final double kPElevator = 0.5;                                       // TODO: Tune-up before Duluth
+  public static final double kPElevator = 2.3;                                       // TODO: Tune-up before Duluth
   public static final double kIElevator = 0.0;                                       // TODO: Tune-up before Duluth
   public static final double kDElevator = 0.0;                                       // TODO: Tune-up before Duluth
   public static final double kFElevator = 0.0;                                       // TODO: Tune-up before Duluth
