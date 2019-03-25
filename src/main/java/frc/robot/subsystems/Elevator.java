@@ -95,7 +95,6 @@ public class Elevator extends Subsystem {
     }
   }
 
-  // 
   private int getEncoderPositionTicks() {
     return mMaster.getSelectedSensorPosition(RobotMap.kElevatorPIDLoopIdx);
   }

@@ -8,30 +8,30 @@ public class PanelIntakeShift extends Command{
   public boolean mIsFinished = true;
   
   public PanelIntakeShift() {
-      }
+  }
     
-      @Override
-      protected void initialize() {
-        mIsFinished = false;
-      }
-    
-      @Override
-      protected void execute() {
-        Robot.mMultiManipulator.shiftPanelIntake(!Robot.mMultiManipulator.isPanelClosed());
-        mIsFinished = true;
-      }
-    
-      @Override
-      protected boolean isFinished() {
-        return mIsFinished;
-      }
-    
-      @Override
-      protected void end() {
-      }
-    
-      @Override
-      protected void interrupted() {
-      }
-    }
-    
+  @Override
+  protected void initialize() {
+    mIsFinished = false;
+  }
+
+  @Override
+  protected void execute() {
+    Robot.mMultiManipulator.shiftPanelIntake(!Robot.mMultiManipulator.isPanelClosed());
+    mIsFinished = true;
+  }
+
+  @Override
+  protected boolean isFinished() {
+    return mIsFinished;
+  }
+
+  @Override
+  protected void end() {
+  }
+
+  @Override
+  protected void interrupted() {
+  }
+
+}

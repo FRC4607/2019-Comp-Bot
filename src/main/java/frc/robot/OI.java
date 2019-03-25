@@ -7,10 +7,11 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import frc.robot.commands.drivetrain.Shift;
 import frc.robot.commands.elevator.ElevatorToPosition;
 import frc.robot.commands.drivetrain.DriveJoystickWithVisionAssistTurning;
-import frc.robot.commands.wrist.WristToAngle;
-import frc.robot.commands.wrist.ZeroWristEncoder;
+// import frc.robot.commands.wrist.WristToAngle;
+// import frc.robot.commands.wrist.ZeroWristEncoder;
 import frc.robot.commands.elevator.ZeroElevatorEncoder;
 import frc.robot.commands.panel.PanelIntakeShift;
+import frc.robot.commands.wrist.WristShift;
 
 /******************************************************************************************************************************** 
 ** OPERATOR/DRIVER INTERFACE CLASS
@@ -28,26 +29,28 @@ public class OI {
   // Operator control
 
   // Wrist 
-  public static Button mWristToIntake = new JoystickButton(mOperatorJoystick, 1);
-  public static Button mWristToUp = new JoystickButton(mOperatorJoystick, 2);
-  public static Button mWristToHorizontal = new JoystickButton(mOperatorJoystick, 3);
-  public static Button mWristEncoderReset = new JoystickButton(mOperatorJoystick, 4);
+  // public static Button mWristToIntake = new JoystickButton(mOperatorJoystick, 1);
+  // public static Button mWristToUp = new JoystickButton(mOperatorJoystick, 2);
+  // public static Button mWristToHorizontal = new JoystickButton(mOperatorJoystick, 3);
+  // public static Button mWristEncoderReset = new JoystickButton(mOperatorJoystick, 4);
   
   // elevator
-  public static Button mElevatorToFirstLevel = new JoystickButton(mOperatorJoystick, 5);
-  public static Button mElevatorToSecondLevel = new JoystickButton(mOperatorJoystick, 6);
-  public static Button mElevatorToThirdLevel = new JoystickButton(mOperatorJoystick, 7);
+  public static Button mWristShift = new JoystickButton(mOperatorJoystick, 1);
 
-  public static Button mElevatorEncoderReset = new JoystickButton(mOperatorJoystick, 8);
+  public static Button mElevatorToFirstLevel = new JoystickButton(mOperatorJoystick, 2);
+  public static Button mElevatorToSecondLevel = new JoystickButton(mOperatorJoystick, 3);
+  public static Button mElevatorToThirdLevel = new JoystickButton(mOperatorJoystick, 4);
+
+  public static Button mElevatorEncoderReset = new JoystickButton(mOperatorJoystick, 5);
 
   public OI() {
     mShift.whenPressed(new Shift());
     mVisionAssistedTurning.whileHeld(new DriveJoystickWithVisionAssistTurning());
 
     // Wrist angles
-    mWristToIntake.whileHeld(new WristToAngle(RobotMap.kWristDownAngle));
-    mWristToUp.whileHeld(new WristToAngle(RobotMap.kWristUpAngle));
-    mWristToHorizontal.whileHeld(new WristToAngle(RobotMap.kWristHorizontalAngle));
+    // mWristToIntake.whileHeld(new WristToAngle(RobotMap.kWristDownAngle));
+    // mWristToUp.whileHeld(new WristToAngle(RobotMap.kWristUpAngle));
+    // mWristToHorizontal.whileHeld(new WristToAngle(RobotMap.kWristHorizontalAngle));
 
     // elevator positions
     mElevatorToFirstLevel.whileHeld(new ElevatorToPosition(RobotMap.kElevatorFirstLevel));
@@ -55,8 +58,9 @@ public class OI {
     mElevatorToThirdLevel.whileHeld(new ElevatorToPosition(RobotMap.kElevatorThirdLevel));
 
     mPanelShift.whenPressed(new PanelIntakeShift());
+    mWristShift.whenPressed(new WristShift());
 
-    mWristEncoderReset.whenPressed(new ZeroWristEncoder());
+    // mWristEncoderReset.whenPressed(new ZeroWristEncoder());
     mElevatorEncoderReset.whenPressed(new ZeroElevatorEncoder());
   }
 }

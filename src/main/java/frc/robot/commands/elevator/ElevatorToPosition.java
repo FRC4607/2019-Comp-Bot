@@ -12,7 +12,7 @@ import frc.robot.Robot;
 ********************************************************************************************************************************/
 public class ElevatorToPosition extends InstantCommand {
 
-  private int mTargetPosition;
+  public int mTargetPosition;
   // private final Logger mLogger = LoggerFactory.getLogger(ElevatorToPosition.class);
 
   /****************************************************************************************************************************** 

@@ -1,8 +1,8 @@
 package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
-import frc.robot.Robot;
-import frc.robot.RobotMap;
+// import frc.robot.Robot;
+// import frc.robot.RobotMap;
 
 
 /******************************************************************************************************************************** 
@@ -10,14 +10,14 @@ import frc.robot.RobotMap;
 ********************************************************************************************************************************/
 public class WristToAngle extends InstantCommand {
 
-  private double mTargetAngle;
+  // private double mTargetAngle;
 
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
   public WristToAngle(double targetAngle) {
-    mTargetAngle = targetAngle;
-    requires(Robot.mWrist);
+    // mTargetAngle = targetAngle;
+    // requires(Robot.mWrist);
   }
 
   /****************************************************************************************************************************** 
@@ -26,7 +26,7 @@ public class WristToAngle extends InstantCommand {
   @Override
   protected void initialize() {
     // mLogger.info("Starting WristToAngle command: [{}]", mTargetAngle);
-    Robot.mWrist.MotionMagicOutput(Robot.mWrist.degreesToSensorTicks(mTargetAngle) * RobotMap.kWristGearing + RobotMap.kWristTickOffset);
+    // Robot.mWrist.MotionMagicOutput(Robot.mWrist.degreesToSensorTicks(mTargetAngle) * RobotMap.kWristGearing + RobotMap.kWristTickOffset);
     
     //                                  COMPETITION
     // Robot.mWrist.MotionMagicOutput(3300 + RobotMap.kWristTickOffset);

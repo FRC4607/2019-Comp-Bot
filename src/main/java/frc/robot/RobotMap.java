@@ -27,13 +27,14 @@ public class RobotMap {
   public static final int kPigeonId = 11;
   
   //                              COMPETITION
-  // public static final double kDeadbandHighGear = 0.22;                            
-  // public static final double kDeadbandLowGear = 0.3;                             
+  // public static final double kDeadbandHighGear = 0.22;
+  // public static final double kDeadbandLowGear = 0.3;
 
   //                              PRACTICE
-  public static final double kDeadbandHighGear = 0.40;                            
-  public static final double kDeadbandLowGear = 0.40;                             
+  public static final double kDeadbandHighGear = 0.40;
+  public static final double kDeadbandLowGear = 0.40;
 
+  // this is the time in seconds for the robot to accelerate
   public static final double kDriveRampRate = 0.25;
 
   // This is an experimental value to assist with the Competition Robot's turning
@@ -72,7 +73,7 @@ public class RobotMap {
   public static final double kFElevator = 0.0;                                       // TODO: Tune-up before Duluth
 
   public static final double kElevatorFeedForwardUpwards = -0.45;
-  public static final double kElevatorFeedForwardDownwards = 0.15;
+  public static final double kElevatorFeedForwardDownwards = 0.10;
   public static final int kElevatorMaxIntegralAccumulator = 500000;                  // TODO: Tune-up before Duluth
   public static final int kElevatorSensorDeadband = 5;
   public static final int kElevatorIZone = 500;                                      // TODO: Tune-up before Duluth
@@ -85,7 +86,7 @@ public class RobotMap {
   // From Ground: 1st = 19in, 2nd = 50in, 3rd = 76in
   // Elevator positions for closed loop in encoder ticks
   public static final int kElevatorFirstLevel = -4200;                              // TODO: Measure correct encoder position   
-  public static final int kElevatorSecondLevel = -16500;                            // TODO: Measure correct encoder position 
+  public static final int kElevatorSecondLevel = -19500;                            // TODO: Measure correct encoder position 
   public static final int kElevatorThirdLevel = -28000;                            // TODO: Measure correct encoder position 
   public static final int kElevatorLowerLimit = 0;
 
@@ -116,7 +117,6 @@ public class RobotMap {
   public static final double kWristUpAngle = 30.0;
   public static final double kWristDownAngle = -50.0;
 
-
   //sensor units per 100ms
   public static final int kVelocityWrist = 2500;                                  // TODO: Calibrate before Duluth
   public static final int kAccelerationWrist = 2500;                              // TODO: Calibrate before Duluth
@@ -137,14 +137,15 @@ public class RobotMap {
   //                                 PRACTICE
   public static final int kCargoMotorId = 15;                                   // TODO: Connect in Duluth
   
-
   //                      COMPETITION
   // public static final int kPanelForwardId = 0;
   // public static final int kPanelReverseId = 1;  
 
-  //                      PRAACTICE
+  //                      PRACTICE
   public static final int kPanelForwardId = 2;
   public static final int kPanelReverseId = 3;  
+  public static final int kWristUpId = 4;
+  public static final int kWristDownId = 5;
 
   /******************************************************************************************************************************** 
   ** JOYSTICKS

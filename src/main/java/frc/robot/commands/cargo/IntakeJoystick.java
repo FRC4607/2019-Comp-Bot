@@ -23,13 +23,13 @@ public class IntakeJoystick extends Command {
   @Override
   protected void execute() {
 
-    double xCargoIntake = OI.mOperatorJoystick.getRawAxis(3);
-    double xCargoOuttake = -OI.mOperatorJoystick.getRawAxis(2);
+    double xCargoIntake = -OI.mOperatorJoystick.getRawAxis(3);
+    double xCargoOuttake = OI.mOperatorJoystick.getRawAxis(2);
 
-    if (xCargoOuttake < -RobotMap.kDeadbandJoystick) {
-      Robot.mMultiManipulator.setOpenLoop(xCargoOuttake);
-    } else if (xCargoIntake > RobotMap.kDeadbandJoystick) {
+    if (xCargoIntake < -RobotMap.kDeadbandJoystick) {
       Robot.mMultiManipulator.setOpenLoop(xCargoIntake);
+    } else if (xCargoOuttake > RobotMap.kDeadbandJoystick) {
+      Robot.mMultiManipulator.setOpenLoop(xCargoOuttake);
     } else {
       Robot.mMultiManipulator.CargoStop();
     }

@@ -3,13 +3,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.MultiManipulator;
-import frc.robot.subsystems.Wrist;
+// import frc.robot.subsystems.Wrist;
 import frc.robot.subsystems.Drivetrain.controlMode;
 import frc.robot.lib.controllers.Vision;
-import frc.robot.lib.controllers.LEDs;
+// import frc.robot.lib.controllers.LEDs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,23 +21,27 @@ public class Robot extends TimedRobot {
 
   public static Drivetrain mDrivetrain = Drivetrain.create();
   public static Elevator mElevator = Elevator.create();
-  public static Wrist mWrist = Wrist.create();
-  public static LEDs mLeds = LEDs.create();
+  // public static Wrist mWrist = Wrist.create();
+  // public static LEDs mLeds = LEDs.create();
   public static MultiManipulator mMultiManipulator = MultiManipulator.create();
   public static OI mOI = new OI();
   private Vision.Status mVisionStatus;
   private Drivetrain.controlMode mDrivetrainState;
-  private boolean mDrivetraiHighGear;
+  private boolean mDrivetrainHighGear;
   private boolean mStartSelftestOrCalibration;
   private final Logger mLogger = LoggerFactory.getLogger(Robot.class);
-  
+  private int mCount = 0;
+
   @Override
   public void robotInit() {
     mLogger.info("<=========== ROBOT INIT ===========>");
   }
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    SmartDashboard.putBoolean("Drivetrain gear:", mDrivetrain.isHighGear());
+    SmartDashboard.putBoolean("Panel intake actuated:", mMultiManipulator.isPanelClosed());
+  }
 
   @Override
   public void disabledInit() {
@@ -46,26 +51,54 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     mDrivetrain.mVision.mVisionThread.stop();
-    mLeds.mLEDThread.stop();
+    // mLeds.mLEDThread.stop();
   }
 
   @Override
   public void autonomousInit() {
     mLogger.info("<=========== AUTONOMOUS INIT ===========>");
     mDrivetrain.mVision.mVisionThread.startPeriodic(RobotMap.kVisionThreadTime);
-    mLeds.mLEDThread.startPeriodic(RobotMap.kLEDThreadTime);
+    // mLeds.mLEDThread.startPeriodic(RobotMap.kLEDThreadTime);
+
+    mCount = 0;
   }
 
   @Override
   public void autonomousPeriodic() {
-    Scheduler.getInstance().run();
+
+    // old intake auto
+    // if (mCount == 0) {
+    //   mMultiManipulator.shiftPanelIntake(!mMultiManipulator.isPanelClosed());
+    // } else if (mCount < 60) {
+    //   mElevator.MotionMagicOutput(RobotMap.kElevatorFirstLevel);
+    // } else if (mCount >= 60 && mCount < 100) {
+    //   mWrist.MotionMagicOutput(mWrist.degreesToSensorTicks(RobotMap.kWristHorizontalAngle) * RobotMap.kWristGearing + RobotMap.kWristTickOffset);
+    // } else if (mCount == 100) {
+    //   mElevator.setOpenLoopControl();
+    // } else {
+    //   Scheduler.getInstance().run();
+    // }
+    // mCount +=1;
+
+    // new intake auto, TODO: calibrate how long it takes to shift the intake
+    if (mCount == 0) {
+      mMultiManipulator.shiftPanelIntake(!mMultiManipulator.isPanelClosed());
+    } else if (mCount < 60) {
+      mElevator.MotionMagicOutput(RobotMap.kElevatorFirstLevel);
+    } else if (mCount == 60) {
+      mElevator.setOpenLoopControl();
+      mMultiManipulator.shiftWristDown(!mMultiManipulator.isWristDown());
+    } else {
+      Scheduler.getInstance().run();
+    }
+    mCount +=1;
   }
 
   @Override
   public void teleopInit() {
     mLogger.info("<=========== TELEOP INIT ===========>");
     mDrivetrain.mVision.mVisionThread.startPeriodic(RobotMap.kVisionThreadTime);
-    mLeds.mLEDThread.startPeriodic(RobotMap.kLEDThreadTime);
+    // mLeds.mLEDThread.startPeriodic(RobotMap.kLEDThreadTime);
   }
 
   @Override
@@ -75,27 +108,26 @@ public class Robot extends TimedRobot {
     // Update LEDs
     mVisionStatus = mDrivetrain.mVision.getStatus();
     mDrivetrainState = mDrivetrain.getControlState();
-    mDrivetraiHighGear = mDrivetrain.isHighGear();
+    mDrivetrainHighGear = mDrivetrain.isHighGear();
     if (mDrivetrainState == controlMode.kDriveWithTurningAssist) {
       switch (mVisionStatus) {
         case kTargeting:
-          mLeds.setState(LEDs.colorState.kDisplayTargetAcquired);
+          // mLeds.setState(LEDs.colorState.kDisplayTargetAcquired);
           break;
         case kReachedTarget:
-         mLeds.setState(LEDs.colorState.kDisplayTargetNotAcquired);
+        //  mLeds.setState(LEDs.colorState.kDisplayTargetNotAcquired);
          break;
         case kLostTarget:
-          mLeds.setState(LEDs.colorState.kDisplayTargetNotAcquired);
+          // mLeds.setState(LEDs.colorState.kDisplayTargetNotAcquired);
           break;
       }
     } else {
-      if (mDrivetraiHighGear == true) {
-        mLeds.setState(LEDs.colorState.kDisplayHighGear);
+      if (mDrivetrainHighGear == true) {
+        // mLeds.setState(LEDs.colorState.kDisplayHighGear);
       } else {
-        mLeds.setState(LEDs.colorState.kDisplayLowGear);
+        // mLeds.setState(LEDs.colorState.kDisplayLowGear);
       }
     }
-  
   
   }
 
