@@ -72,7 +72,7 @@ public class RobotMap {
   public static final double kDElevator = 0.0;                                       // TODO: Tune-up before Duluth
   public static final double kFElevator = 0.0;                                       // TODO: Tune-up before Duluth
 
-  public static final double kElevatorFeedForwardUpwards = -0.45;
+  public static final double kElevatorFeedForwardUpwards = -0.46;
   public static final double kElevatorFeedForwardDownwards = 0.10;
   public static final int kElevatorMaxIntegralAccumulator = 500000;                  // TODO: Tune-up before Duluth
   public static final int kElevatorSensorDeadband = 5;

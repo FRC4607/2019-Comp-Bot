@@ -83,6 +83,11 @@ public class Elevator extends Subsystem {
     return distance; 
   }
 
+  public int Math(int TargetPosition) {
+    int mTargetPosition = (TargetPosition - 13) * 535;
+    return mTargetPosition;
+  }
+
   /****************************************************************************************************************************** 
   ** INVERT MOTOR OUTPUT
   ******************************************************************************************************************************/
@@ -149,8 +154,10 @@ public class Elevator extends Subsystem {
       mMaster.selectProfileSlot(RobotMap.kElevatorMotionMagicSlotIdx, RobotMap.kElevatorPIDLoopIdx);
     }
     if (distanceToSensorTicks(targetPositionTicks) >= 0) {
+      mLogger.info("Elevator Up!");
       mMaster.set(ControlMode.MotionMagic, targetPositionTicks, DemandType.ArbitraryFeedForward, RobotMap.kElevatorFeedForwardUpwards);
     } else if (distanceToSensorTicks(targetPositionTicks) < 0) {
+      mLogger.info("Elevator Down!");
       mMaster.set(ControlMode.MotionMagic, targetPositionTicks, DemandType.ArbitraryFeedForward, RobotMap.kElevatorFeedForwardDownwards);
     }
     mEncoderPositionTicks = getSensorPosition();

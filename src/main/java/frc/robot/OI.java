@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Button;
 import frc.robot.commands.drivetrain.Shift;
 import frc.robot.commands.elevator.ElevatorToPosition;
+import frc.robot.commands.elevator.ElevatorToPositionInch;
 import frc.robot.commands.drivetrain.DriveJoystickWithVisionAssistTurning;
 // import frc.robot.commands.wrist.WristToAngle;
 // import frc.robot.commands.wrist.ZeroWristEncoder;
@@ -53,9 +54,13 @@ public class OI {
     // mWristToHorizontal.whileHeld(new WristToAngle(RobotMap.kWristHorizontalAngle));
 
     // elevator positions
-    mElevatorToFirstLevel.whileHeld(new ElevatorToPosition(RobotMap.kElevatorFirstLevel));
-    mElevatorToSecondLevel.whileHeld(new ElevatorToPosition(RobotMap.kElevatorSecondLevel));
-    mElevatorToThirdLevel.whileHeld(new ElevatorToPosition(RobotMap.kElevatorThirdLevel));
+    // mElevatorToFirstLevel.whileHeld(new ElevatorToPosition(RobotMap.kElevatorFirstLevel));
+    // mElevatorToSecondLevel.whileHeld(new ElevatorToPosition(RobotMap.kElevatorSecondLevel));
+    // mElevatorToThirdLevel.whileHeld(new ElevatorToPosition(RobotMap.kElevatorThirdLevel));
+
+    mElevatorToFirstLevel.whileHeld(new ElevatorToPositionInch(19));
+    mElevatorToSecondLevel.whileHeld(new ElevatorToPositionInch(48));
+    mElevatorToThirdLevel.whileHeld(new ElevatorToPositionInch(60));
 
     mPanelShift.whenPressed(new PanelIntakeShift());
     mWristShift.whenPressed(new WristShift());
