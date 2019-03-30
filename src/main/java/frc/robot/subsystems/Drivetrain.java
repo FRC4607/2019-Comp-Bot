@@ -284,7 +284,7 @@ public class Drivetrain extends Subsystem {
     DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.kPCMId, RobotMap.kShifterHighGearSolenoidId, RobotMap.kShifterLowGearSolenoidId);
 
     Vision vision = Vision.create();
-    Vision visionLow = Vision.create("limelightlow");
+    Vision visionLow = Vision.create("limelight-low");
 
     Compressor compressor = new Compressor(RobotMap.kPCMId);
 
