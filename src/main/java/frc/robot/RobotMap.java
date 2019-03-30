@@ -101,6 +101,7 @@ public class RobotMap {
   public static final int kElevatorSecondLevel = 19500;                            // TODO: Measure correct encoder position 
   public static final int kElevatorThirdLevel = 35000;                            // TODO: Measure correct encoder position 
   
+  public static final int kElevatorLimelightLowPos = 8000;
   /******************************************************************************************************************************** 
   ** WRIST SUBSYSTEM
   ********************************************************************************************************************************/

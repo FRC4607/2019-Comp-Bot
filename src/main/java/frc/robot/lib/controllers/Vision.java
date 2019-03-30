@@ -2,6 +2,7 @@ package frc.robot.lib.controllers;
 
 import frc.robot.RobotMap;
 import frc.robot.lib.drivers.Limelight;
+import frc.robot.lib.drivers.Limelight.ledMode;
 import edu.wpi.first.wpilibj.Notifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,11 @@ public class Vision {
           mStatus = Status.kTargeting;
         }
 
+        if (mDesiredLimelightState.ordinal() != mLimelight.getLedMode()) {
+          mLogger.info("Limelight led mode state change requrest: [{}]", mDesiredLimelightState);
+          mLimelight.setLedMode(mDesiredLimelightState);
+        }
+
         // Process the current states
         if (mState == State.kTurn) {
           mTurningErrorDeg = mLimelight.horizontalToTargetDeg();
@@ -52,6 +58,7 @@ public class Vision {
   private double mTurningErrorDeg = 0.0;
   private double mTurn = 0.0;
   private State mState = State.kTurn;
+  private ledMode mDesiredLimelightState;
   private State mDesiredState = State.kTurn;
   private Status mStatus = Status.kLostTarget;
 
@@ -80,6 +87,10 @@ public class Vision {
     mDesiredState = state;
   }
 
+  public synchronized void setLimelightState(ledMode desiredLimelightState) {
+    mDesiredLimelightState = desiredLimelightState;
+  }
+
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
@@ -92,4 +103,8 @@ public class Vision {
     return new Vision(limelight);
   }
 
+  public static Vision create(String tableName) {
+    Limelight limelight = new Limelight(tableName);
+    return new Vision(limelight);
+  }
 }
