@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /******************************************************************************************************************************** 
 ** ELEVATOR JOYSTICK COMMAND
@@ -13,7 +11,6 @@ import org.slf4j.LoggerFactory;
 public class WristToAngle extends InstantCommand {
 
   private double mTargetAngle;
-  private final Logger mLogger = LoggerFactory.getLogger(WristToAngle.class);
 
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
@@ -29,9 +26,13 @@ public class WristToAngle extends InstantCommand {
   @Override
   protected void initialize() {
     // mLogger.info("Starting WristToAngle command: [{}]", mTargetAngle);
-    // // setInterruptible(true);
-    // Robot.mWrist.MotionMagicOutput(Robot.mWrist.degreesToSensorTicks(mTargetAngle) * RobotMap.kWristGearing + RobotMap.kWristTickOffset);
-    Robot.mWrist.MotionMagicOutput(3300 + RobotMap.kWristTickOffset);
+    Robot.mWrist.MotionMagicOutput(Robot.mWrist.degreesToSensorTicks(mTargetAngle) * RobotMap.kWristGearing + RobotMap.kWristTickOffset);
+    
+    //                                  COMPETITION
+    // Robot.mWrist.MotionMagicOutput(3300 + RobotMap.kWristTickOffset);
+    //                                  PRACTICE
+    // Robot.mWrist.MotionMagicOutput(4000);
+
   }
 
   // @Override

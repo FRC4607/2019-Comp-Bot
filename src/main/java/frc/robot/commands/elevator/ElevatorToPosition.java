@@ -1,44 +1,44 @@
-package frc.robot.commands.cargo;
+package frc.robot.commands.elevator;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 import frc.robot.OI;
-import frc.robot.RobotMap;
+// import frc.robot.RobotMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /******************************************************************************************************************************** 
-** CARGOJOYSTICK COMMAND
+** ELEVATOR JOYSTICK COMMAND
 ********************************************************************************************************************************/
-public class IntakeJoystick extends Command {
-  
+public class ElevatorToPosition extends InstantCommand {
+
+  private int mTargetPosition;
+  private final Logger mLogger = LoggerFactory.getLogger(ElevatorToPosition.class);
+
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
-  public IntakeJoystick() {
-    requires(Robot.mMultiManipulator);
+  public ElevatorToPosition(int targetPosition) {
+    mTargetPosition = targetPosition;
+    requires(Robot.mElevator);
   }
 
   /****************************************************************************************************************************** 
   ** COMMAND OVERRIDES
   ******************************************************************************************************************************/
   @Override
-  protected void execute() {
-
-    double xCargoOuttake = -OI.mOperatorJoystick.getRawAxis(3);
-    double xCargoIntake = OI.mOperatorJoystick.getRawAxis(2);
-
-    if (xCargoOuttake < -RobotMap.kDeadbandJoystick) {
-      Robot.mMultiManipulator.setOpenLoop(xCargoOuttake);
-    } else if (xCargoIntake > RobotMap.kDeadbandJoystick) {
-      Robot.mMultiManipulator.setOpenLoop(xCargoIntake);
-    } else {
-      Robot.mMultiManipulator.CargoStop();
-    }
-
+  protected void initialize() {
+    // TODO: add gain for gearing 
+    Robot.mElevator.MotionMagicOutput(mTargetPosition);
+    Robot.mElevator.setOpenLoopControl();
   }
 
   @Override
-  protected boolean isFinished() {
-    return false;
+  protected void execute() {
+    // Note that on an Xbox Controller, a positive input is to the bottom-right
+    double zElevatorPosition = OI.mOperatorJoystick.getPOV();
+    // mLogger.info("Position: {}", zElevatorPosition);
   }
-  
+
 }

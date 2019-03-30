@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
 import frc.robot.lib.drivers.TalonSRX;
-import frc.robot.lib.drivers.VictorSPX;
+// import frc.robot.lib.drivers.VictorSPX;
 import frc.robot.lib.controllers.Vision;
 import frc.robot.commands.drivetrain.DriveJoystick;
 import edu.wpi.first.wpilibj.Timer;
@@ -14,7 +14,7 @@ import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+// import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,22 +26,17 @@ public class Drivetrain extends Subsystem {
   public static enum controlMode {
     kOpenLoop,
     kVelocity,
+    kDriveWithTurningAssist,
     kSelfTest
   }
 
   // Scalars to remove the motor deadband
   private static final double kDeadbandHighGearScalar = (1.0 - RobotMap.kDeadbandHighGear) / 1.0;
-  private static final double kDeadbandLowGearScalar = (1.0 - RobotMap.kDeadbandLowGear) / 1.0;
+  // private static final double kDeadbandLowGearScalar = (1.0 - RobotMap.kDeadbandLowGear) / 1.0;
 
   // Hardware
   private final WPI_TalonSRX mLeftLeader, mRightLeader, mRightFollowerA, mRightFollowerB,  mLeftFollowerA, mLeftFollowerB;
   
-  //                               PRACTICE BOT
-  // private final WPI_TalonSRX mLeftFollowerA, mLeftFollowerB;   
-
-  //                               COMPETITION BOT
-  // private final WPI_VictorSPX mLeftFollowerA ; // , mLeftFollowerB;
-
   private final DoubleSolenoid mShifter;
   private final Compressor mCompressor;
 
@@ -63,7 +58,6 @@ public class Drivetrain extends Subsystem {
   private final Logger mSelftestLogger = LoggerFactory.getLogger("Drivetrain_Selftest");
   private final Logger mCalibrationLogger = LoggerFactory.getLogger("Drivetrain_Calibration");
   //private final Logger mDataDumper = LoggerFactory.getLogger("Data_Dumper");
-
 
   /****************************************************************************************************************************** 
   ** GETTERS
@@ -171,7 +165,6 @@ public class Drivetrain extends Subsystem {
     double mTurn = 0.0;
     
     // Apply calibrated motor deadband
-    
     if (turn > 0.0) {
       mTurn = (RobotMap.kDeadbandHighGear + (kDeadbandHighGearScalar * turn));
     } else if (turn < -0.0) {
@@ -185,7 +178,7 @@ public class Drivetrain extends Subsystem {
     
     // mLogger.info("Throttle: {}, Turn: {}", mThrottle, mTurn);
     // mLogger.info("Joystick Throttle: {}, Joystick Turn: {}", throttle, turn);
-    if (mControlState == controlMode.kOpenLoop) {
+    if (mControlState == controlMode.kOpenLoop || mControlState == controlMode.kDriveWithTurningAssist) {
       // Invert the turn signal to get the DifferentialDrive to turn right/left correctly
       mDiffDrive.arcadeDrive(mThrottle, -mTurn);   
       // mDiffDrive.arcadeDrive(throttle, -turn);   
@@ -214,6 +207,12 @@ public class Drivetrain extends Subsystem {
     mControlState = controlMode.kVelocity;
   }
 
+  /************************************************************************************************************************* 
+  ** SET DRIVE WITH TURNING ASSIST MODE
+   *****************************************************************************************************************************/
+  public void setDriverTurningAssist() {
+    mControlState = controlMode.kDriveWithTurningAssist;
+  }
   /****************************************************************************************************************************** 
   ** ZERO SENSOR POSITION
   ******************************************************************************************************************************/
@@ -230,71 +229,8 @@ public class Drivetrain extends Subsystem {
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
-  //                                          PRACTICE BOT
-  
-  // public Drivetrain(WPI_TalonSRX leftLeader, WPI_TalonSRX leftFollowerA, WPI_TalonSRX leftFollowerB,
-  //                   WPI_TalonSRX rightLeader, WPI_TalonSRX rightFollowerA, WPI_TalonSRX rightFollowerB,
-  //                   DoubleSolenoid shifter, Vision vision, Compressor compressor, DifferentialDrive diffDrive) {
-  
-  //   mLeftLeader = leftLeader;
-  //   mLeftFollowerA = leftFollowerA; 
-  //   mLeftFollowerB = leftFollowerB;
-   
-  //   mRightLeader = rightLeader; 
-  //   mRightFollowerA = rightFollowerA;
-  //   mRightFollowerB = rightFollowerB;
-
-  //   mVision = vision;
-  //   mShifter = shifter;
-  //   mCompressor = compressor;
-
-  //   mDiffDrive = diffDrive;
-  //   mDiffDrive.setSafetyEnabled(false);
-
-  //   // Add Pigeon IMU
-
-  //   // Start off in open-loop
-  //   mControlState = controlMode.kOpenLoop;
-  //   mIsHighGear = false;
-  //   setHighGear(true);
-  //   mIsCompressorClosedLoop = false;
-  //   setCompressorClosedLoop(true);
-  //   mIsBrakeMode = false;
-  //   setBrakeMode(true);
-
-  //   // The Differential drive will invert the output going to the right side to get the left and right sides
-  //   // in phase with one-another.  For the comp bot, no inversion is needed to get the robot to move forward
-  //   // with positive joystick values.
-  //   mIsInverted = true;
-  //   InvertOutput(false);
-
-  //   mLeftLeader.setSensorPhase(false);
-  //   mRightLeader.setSensorPhase(true);
-  // }
-
-  // public static Drivetrain create() {
-  //   WPI_TalonSRX leftLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kLeftDriveMasterId));
-  //   WPI_TalonSRX leftFollowerA = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kLeftDriveFollowerAId), RobotMap.kLeftDriveMasterId);
-  //   WPI_TalonSRX leftFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kLeftDriveFollowerBId), RobotMap.kLeftDriveMasterId);
-  //   WPI_TalonSRX rightLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kRightDriveMasterId));
-  //   WPI_TalonSRX rightFollowerA = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerAId), RobotMap.kRightDriveMasterId);
-  //   WPI_TalonSRX rightFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerBId), RobotMap.kRightDriveMasterId);
-    
-  //   DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.kPCMId, RobotMap.kShifterHighGearSolenoidId, RobotMap.kShifterLowGearSolenoidId);
-
-  //   Vision vision = Vision.create();
-
-  //   Compressor compressor = new Compressor(RobotMap.kPCMId);
-
-  //   DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader);
-
-  //   return new Drivetrain(leftLeader, leftFollowerA, leftFollowerB, rightLeader, rightFollowerA, rightFollowerB, shifter, vision, compressor, diffDrive);
-  // } 
-
-//                                            COMPETITION BOT
-  public Drivetrain(WPI_TalonSRX leftLeader, // WPI_VictorSPX leftFollowerA, // WPI_VictorSPX leftFollowerB,
-                    WPI_TalonSRX leftFollowerA,  WPI_TalonSRX leftFollowerB, WPI_TalonSRX rightLeader, 
-                    WPI_TalonSRX rightFollowerA, WPI_TalonSRX rightFollowerB,
+  public Drivetrain(WPI_TalonSRX leftLeader, WPI_TalonSRX leftFollowerA, WPI_TalonSRX leftFollowerB, 
+                    WPI_TalonSRX rightLeader, WPI_TalonSRX rightFollowerA, WPI_TalonSRX rightFollowerB,
                     DoubleSolenoid shifter, Vision vision, Compressor compressor, DifferentialDrive diffDrive) {
 
     mLeftLeader = leftLeader;
@@ -311,8 +247,6 @@ public class Drivetrain extends Subsystem {
 
     mDiffDrive = diffDrive;
     mDiffDrive.setSafetyEnabled(false);
-
-    // Add Pigeon IMU
 
     // Start off in open-loop
     mControlState = controlMode.kOpenLoop;
@@ -331,14 +265,16 @@ public class Drivetrain extends Subsystem {
 
     mLeftLeader.setSensorPhase(false);
     mRightLeader.setSensorPhase(true);
+
+    mLeftLeader.configOpenloopRamp(RobotMap.kDriveRampRate);
+    mRightLeader.configOpenloopRamp(RobotMap.kDriveRampRate);
+    
 }
 
   public static Drivetrain create() {
     WPI_TalonSRX leftLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kLeftDriveMasterId));
     WPI_TalonSRX leftFollowerA = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kLeftDriveFollowerAId), RobotMap.kLeftDriveMasterId);
-    // WPI_VictorSPX leftFollowerA = VictorSPX.createVictorSPX(new WPI_VictorSPX(RobotMap.kLeftDriveFollowerAId), RobotMap.kLeftDriveMasterId);
     WPI_TalonSRX leftFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kLeftDriveFollowerBId), RobotMap.kLeftDriveMasterId);
-    // WPI_VictorSPX leftFollowerB = VictorSPX.createVictorSPX(new WPI_VictorSPX(RobotMap.kLeftDriveFollowerBId), RobotMap.kLeftDriveMasterId);
     WPI_TalonSRX rightLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kRightDriveMasterId));
     WPI_TalonSRX rightFollowerA = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerAId), RobotMap.kRightDriveMasterId);
     WPI_TalonSRX rightFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerBId), RobotMap.kRightDriveMasterId);
@@ -385,26 +321,6 @@ public class Drivetrain extends Subsystem {
     talon.set(0.0);
   }
 
-  private void MeasureMotorHealth(WPI_VictorSPX victor, boolean posPolarity, boolean wantsHighGear, WPI_TalonSRX talon) {
-    int sensorPosition, sensorVelocity;
-    double motorOutputPercent, motorOutputVoltage, endTime; 
-    int victorId = victor.getDeviceID();
-    double setMotorOutputPercent = posPolarity ? 0.5 : -0.5;
-
-    setHighGear(wantsHighGear);
-    zeroSensorPosition(talon);
-    victor.set(setMotorOutputPercent);
-    endTime = Timer.getFPGATimestamp() + 2.0;
-    do {
-      sensorPosition = talon.getSelectedSensorPosition();
-      sensorVelocity = talon.getSelectedSensorVelocity();
-      motorOutputPercent = victor.getMotorOutputPercent();
-      motorOutputVoltage = victor.getMotorOutputVoltage();
-      mSelftestLogger.info("VictorSPX_{},{},{},{},{},{},{}", victorId, wantsHighGear, setMotorOutputPercent, motorOutputPercent, motorOutputVoltage, sensorPosition, sensorVelocity);
-    } while (Timer.getFPGATimestamp() < endTime);   
-    victor.set(0.0);
-  }
-
   private void MeasureMotorHealth(WPI_TalonSRX talonfollow, boolean posPolarity, boolean wantsHighGear, WPI_TalonSRX talon) {
     int sensorPosition, sensorVelocity;
     double motorOutputPercent, motorOutputVoltage, endTime; 
@@ -420,7 +336,8 @@ public class Drivetrain extends Subsystem {
       sensorVelocity = talon.getSelectedSensorVelocity();
       motorOutputPercent = talonfollow.getMotorOutputPercent();
       motorOutputVoltage = talonfollow.getMotorOutputVoltage();
-      mSelftestLogger.info("VictorSPX_{},{},{},{},{},{},{}", talonID, wantsHighGear, setMotorOutputPercent, motorOutputPercent, motorOutputVoltage, sensorPosition, sensorVelocity);
+      mSelftestLogger.info("TalonSRX_{},{},{},{},{},{},{}", 
+                           talonID, wantsHighGear, setMotorOutputPercent, motorOutputPercent, motorOutputVoltage, sensorPosition, sensorVelocity);
     } while (Timer.getFPGATimestamp() < endTime);   
     talonfollow.set(0.0);
   }
@@ -540,7 +457,5 @@ public class Drivetrain extends Subsystem {
     setOpenLoopControl();
     setCompressorClosedLoop(true);
   }
-
-
 
 }

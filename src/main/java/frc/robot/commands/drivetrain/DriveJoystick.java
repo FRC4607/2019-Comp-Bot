@@ -25,7 +25,7 @@ public class DriveJoystick extends Command {
   protected void execute() {
     // Note that on an Xbox Controller, a positive input is to the bottom-right
     double throttle = OI.mDriverJoystick.getY();
-    double turn = OI.mDriverJoystick.getX();
+    double turn = (OI.mDriverJoystick.getX() * RobotMap.kTurnGain);
 
     // Apply a deadband to the joystick
     if (throttle < RobotMap.kDeadbandJoystick && throttle > -RobotMap.kDeadbandJoystick) {

@@ -43,6 +43,7 @@ public class DriveJoystickWithVisionAssistTurning extends InstantCommand {
     if (mState != Vision.State.kTurn || mStatus != Vision.Status.kTargeting) {
       mTurn = 0.0;   
     }
+    Robot.mDrivetrain.setDriverTurningAssist();
     Robot.mDrivetrain.ApplyDriveSignal(mThrottle, mTurn);
   }
 

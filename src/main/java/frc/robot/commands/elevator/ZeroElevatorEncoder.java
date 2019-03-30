@@ -1,44 +1,35 @@
-package frc.robot.commands.cargo;
+package frc.robot.commands.elevator;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
-import frc.robot.OI;
-import frc.robot.RobotMap;
 
 /******************************************************************************************************************************** 
-** CARGOJOYSTICK COMMAND
+** ELEVATOR JOYSTICK COMMAND
 ********************************************************************************************************************************/
-public class IntakeJoystick extends Command {
-  
+public class ZeroElevatorEncoder extends InstantCommand {
+
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
-  public IntakeJoystick() {
-    requires(Robot.mMultiManipulator);
+  public ZeroElevatorEncoder() {
+    requires(Robot.mElevator);
   }
 
   /****************************************************************************************************************************** 
   ** COMMAND OVERRIDES
   ******************************************************************************************************************************/
   @Override
-  protected void execute() {
-
-    double xCargoOuttake = -OI.mOperatorJoystick.getRawAxis(3);
-    double xCargoIntake = OI.mOperatorJoystick.getRawAxis(2);
-
-    if (xCargoOuttake < -RobotMap.kDeadbandJoystick) {
-      Robot.mMultiManipulator.setOpenLoop(xCargoOuttake);
-    } else if (xCargoIntake > RobotMap.kDeadbandJoystick) {
-      Robot.mMultiManipulator.setOpenLoop(xCargoIntake);
-    } else {
-      Robot.mMultiManipulator.CargoStop();
-    }
-
+  protected void initialize() {
+    Robot.mElevator.zeroSensorPosition();
   }
 
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
-  
+  // @Override
+  // protected void execute() {
+  //   // Robot.mWrist.MotionMagicOutput(mTargetAngle);
+  // }
+
+  // @Override
+  // protected boolean isFinished() {
+  //   return false;
+  // }
 }
