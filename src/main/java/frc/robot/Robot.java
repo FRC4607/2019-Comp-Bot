@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.MultiManipulator;
@@ -29,6 +30,7 @@ public class Robot extends TimedRobot {
   private boolean mDrivetraiHighGear;
   private boolean mStartSelftestOrCalibration;
   private final Logger mLogger = LoggerFactory.getLogger(Robot.class);
+  private int mCount = 0;
   
   @Override
   public void robotInit() {
@@ -36,7 +38,10 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    SmartDashboard.putBoolean("Drivetrain gear:", mDrivetrain.isHighGear());
+    SmartDashboard.putBoolean("Panel intake actuated:", mMultiManipulator.isPanelClosed());
+  }
 
   @Override
   public void disabledInit() {
@@ -54,11 +59,27 @@ public class Robot extends TimedRobot {
     mLogger.info("<=========== AUTONOMOUS INIT ===========>");
     mDrivetrain.mVision.mVisionThread.startPeriodic(RobotMap.kVisionThreadTime);
     mLeds.mLEDThread.startPeriodic(RobotMap.kLEDThreadTime);
+
+    mCount = 0;
+
   }
 
   @Override
   public void autonomousPeriodic() {
+    // no autonomous
     Scheduler.getInstance().run();
+
+    // auto pick up hatch panel
+    // if (mCount == 0) {
+    //   mMultiManipulator.shiftPanelIntake(!mMultiManipulator.isPanelClosed());
+    // } else if (mCount < 60) {
+    //   mElevator.MotionMagicOutput(RobotMap.kElevatorFirstLevel);
+    // } else if (mCount >= 60 && mCount < 100) {
+    //   mWrist.MotionMagicOutput(mWrist.degreesToSensorTicks(RobotMap.kWristHorizontalAngle) * RobotMap.kWristGearing + RobotMap.kWristTickOffset);
+    // } else if (mCount == 100) {
+    //   mElevator.setOpenLoopControl();
+    // } 
+    // mCount +=1;
   }
 
   @Override
@@ -95,7 +116,6 @@ public class Robot extends TimedRobot {
         mLeds.setState(LEDs.colorState.kDisplayLowGear);
       }
     }
-  
   
   }
 

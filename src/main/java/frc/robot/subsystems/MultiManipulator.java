@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.lib.drivers.TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -45,10 +46,12 @@ public class MultiManipulator extends Subsystem {
       mPanelActuator.set(DoubleSolenoid.Value.kForward);
       SmartDashboard.putBoolean("Panel Intake actuated:", wantsPanelOpen);
       mPanelOpen = true;
+      Robot.mLeds.setBlinking(true);
     } else if (wantsPanelOpen == false) {
       mPanelActuator.set(DoubleSolenoid.Value.kReverse);
       SmartDashboard.putBoolean("Panel Intake actuated:", wantsPanelOpen);
       mPanelOpen = false;
+      Robot.mLeds.setBlinking(false);
     }
     mLogger.info("Panel shifted");
   }

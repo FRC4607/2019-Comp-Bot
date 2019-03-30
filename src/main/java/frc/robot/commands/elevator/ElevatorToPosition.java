@@ -2,10 +2,11 @@ package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
+import frc.robot.OI;
 // import frc.robot.RobotMap;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /******************************************************************************************************************************** 
 ** ELEVATOR JOYSTICK COMMAND
@@ -13,7 +14,7 @@ import frc.robot.Robot;
 public class ElevatorToPosition extends InstantCommand {
 
   private int mTargetPosition;
-  // private final Logger mLogger = LoggerFactory.getLogger(ElevatorToPosition.class);
+  private final Logger mLogger = LoggerFactory.getLogger(ElevatorToPosition.class);
 
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
@@ -32,4 +33,12 @@ public class ElevatorToPosition extends InstantCommand {
     Robot.mElevator.MotionMagicOutput(mTargetPosition);
     Robot.mElevator.setOpenLoopControl();
   }
+
+  @Override
+  protected void execute() {
+    // Note that on an Xbox Controller, a positive input is to the bottom-right
+    double zElevatorPosition = OI.mOperatorJoystick.getPOV();
+    // mLogger.info("Position: {}", zElevatorPosition);
+  }
+
 }

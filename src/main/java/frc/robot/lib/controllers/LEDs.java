@@ -5,15 +5,15 @@ import frc.robot.lib.drivers.Canifier;
 import com.ctre.phoenix.CANifier;
 import com.ctre.phoenix.CANifier.LEDChannel;
 import edu.wpi.first.wpilibj.Notifier;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /******************************************************************************************************************************** 
 ** LED CONTROLLER CLASS
 ********************************************************************************************************************************/
 public class LEDs {
 
-  private final Logger mLogger = LoggerFactory.getLogger(LEDs.class);
+  // private final Logger mLogger = LoggerFactory.getLogger(LEDs.class);
 
   public static enum colorState {
     kDisplayTargetAcquired,
@@ -33,7 +33,7 @@ public class LEDs {
       // Process color state changes
       synchronized(this) {
         if (mColorState != mDesiredColorState) {
-          mLogger.info("LEDs processing state change request: [{}]", mDesiredColorState);
+          // mLogger.info("LEDs processing state change request: [{}]", mDesiredColorState);
           mColorState = mDesiredColorState;
         }
 

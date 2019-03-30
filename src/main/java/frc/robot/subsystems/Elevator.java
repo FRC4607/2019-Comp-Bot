@@ -83,6 +83,10 @@ public class Elevator extends Subsystem {
     return distance; 
   }
 
+  public int Math(int TargetPosition) {
+    int mTargetPosition = (TargetPosition - 18) * 535;
+    return mTargetPosition;
+  }
   /****************************************************************************************************************************** 
   ** INVERT MOTOR OUTPUT
   ******************************************************************************************************************************/
@@ -128,9 +132,6 @@ public class Elevator extends Subsystem {
     // This is inverted/not inverted along with the motor outputs in order go get the forward/reverse limit switches to work
     
     //                          COMPETITION BOT
-    // mThrottle = throttle * 1.0;
-
-    //                          PRACTICE BOT
     mThrottle = throttle * 1.0;
 
     if (mControlState == controlMode.kOpenLoop) {
@@ -201,21 +202,16 @@ public int getSensorPosition() {
     mIsBrakeMode = false;
     setBrakeMode(true);
 
-    //                                  PRACTICE BOT TODO: fix
-    mMaster.setInverted(true);
-    mFollow.setInverted(true);
-    // Get the mag encoder sensor in-phase with the motors
-    mFollow.setSensorPhase(true);
-
     mIsInverted = true;
     InvertOutput(false);
 
-    //                                 COMPETITIONN BOT
+    //                                 COMPETITION BOT
     // These are inverted along with the joystick inputs in order go get the forward/reverse limit switches to work
-    // mMaster.setInverted(true);
-    // mFollow.setInverted(true);
-    // Get the mag encoder sensor in-phase with the motors
-    // mFollow.setSensorPhase(true);
+    mMaster.setInverted(true);
+    mFollow.setInverted(true);
+    // Get the mag encoder sensor in-phase with the motors, possibly false for practice robot
+    mFollow.setSensorPhase(true);
+    mMaster.setSensorPhase(true);
 
     // Configure the feedback sensor
     mFollow.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.kElevatorPIDLoopIdx, RobotMap.kLongCANTimeoutMs);

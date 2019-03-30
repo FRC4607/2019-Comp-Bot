@@ -162,11 +162,12 @@ public class Wrist extends Subsystem {
     // A +'ve motor ouptut needs to move the wrist up and a -'ve output needs to move the wrist down
    
     //                                 COMPETITION
-    // mMaster.setInverted(false);
-    // mMaster.setSensorPhase(false);
+    mMaster.setInverted(false);
+    mMaster.setSensorPhase(false);
+
     //                                PRACTICE BOT
-    mMaster.setInverted(true);
-    mMaster.setSensorPhase(true);
+    // mMaster.setInverted(true);
+    // mMaster.setSensorPhase(true);
 
     mMaster.setNeutralMode(NeutralMode.Brake);
     
