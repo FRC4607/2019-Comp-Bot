@@ -46,12 +46,12 @@ public class MultiManipulator extends Subsystem {
       mPanelActuator.set(DoubleSolenoid.Value.kForward);
       SmartDashboard.putBoolean("Panel Intake actuated:", wantsPanelOpen);
       mPanelOpen = true;
-      Robot.mLeds.setBlinking(true);
+      // Robot.mLeds.setBlinking(true);
     } else if (wantsPanelOpen == false) {
       mPanelActuator.set(DoubleSolenoid.Value.kReverse);
       SmartDashboard.putBoolean("Panel Intake actuated:", wantsPanelOpen);
       mPanelOpen = false;
-      Robot.mLeds.setBlinking(false);
+      // Robot.mLeds.setBlinking(false);
     }
     mLogger.info("Panel shifted");
   }

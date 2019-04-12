@@ -14,7 +14,7 @@ public class WristJoystick extends Command {
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
   public WristJoystick() {
-    requires(Robot.mWrist);
+    // requires(Robot.mWrist);
   }
 
   /****************************************************************************************************************************** 
@@ -30,7 +30,7 @@ public class WristJoystick extends Command {
       zWrist = 0.0;
     }
 
-    Robot.mWrist.setOpenOutput(zWrist);
+    // Robot.mWrist.setOpenOutput(zWrist);
   }
 
   @Override

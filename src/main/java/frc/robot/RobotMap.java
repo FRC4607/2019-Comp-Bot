@@ -104,7 +104,7 @@ public class RobotMap {
   /******************************************************************************************************************************** 
   ** WRIST SUBSYSTEM
   ********************************************************************************************************************************/
-  public static final int kWristMotorId = 16;                                    // Has CTRE mag encoder
+  // public static final int kWristMotorId = 16;                                    // Has CTRE mag encoder
   
   public static final double kWristGain = 0.5;
   public static final int kPIDLoopIdx = 0;
@@ -177,6 +177,6 @@ public class RobotMap {
   /******************************************************************************************************************************** 
   ** LEDS CONTROLLER
   ********************************************************************************************************************************/
-  public static final int kCanifierId = 50;
+  // public static final int kCanifierId = 50;
   public static final double kLEDThreadTime = 0.25;
 }
