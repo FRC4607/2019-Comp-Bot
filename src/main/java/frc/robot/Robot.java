@@ -8,6 +8,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.MultiManipulator;
 import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain.controlMode;
 import frc.robot.lib.controllers.Vision;
 import frc.robot.lib.controllers.LEDs;
@@ -23,6 +24,7 @@ public class Robot extends TimedRobot {
   public static Elevator mElevator = Elevator.create();
   // public static Wrist mWrist = Wrist.create();
   // public static LEDs mLeds = LEDs.create();
+  public static Climber mClimber = Climber.create();
   public static MultiManipulator mMultiManipulator = MultiManipulator.create();
   public static OI mOI = new OI();
   private Vision.Status mVisionStatus;

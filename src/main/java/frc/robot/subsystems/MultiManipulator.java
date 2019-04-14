@@ -23,9 +23,9 @@ public class MultiManipulator extends Subsystem {
   }
 
   WPI_TalonSRX mCargoMotor;
-  DoubleSolenoid mPanelActuator;
+  DoubleSolenoid mPanelActuator, mWristShifter;
 
-  private boolean mPanelOpen;
+  private boolean mPanelOpen, mWristDown;
 
   // Logger
   private final Logger mLogger = LoggerFactory.getLogger(MultiManipulator.class);
@@ -56,18 +56,35 @@ public class MultiManipulator extends Subsystem {
     mLogger.info("Panel shifted");
   }
 
+  public void shiftWrist(boolean wantsWristDown) {
+    if (wantsWristDown == true) {
+      mWristShifter.set(DoubleSolenoid.Value.kForward);
+      mWristDown = true;
+    } else if (wantsWristDown == false) {
+      mWristShifter.set(DoubleSolenoid.Value.kReverse);
+      mWristDown = false;
+    }
+    mLogger.info("Wrist shifted");
+  }
+
  public boolean isPanelClosed() {
    return mPanelOpen;
  }
 
-  public MultiManipulator(WPI_TalonSRX cargoMotor, DoubleSolenoid panelActuator) {
+ public boolean isWristDown() {
+   return mWristDown;
+ }
+
+  public MultiManipulator(WPI_TalonSRX cargoMotor, DoubleSolenoid panelActuator, DoubleSolenoid wristShifter) {
     mCargoMotor = cargoMotor;
     mCargoMotor.setInverted(true);
     mCargoMotor.setNeutralMode(NeutralMode.Coast);
 
     mPanelActuator = panelActuator;
+    mWristShifter = wristShifter;
     // Should be false on Comp-Bot
     shiftPanelIntake(false);
+    shiftWrist(true);
 
     // Current limiting
     mCargoMotor.configContinuousCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
@@ -81,8 +98,9 @@ public class MultiManipulator extends Subsystem {
   public static MultiManipulator create() {
     WPI_TalonSRX cargoMotor = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kCargoMotorId));
     DoubleSolenoid panelActuator = new DoubleSolenoid(RobotMap.kPCMId, RobotMap.kPanelForwardId , RobotMap.kPanelReverseId);
+    DoubleSolenoid wristShifter = new DoubleSolenoid(RobotMap.kPCMId, RobotMap.kWristShiftDown ,RobotMap.kWristShiftUp);
 
-    return new MultiManipulator(cargoMotor, panelActuator);
+    return new MultiManipulator(cargoMotor, panelActuator, wristShifter);
   }
 
   @Override
