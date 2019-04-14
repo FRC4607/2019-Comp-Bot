@@ -34,6 +34,10 @@ public class Vision {
           mStatus = Status.kTargeting;
         }
 
+        double x = mDesiredLimelightState.ordinal();
+        double y = mLimelight.getLedMode();
+        // mLogger.info("Desired State: {}, Current State: {}", x, y);
+
         if (mDesiredLimelightState.ordinal() != mLimelight.getLedMode()) {
           mLogger.info("Limelight led mode state change requrest: [{}]", mDesiredLimelightState);
           mLimelight.setLedMode(mDesiredLimelightState);
@@ -58,7 +62,7 @@ public class Vision {
   private double mTurningErrorDeg = 0.0;
   private double mTurn = 0.0;
   private State mState = State.kTurn;
-  private ledMode mDesiredLimelightState;
+  private ledMode mDesiredLimelightState = ledMode.kOn;
   private State mDesiredState = State.kTurn;
   private Status mStatus = Status.kLostTarget;
 
