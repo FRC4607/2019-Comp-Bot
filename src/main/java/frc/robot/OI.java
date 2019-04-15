@@ -6,12 +6,14 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Button;
 import frc.robot.commands.drivetrain.Shift;
 import frc.robot.commands.elevator.ElevatorToPosition;
+import frc.robot.commands.climber.ClimbShift;
 // import frc.robot.commands.elevator.ElevatorToPositionInch;
 import frc.robot.commands.drivetrain.DriveJoystickWithVisionAssistTurning;
 import frc.robot.commands.wrist.WristToAngle;
 // import frc.robot.commands.wrist.ZeroWristEncoder;
 // import frc.robot.commands.elevator.ZeroElevatorEncoder;
 import frc.robot.commands.panel.PanelIntakeShift;
+import frc.robot.commands.wrist.WristShift;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,10 +36,12 @@ public class OI {
   // Operator control
 
   // Wrist 
-  public static Button mWristToIntake = new JoystickButton(mOperatorJoystick, 1);
-  public static Button mWristToUp = new JoystickButton(mOperatorJoystick, 4);
-  public static Button mWristToHorizontal = new JoystickButton(mOperatorJoystick, 2);
+  // public static Button mWristToIntake = new JoystickButton(mOperatorJoystick, 1);
+  // public static Button mWristToUp = new JoystickButton(mOperatorJoystick, 4);
+  // public static Button mWristToHorizontal = new JoystickButton(mOperatorJoystick, 2);
   // public static Button mWristEncoderReset = new JoystickButton(mOperatorJoystick, 4);
+  public static Button mWristShift = new JoystickButton(mOperatorJoystick, 1);
+  public static Button mClimbShift = new JoystickButton(mOperatorJoystick, 2);
   
   // elevator
   public static Button mElevatorToFirstLevel = new JoystickButton(mOperatorJoystick, 5);
@@ -51,10 +55,11 @@ public class OI {
     mVisionAssistedTurning.whileHeld(new DriveJoystickWithVisionAssistTurning());
 
     // Wrist angles
-    mWristToIntake.whileHeld(new WristToAngle(RobotMap.kWristDownAngle));
-    mWristToUp.whileHeld(new WristToAngle(RobotMap.kWristUpAngle));
-    mWristToHorizontal.whileHeld(new WristToAngle(RobotMap.kWristHorizontalAngle));
+    // mWristToIntake.whileHeld(new WristToAngle(RobotMap.kWristDownAngle));
+    // mWristToUp.whileHeld(new WristToAngle(RobotMap.kWristUpAngle));
+    // mWristToHorizontal.whileHeld(new WristToAngle(RobotMap.kWristHorizontalAngle));
 
+    mWristShift.whenPressed(new WristShift());
     // elevator positions
     mElevatorToFirstLevel.whileHeld(new ElevatorToPosition(RobotMap.kElevatorFirstLevel));
     mElevatorToSecondLevel.whileHeld(new ElevatorToPosition(RobotMap.kElevatorSecondLevel));
@@ -66,6 +71,8 @@ public class OI {
 
     mPanelShift.whenPressed(new PanelIntakeShift());
     
+    mClimbShift.whenPressed(new ClimbShift());
+
     // mWristEncoderReset.whenPressed(new ZeroWristEncoder());
     // mElevatorEncoderReset.whenPressed(new ZeroElevatorEncoder());
   }

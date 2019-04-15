@@ -17,7 +17,7 @@ public class WristToAngle extends InstantCommand {
   ******************************************************************************************************************************/
   public WristToAngle(double targetAngle) {
     mTargetAngle = targetAngle;
-    requires(Robot.mWrist);
+    // requires(Robot.mWrist);
   }
 
   /****************************************************************************************************************************** 
@@ -26,7 +26,7 @@ public class WristToAngle extends InstantCommand {
   @Override
   protected void initialize() {
     // mLogger.info("Starting WristToAngle command: [{}]", mTargetAngle);
-    Robot.mWrist.MotionMagicOutput(Robot.mWrist.degreesToSensorTicks(mTargetAngle) * RobotMap.kWristGearing + RobotMap.kWristTickOffset);
+    // Robot.mWrist.MotionMagicOutput(Robot.mWrist.degreesToSensorTicks(mTargetAngle) * RobotMap.kWristGearing + RobotMap.kWristTickOffset);
     
     //                                  COMPETITION
     // Robot.mWrist.MotionMagicOutput(3300 + RobotMap.kWristTickOffset);

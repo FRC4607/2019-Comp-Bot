@@ -175,11 +175,11 @@ public class Wrist extends Subsystem {
 
   }
 
-  public static Wrist create() {
-    WPI_TalonSRX master = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kWristMotorId));
+  // public static Wrist create() {
+    // WPI_TalonSRX master = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kWristMotorId));
         
-    return new Wrist(master);
-  }
+    // return new Wrist(master);
+  // }
 
   /****************************************************************************************************************************** 
   ** OVERRIDE DEFAULT SUBSYSTEM COMMAND

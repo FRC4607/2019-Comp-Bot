@@ -17,12 +17,12 @@ public class RobotMap {
   public static final int kRightDriveFollowerBId = 12;
 
 //                              COMPETITION
-  public static final int kShifterHighGearSolenoidId = 3;
-  public static final int kShifterLowGearSolenoidId = 2;
+  // public static final int kShifterHighGearSolenoidId = 3;
+  // public static final int kShifterLowGearSolenoidId = 2;
 
   //                             PRACTICE
-  // public static final int kShifterHighGearSolenoidId = 0;
-  // public static final int kShifterLowGearSolenoidId = 1;
+  public static final int kShifterHighGearSolenoidId = 6;
+  public static final int kShifterLowGearSolenoidId = 7;
 
   public static final int kPigeonId = 11;
   
@@ -105,7 +105,7 @@ public class RobotMap {
   /******************************************************************************************************************************** 
   ** WRIST SUBSYSTEM
   ********************************************************************************************************************************/
-  public static final int kWristMotorId = 16;                                    // Has CTRE mag encoder
+  // public static final int kWristMotorId = 16;                                    // Has CTRE mag encoder
   
   public static final double kWristGain = 0.5;
   public static final int kPIDLoopIdx = 0;
@@ -151,14 +151,23 @@ public class RobotMap {
   //                                 PRACTICE
   // public static final int kCargoMotorId = 15;                                   // TODO: Connect in Duluth
   
+  public static final int kWristShiftUp = 0;
+  public static final int kWristShiftDown = 1;
 
   //                      COMPETITION
-  public static final int kPanelForwardId = 0;
-  public static final int kPanelReverseId = 1;  
+  // public static final int kPanelForwardId = 0;
+  // public static final int kPanelReverseId = 1;  
 
   //                      PRAACTICE
-  // public static final int kPanelForwardId = 2;
-  // public static final int kPanelReverseId = 3;  
+  public static final int kPanelForwardId = 2;
+  public static final int kPanelReverseId = 3;  
+
+ /******************************************************************************************************************************** 
+  ** CLIMBER SUBSYSTEM
+  ********************************************************************************************************************************/
+  
+  public static final int kClimberDown = 4;
+  public static final int kClimberUp = 5;
 
   /******************************************************************************************************************************** 
   ** JOYSTICKS
@@ -178,6 +187,6 @@ public class RobotMap {
   /******************************************************************************************************************************** 
   ** LEDS CONTROLLER
   ********************************************************************************************************************************/
-  public static final int kCanifierId = 50;
+  // public static final int kCanifierId = 50;
   public static final double kLEDThreadTime = 0.25;
 }

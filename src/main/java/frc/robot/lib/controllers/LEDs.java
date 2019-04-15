@@ -104,9 +104,9 @@ public class LEDs {
     mCanifier = canifier;
   }
 
-  public static LEDs create() {
-    CANifier mCanifier = Canifier.createLEDCanifier(new CANifier(RobotMap.kCanifierId));
-    return new LEDs(mCanifier);
-  }
+  // public static LEDs create() {
+    // CANifier mCanifier = Canifier.createLEDCanifier(new CANifier(RobotMap.kCanifierId));
+    // return new LEDs(mCanifier);
+  // }
 
 } 

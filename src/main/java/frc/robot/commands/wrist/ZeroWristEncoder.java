@@ -12,7 +12,7 @@ public class ZeroWristEncoder extends InstantCommand {
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
   public ZeroWristEncoder() {
-    requires(Robot.mWrist);
+    // requires(Robot.mWrist);
   }
 
   /****************************************************************************************************************************** 
@@ -20,7 +20,7 @@ public class ZeroWristEncoder extends InstantCommand {
   ******************************************************************************************************************************/
   @Override
   protected void initialize() {
-    Robot.mWrist.zeroEncoder();
+    // Robot.mWrist.zeroEncoder();
   }
 
   // @Override
