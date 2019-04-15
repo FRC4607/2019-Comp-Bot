@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     mDrivetrain.mVision.mVisionThread.stop();
+    mDrivetrain.mVisionLow.mVisionThread.stop();
     // mLeds.mLEDThread.stop();
   }
 
@@ -60,6 +61,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     mLogger.info("<=========== AUTONOMOUS INIT ===========>");
     mDrivetrain.mVision.mVisionThread.startPeriodic(RobotMap.kVisionThreadTime);
+    mDrivetrain.mVisionLow.mVisionThread.startPeriodic(RobotMap.kVisionThreadTime);
     // mLeds.mLEDThread.startPeriodic(RobotMap.kLEDThreadTime);
 
     mCount = 0;
@@ -88,6 +90,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     mLogger.info("<=========== TELEOP INIT ===========>");
     mDrivetrain.mVision.mVisionThread.startPeriodic(RobotMap.kVisionThreadTime);
+    mDrivetrain.mVisionLow.mVisionThread.startPeriodic(RobotMap.kVisionThreadTime);
     // mLeds.mLEDThread.startPeriodic(RobotMap.kLEDThreadTime);
   }
 

@@ -27,6 +27,7 @@ public class DrivetrainTest {
   WPI_TalonSRX rightFollowerBMock = mock(WPI_TalonSRX.class);
   DifferentialDrive diffDriveMock = mock(DifferentialDrive.class);
   Vision visionMock = mock(Vision.class);
+  Vision visionMockLow = mock(Vision.class);
   DoubleSolenoid shifterMock = mock(DoubleSolenoid.class);
   Compressor compressorMock = mock(Compressor.class);
 
@@ -52,7 +53,7 @@ public class DrivetrainTest {
   public void testInvertOutput() {
     Drivetrain drivetrain = new Drivetrain(leftLeaderMock, leftFollowerAMock, leftFollowerBMock, 
                                            rightLeaderMock, rightFollowerAMock, rightFollowerBMock,
-                                           shifterMock, visionMock, compressorMock, diffDriveMock);
+                                           shifterMock, visionMock, visionMockLow, compressorMock, diffDriveMock);
     // Should start off inverted
     boolean invertedValue = false;
     assertEquals(invertedValue, drivetrain.isInverted());
@@ -88,7 +89,7 @@ public class DrivetrainTest {
   public void testShift() {
     Drivetrain drivetrain = new Drivetrain(leftLeaderMock, leftFollowerAMock, leftFollowerBMock, 
                                            rightLeaderMock, rightFollowerAMock, rightFollowerBMock,
-                                           shifterMock, visionMock, compressorMock, diffDriveMock);
+                                           shifterMock, visionMock, visionMockLow, compressorMock, diffDriveMock);
     // Should start off in high gear
     boolean highGear = true;
     assertEquals(highGear, drivetrain.isHighGear());
@@ -115,7 +116,7 @@ public class DrivetrainTest {
   public void testCompressor() {
     Drivetrain drivetrain = new Drivetrain(leftLeaderMock, leftFollowerAMock, leftFollowerBMock, 
                                            rightLeaderMock, rightFollowerAMock, rightFollowerBMock,
-                                           shifterMock, visionMock, compressorMock, diffDriveMock);
+                                           shifterMock, visionMock, visionMockLow, compressorMock, diffDriveMock);
     // Should start off in closed loop mode
     boolean wantsClosedLoop = true;
     assertEquals(wantsClosedLoop, drivetrain.isCompressorClosedLoop());
@@ -144,7 +145,7 @@ public class DrivetrainTest {
   public void testBrakeMode() {
     Drivetrain drivetrain = new Drivetrain(leftLeaderMock, leftFollowerAMock, leftFollowerBMock, 
                                            rightLeaderMock, rightFollowerAMock, rightFollowerBMock,
-                                           shifterMock, visionMock, compressorMock, diffDriveMock);
+                                           shifterMock, visionMock, visionMockLow, compressorMock, diffDriveMock);
     // Should start off in coast mode
     boolean brakeMode = true;
     assertEquals(brakeMode, drivetrain.isBrakeMode());
