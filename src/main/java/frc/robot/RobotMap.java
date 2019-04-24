@@ -38,7 +38,9 @@ public class RobotMap {
 
   // This is an experimental value to assist with the Competition Robot's turning
   public static final double kTurnGain = 0.85;
-
+  public static final double kHighGearTurnGain = 0.4;
+  public static final double kVisionTurnGain = 0.525;
+  public static final double kVisionThrottle = 0.75;
   // Use the drivetrain CalibrateMaxTurnVelocity() and CalibrateMaxTurnAcceleration() method to measure these
   public static final double kDrivetrainHighGearMaxTurnVelocity = 5.0;
   public static final double kDrivetrainHighGearMaxTurnAcceleration = 10.0;
@@ -168,6 +170,8 @@ public class RobotMap {
   
   public static final int kClimberDown = 4;
   public static final int kClimberUp = 5;
+  public static final int kRearClimberDown = 6;
+  public static final int kRearClimberUp = 7;
 
   /******************************************************************************************************************************** 
   ** JOYSTICKS

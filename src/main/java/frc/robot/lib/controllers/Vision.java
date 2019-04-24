@@ -34,8 +34,8 @@ public class Vision {
           mStatus = Status.kTargeting;
         }
 
-        double x = mDesiredLimelightState.ordinal();
-        double y = mLimelight.getLedMode();
+        // double x = mDesiredLimelightState.ordinal();
+        // double y = mLimelight.getLedMode();
         // mLogger.info("Desired State: {}, Current State: {}", x, y);
 
         if (mDesiredLimelightState.ordinal() != mLimelight.getLedMode()) {
@@ -46,7 +46,7 @@ public class Vision {
         // Process the current states
         if (mState == State.kTurn) {
           mTurningErrorDeg = mLimelight.horizontalToTargetDeg();
-          mTurn = mTurningErrorDeg * RobotMap.kScaleHorizontalToTarget * RobotMap.kTurningGain;
+          mTurn = mTurningErrorDeg * RobotMap.kScaleHorizontalToTarget * RobotMap.kVisionTurnGain;
           if (!mLimelight.foundTarget()) {
             mStatus = Status.kLostTarget;
           } else if (Math.abs(mTurningErrorDeg) < RobotMap.kStopTurningDeg) {

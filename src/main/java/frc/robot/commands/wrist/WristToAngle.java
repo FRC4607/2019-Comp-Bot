@@ -1,8 +1,8 @@
 package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
-import frc.robot.Robot;
-import frc.robot.RobotMap;
+// import frc.robot.Robot;
+// import frc.robot.RobotMap;
 
 
 /******************************************************************************************************************************** 
@@ -10,13 +10,13 @@ import frc.robot.RobotMap;
 ********************************************************************************************************************************/
 public class WristToAngle extends InstantCommand {
 
-  private double mTargetAngle;
+  // private double mTargetAngle;
 
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
   public WristToAngle(double targetAngle) {
-    mTargetAngle = targetAngle;
+    // mTargetAngle = targetAngle;
     // requires(Robot.mWrist);
   }
 

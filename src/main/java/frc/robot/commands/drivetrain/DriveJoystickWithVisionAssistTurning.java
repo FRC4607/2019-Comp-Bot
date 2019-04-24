@@ -32,18 +32,18 @@ public class DriveJoystickWithVisionAssistTurning extends InstantCommand {
   ******************************************************************************************************************************/
   @Override
   protected void initialize() {
-    mThrottle = OI.mDriverJoystick.getY();
+    mThrottle = (OI.mDriverJoystick.getY() * RobotMap.kVisionThrottle);
 
     elevatorTickPosition = Robot.mElevator.getSensorPosition();
 
     if (elevatorTickPosition > RobotMap.kElevatorLimelightLowPos) {
-      mTurn = Robot.mDrivetrain.mVisionLow.getOutput();
+      mTurn = (RobotMap.kTurnGain * Robot.mDrivetrain.mVisionLow.getOutput());
       mStatus = Robot.mDrivetrain.mVisionLow.getStatus();
       mState = Robot.mDrivetrain.mVisionLow.getState();
       Robot.mDrivetrain.mVisionLow.setLimelightState(ledMode.kOn);
       Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOff);
     } else {
-      mTurn = Robot.mDrivetrain.mVision.getOutput();
+      mTurn = (RobotMap.kTurnGain * Robot.mDrivetrain.mVision.getOutput());
       mStatus = Robot.mDrivetrain.mVision.getStatus();
       mState = Robot.mDrivetrain.mVision.getState();
       Robot.mDrivetrain.mVisionLow.setLimelightState(ledMode.kOff);

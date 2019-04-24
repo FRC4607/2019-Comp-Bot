@@ -5,15 +5,15 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.OI;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /******************************************************************************************************************************** 
 ** ELEVATOR JOYSTICK COMMAND
 ********************************************************************************************************************************/
 public class ElevatorJoystick extends Command {
 
-  private final Logger mLogger = LoggerFactory.getLogger(ElevatorJoystick.class);
+  // private final Logger mLogger = LoggerFactory.getLogger(ElevatorJoystick.class);
 
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
@@ -39,7 +39,7 @@ public class ElevatorJoystick extends Command {
     // Apply a gain to the elevator output
     zElevator = zElevator * RobotMap.kElevatorOpenLoopGain;
 
-    int ticks = Robot.mElevator.getSensorPosition();
+    // int ticks = Robot.mElevator.getSensorPosition();
     // mLogger.info("Power: {}, Ticks: {}", zElevator, ticks);
     Robot.mElevator.setOpenLoopOutput(zElevator);
   }

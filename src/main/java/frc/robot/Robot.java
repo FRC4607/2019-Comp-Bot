@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.MultiManipulator;
-import frc.robot.subsystems.Wrist;
+// import frc.robot.subsystems.Wrist;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain.controlMode;
 import frc.robot.lib.controllers.Vision;
-import frc.robot.lib.controllers.LEDs;
+// import frc.robot.lib.controllers.LEDs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
   private boolean mDrivetraiHighGear;
   private boolean mStartSelftestOrCalibration;
   private final Logger mLogger = LoggerFactory.getLogger(Robot.class);
-  private int mCount = 0;
+  // private int mCount = 0;
   
   @Override
   public void robotInit() {
@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
     mDrivetrain.mVisionLow.mVisionThread.startPeriodic(RobotMap.kVisionThreadTime);
     // mLeds.mLEDThread.startPeriodic(RobotMap.kLEDThreadTime);
 
-    mCount = 0;
+    // mCount = 0;
 
   }
 

@@ -9,21 +9,21 @@ import frc.robot.commands.elevator.ElevatorToPosition;
 import frc.robot.commands.climber.ClimbShift;
 // import frc.robot.commands.elevator.ElevatorToPositionInch;
 import frc.robot.commands.drivetrain.DriveJoystickWithVisionAssistTurning;
-import frc.robot.commands.wrist.WristToAngle;
+// import frc.robot.commands.wrist.WristToAngle;
 // import frc.robot.commands.wrist.ZeroWristEncoder;
 // import frc.robot.commands.elevator.ZeroElevatorEncoder;
 import frc.robot.commands.panel.PanelIntakeShift;
 import frc.robot.commands.wrist.WristShift;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /******************************************************************************************************************************** 
 ** OPERATOR/DRIVER INTERFACE CLASS
 ********************************************************************************************************************************/
 public class OI {
 
-  private final Logger mLogger = LoggerFactory.getLogger(OI.class);
+  // private final Logger mLogger = LoggerFactory.getLogger(OI.class);
 
   public static Joystick mDriverJoystick = new Joystick(RobotMap.kDriverJoystick);
   public static Joystick mOperatorJoystick = new Joystick(RobotMap.kOperatorJoystick);
