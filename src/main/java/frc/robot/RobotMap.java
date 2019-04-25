@@ -27,7 +27,7 @@ public class RobotMap {
   public static final int kPigeonId = 11;
   
   //                              COMPETITION
-  public static final double kDeadbandHighGear = 0.22;                            
+  public static final double kDeadbandHighGear = 0.15;                            
   public static final double kDeadbandLowGear = 0.3;                             
 
   //                              PRACTICE
@@ -128,6 +128,7 @@ public class RobotMap {
   public static final double kWristHorizontalAngle = 13.0;
   public static final double kWristUpAngle = 80.0;
   public static final double kWristDownAngle = -30.0;
+  public static final double kWristDefenseAngle = -120.0;
 
 
   //sensor units per 100ms

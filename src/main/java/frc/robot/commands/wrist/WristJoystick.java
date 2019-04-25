@@ -4,11 +4,16 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.OI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /******************************************************************************************************************************** 
 ** ELEVATOR JOYSTICK COMMAND
 ********************************************************************************************************************************/
 public class WristJoystick extends Command {
+
+  private final Logger mLogger = LoggerFactory.getLogger(WristJoystick.class);
 
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
@@ -30,7 +35,11 @@ public class WristJoystick extends Command {
       zWrist = 0.0;
     }
 
-    Robot.mWrist.setOpenOutput(zWrist);
+    if (Robot.mWrist.isDefenseMode() == true) {
+      Robot.mWrist.MotionMagicOutput(Robot.mWrist.degreesToSensorTicks(RobotMap.kWristDefenseAngle) * RobotMap.kWristGearing + RobotMap.kWristTickOffset);
+    } else if (Robot.mWrist.isDefenseMode() == false) {
+      Robot.mWrist.setOpenOutput(zWrist);
+    }
   }
 
   @Override

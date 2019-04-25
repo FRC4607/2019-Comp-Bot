@@ -156,7 +156,7 @@ public class Elevator extends Subsystem {
       mMaster.set(ControlMode.MotionMagic, targetPositionTicks, DemandType.ArbitraryFeedForward, RobotMap.kElevatorFeedForwardDownwards);
     }
     mEncoderPositionTicks = getSensorPosition();
-    mLogger.info("Current Position: {}, Target Position: {}", mEncoderPositionTicks, targetPositionTicks);
+    // mLogger.info("Current Position: {}, Target Position: {}", mEncoderPositionTicks, targetPositionTicks);
   }
 
   /****************************************************************************************************************************** 

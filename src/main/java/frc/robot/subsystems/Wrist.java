@@ -12,6 +12,7 @@ import frc.robot.lib.drivers.TalonSRX;
 import frc.robot.commands.wrist.WristJoystick;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /******************************************************************************************************************************** 
 ** WRIST SUBSYSTEM CLASS
@@ -32,6 +33,7 @@ public class Wrist extends Subsystem {
 
   // Hardware states
   private controlMode mControlState;
+  private boolean mIsDefenseMode;
 
   // Logger
   private final Logger mLogger = LoggerFactory.getLogger(Wrist.class);
@@ -43,6 +45,35 @@ public class Wrist extends Subsystem {
     return mControlState;
   }
 
+  /****************************************************************************************************************************** 
+  ** 
+  ******************************************************************************************************************************/
+  public boolean isDefenseMode() {
+    return mIsDefenseMode;
+  }
+
+  /****************************************************************************************************************************** 
+  ** 
+  ******************************************************************************************************************************/
+  public void setDefenseMode(boolean wantsDefenseMode) {
+    if (wantsDefenseMode && !mIsDefenseMode) {
+      mIsDefenseMode = wantsDefenseMode;
+      mMaster.configContinuousCurrentLimit(2, RobotMap.kLongCANTimeoutMs);
+      mMaster.configPeakCurrentLimit(2, RobotMap.kLongCANTimeoutMs);
+      mMaster.configPeakCurrentDuration(200, RobotMap.kLongCANTimeoutMs);
+      mMaster.enableCurrentLimit(true);
+      SmartDashboard.putBoolean("Wrist in defense mode:", wantsDefenseMode);
+      mLogger.info("Wrist set to defense [True]");
+    } else if (!wantsDefenseMode && mIsDefenseMode) {
+      mIsDefenseMode = wantsDefenseMode;
+      mMaster.configContinuousCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
+      mMaster.configPeakCurrentLimit(30, RobotMap.kLongCANTimeoutMs);
+      mMaster.configPeakCurrentDuration(200, RobotMap.kLongCANTimeoutMs);
+      mMaster.enableCurrentLimit(true);
+      SmartDashboard.putBoolean("Wrist in defense mode:", wantsDefenseMode);
+      mLogger.info("Wrist set to defense [False]");
+    }
+  }
   /****************************************************************************************************************************** 
   ** 
   ******************************************************************************************************************************/
@@ -93,7 +124,7 @@ public class Wrist extends Subsystem {
     } else {
       mWristFFGravityComponent = 0.0;
     }
-    mLogger.info("Encoder position: {}, target position: {}, Feed Forward: {}", mEncoderPositionTicks, targetPositionTicks, mWristFFGravityComponent);
+    // mLogger.info("Encoder position: {}, target position: {}, Feed Forward: {}", mEncoderPositionTicks, targetPositionTicks, mWristFFGravityComponent);
     mMaster.set(ControlMode.MotionMagic, targetPositionTicks, DemandType.ArbitraryFeedForward, mWristFFGravityComponent);
   }
 
@@ -173,6 +204,8 @@ public class Wrist extends Subsystem {
     
     mMaster.set(ControlMode.PercentOutput, 0.0);
 
+    mIsDefenseMode = true;
+    setDefenseMode(false);
   }
 
   public static Wrist create() {

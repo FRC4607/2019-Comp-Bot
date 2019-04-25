@@ -13,6 +13,8 @@ import frc.robot.lib.controllers.Vision;
 import frc.robot.lib.controllers.LEDs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import frc.robot.lib.drivers.Limelight.ledMode;
+
 
 /******************************************************************************************************************************** 
 ** ROBOT SUBSYSTEM CLASS
@@ -53,6 +55,13 @@ public class Robot extends TimedRobot {
     mDrivetrain.mVision.mVisionThread.stop();
     mDrivetrain.mVisionLow.mVisionThread.stop();
     mLeds.mLEDThread.stop();
+
+    if (mDrivetrain.mVision.getLedMode() != -1.0) {
+      mDrivetrain.mVision.setLimelightState(ledMode.kOff);
+    }
+    if (mDrivetrain.mVisionLow.getLedMode() != -1.0) {
+      mDrivetrain.mVisionLow.setLimelightState(ledMode.kOff);  
+    }
   }
 
   @Override
@@ -64,6 +73,9 @@ public class Robot extends TimedRobot {
 
     mCount = 0;
 
+    // Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOff);
+    // Robot.mDrivetrain.mVisionLow.setLimelightState(ledMode.kOff);
+  
   }
 
   @Override

@@ -34,8 +34,8 @@ public class Vision {
           mStatus = Status.kTargeting;
         }
 
-        double x = mDesiredLimelightState.ordinal();
-        double y = mLimelight.getLedMode();
+        // double x = mDesiredLimelightState.ordinal();
+        // double y = mLimelight.getLedMode();
         // mLogger.info("Desired State: {}, Current State: {}", x, y);
 
         if (mDesiredLimelightState.ordinal() != mLimelight.getLedMode()) {
@@ -85,6 +85,10 @@ public class Vision {
 
   public synchronized State getState() {
     return mState;
+  }
+
+  public synchronized double getLedMode() {
+    return mLimelight.getLedMode();
   }
 
   public synchronized void setState(State state) {

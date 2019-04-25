@@ -252,8 +252,8 @@ public class Drivetrain extends Subsystem {
 
     // Start off in open-loop
     mControlState = controlMode.kOpenLoop;
-    mIsHighGear = false;
-    setHighGear(true);
+    mIsHighGear = true;
+    setHighGear(false);
     mIsCompressorClosedLoop = false;
     setCompressorClosedLoop(true);
     mIsBrakeMode = false;

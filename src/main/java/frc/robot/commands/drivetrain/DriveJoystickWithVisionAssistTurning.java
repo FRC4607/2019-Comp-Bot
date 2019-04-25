@@ -7,6 +7,10 @@ import frc.robot.OI;
 import frc.robot.lib.controllers.Vision;
 import frc.robot.lib.drivers.Limelight.ledMode;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 /******************************************************************************************************************************** 
 ** DRIVEJOYSTICKWITHVISIONASSIST DRIVETRAIN COMMAND
 ********************************************************************************************************************************/
@@ -19,12 +23,14 @@ public class DriveJoystickWithVisionAssistTurning extends InstantCommand {
 
   int elevatorTickPosition;
 
+  private final Logger mLogger = LoggerFactory.getLogger(DriveJoystickWithVisionAssistTurning.class);
+  
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
   public DriveJoystickWithVisionAssistTurning() {
     super();
-    requires(Robot.mDrivetrain);;
+    requires(Robot.mDrivetrain);
   }
 
   /****************************************************************************************************************************** 
@@ -36,18 +42,24 @@ public class DriveJoystickWithVisionAssistTurning extends InstantCommand {
 
     elevatorTickPosition = Robot.mElevator.getSensorPosition();
 
+    // mTurn = Robot.mDrivetrain.mVision.getOutput();
+    // mStatus = Robot.mDrivetrain.mVision.getStatus();
+    // mState = Robot.mDrivetrain.mVision.getState();
+
+    // Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOn);
+
     if (elevatorTickPosition > RobotMap.kElevatorLimelightLowPos) {
       mTurn = Robot.mDrivetrain.mVisionLow.getOutput();
       mStatus = Robot.mDrivetrain.mVisionLow.getStatus();
       mState = Robot.mDrivetrain.mVisionLow.getState();
       Robot.mDrivetrain.mVisionLow.setLimelightState(ledMode.kOn);
-      Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOff);
+      mLogger.info("Using low limelight");
     } else {
       mTurn = Robot.mDrivetrain.mVision.getOutput();
       mStatus = Robot.mDrivetrain.mVision.getStatus();
       mState = Robot.mDrivetrain.mVision.getState();
-      Robot.mDrivetrain.mVisionLow.setLimelightState(ledMode.kOff);
       Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOn);
+      mLogger.info("Using high limelight");
     }
     
     // Apply a deadband to the joystick
