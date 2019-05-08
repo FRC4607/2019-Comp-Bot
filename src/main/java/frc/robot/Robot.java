@@ -55,13 +55,6 @@ public class Robot extends TimedRobot {
     mDrivetrain.mVision.mVisionThread.stop();
     mDrivetrain.mVisionLow.mVisionThread.stop();
     mLeds.mLEDThread.stop();
-
-    if (mDrivetrain.mVision.getLedMode() != -1.0) {
-      mDrivetrain.mVision.setLimelightState(ledMode.kOff);
-    }
-    if (mDrivetrain.mVisionLow.getLedMode() != -1.0) {
-      mDrivetrain.mVisionLow.setLimelightState(ledMode.kOff);  
-    }
   }
 
   @Override
@@ -73,6 +66,12 @@ public class Robot extends TimedRobot {
 
     mCount = 0;
 
+    if (mDrivetrain.mVision.getLedMode() != -1.0) {
+      mDrivetrain.mVision.setLimelightState(ledMode.kOff);
+    }
+    if (mDrivetrain.mVisionLow.getLedMode() != -1.0) {
+      mDrivetrain.mVisionLow.setLimelightState(ledMode.kOff);  
+    }
     // Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOff);
     // Robot.mDrivetrain.mVisionLow.setLimelightState(ledMode.kOff);
   

@@ -125,7 +125,7 @@ public class RobotMap {
   public static final int kWristTickOffset = 550;
 
   // Wrist positions for closed loop
-  public static final double kWristHorizontalAngle = 13.0;
+  public static final double kWristHorizontalAngle = 11.5;
   public static final double kWristUpAngle = 80.0;
   public static final double kWristDownAngle = -30.0;
   public static final double kWristDefenseAngle = -120.0;

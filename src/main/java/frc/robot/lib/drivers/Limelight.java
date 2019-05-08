@@ -36,16 +36,25 @@ public class Limelight {
     stop, // 0	Stop taking snapshots
     start // 1	Take two snapshots per second
   }
+  private void defaultConfiguration() {    
+    setLedMode(ledMode.kOn);
+    setCamMode(camMode.kDriver);
+    setPipeline(pipeline.k0);
+    setSnapshot(snapshot.stop);
+    setStream(stream.kPipMain);
+  }
 
   /****************************************************************************************************************************** 
   ** CONSTRUCTORS
   ******************************************************************************************************************************/
   public Limelight() {
     mTable = NetworkTableInstance.getDefault().getTable("limelight");
+    defaultConfiguration();
   }
 
   public Limelight(String tableName) {
     mTable = NetworkTableInstance.getDefault().getTable(tableName);
+    defaultConfiguration();
   }
 
   /****************************************************************************************************************************** 
