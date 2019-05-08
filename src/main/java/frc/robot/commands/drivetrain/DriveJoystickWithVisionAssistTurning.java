@@ -46,23 +46,21 @@ public class DriveJoystickWithVisionAssistTurning extends InstantCommand {
     mStatus = Robot.mDrivetrain.mVision.getStatus();
     mState = Robot.mDrivetrain.mVision.getState();
 
-    Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOn);
+    // Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOn);
 
-    // if (elevatorTickPosition > RobotMap.kElevatorLimelightLowPos) {
-    //   mTurn = Robot.mDrivetrain.mVisionLow.getOutput();
-    //   mStatus = Robot.mDrivetrain.mVisionLow.getStatus();
-    //   mState = Robot.mDrivetrain.mVisionLow.getState();
-    //   Robot.mDrivetrain.mVisionLow.setLimelightState(ledMode.kOn);
-    //   Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOff);
-    //   mLogger.info("Using low limelight");
-    // } else {
-    //   mTurn = Robot.mDrivetrain.mVision.getOutput();
-    //   mStatus = Robot.mDrivetrain.mVision.getStatus();
-    //   mState = Robot.mDrivetrain.mVision.getState();
-    //   Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOn);
-    //   Robot.mDrivetrain.mVisionLow.setLimelightState(ledMode.kOff);
-    //   mLogger.info("Using high limelight");
-    // }
+    if (elevatorTickPosition > RobotMap.kElevatorLimelightLowPos) {
+      mTurn = Robot.mDrivetrain.mVisionLow.getOutput();
+      mStatus = Robot.mDrivetrain.mVisionLow.getStatus();
+      mState = Robot.mDrivetrain.mVisionLow.getState();
+      Robot.mDrivetrain.mVisionLow.setLimelightState(ledMode.kOn);
+      mLogger.info("Using low limelight");
+    } else {
+      mTurn = Robot.mDrivetrain.mVision.getOutput();
+      mStatus = Robot.mDrivetrain.mVision.getStatus();
+      mState = Robot.mDrivetrain.mVision.getState();
+      Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOn);
+      mLogger.info("Using high limelight");
+    }
     
     // Apply a deadband to the joystick
     if (mThrottle < RobotMap.kDeadbandJoystick && mThrottle > -RobotMap.kDeadbandJoystick) {
