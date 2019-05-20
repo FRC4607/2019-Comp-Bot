@@ -15,15 +15,15 @@ import frc.robot.commands.wrist.WristToAngle;
 import frc.robot.commands.panel.PanelIntakeShift;
 import frc.robot.commands.drivetrain.limelightLEDOff;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /******************************************************************************************************************************** 
 ** OPERATOR/DRIVER INTERFACE CLASS
 ********************************************************************************************************************************/
 public class OI {
 
-  private final Logger mLogger = LoggerFactory.getLogger(OI.class);
+  // private final Logger mLogger = LoggerFactory.getLogger(OI.class);
 
   public static Joystick mDriverJoystick = new Joystick(RobotMap.kDriverJoystick);
   public static Joystick mOperatorJoystick = new Joystick(RobotMap.kOperatorJoystick);
@@ -67,6 +67,10 @@ public class OI {
     mElevatorToSecondLevel.whileHeld(new ElevatorToPosition(RobotMap.kElevatorSecondLevel));
     mElevatorToThirdLevel.whileHeld(new ElevatorToPosition(RobotMap.kElevatorThirdLevel));
 
+
+    mElevatorToFirstLevel.whileHeld(new WristToAngle(RobotMap.kWristHorizontalAngle));
+    mElevatorToSecondLevel.whileHeld(new WristToAngle(RobotMap.kWristHorizontalAngle));
+    mElevatorToThirdLevel.whileHeld(new WristToAngle(RobotMap.kWristHorizontalAngle));
     // mElevatorToFirstLevel.whileHeld(new ElevatorToPositionInch(19));
     // mElevatorToSecondLevel.whileHeld(new ElevatorToPositionInch(48));
     // mElevatorToThirdLevel.whileHeld(new ElevatorToPositionInch(60));

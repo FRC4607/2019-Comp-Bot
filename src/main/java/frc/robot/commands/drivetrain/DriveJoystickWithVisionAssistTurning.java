@@ -61,7 +61,7 @@ public class DriveJoystickWithVisionAssistTurning extends InstantCommand {
       Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOn);
       mLogger.info("Using high limelight");
     }
-    
+
     // Apply a deadband to the joystick
     if (mThrottle < RobotMap.kDeadbandJoystick && mThrottle > -RobotMap.kDeadbandJoystick) {
       mThrottle = 0.0;

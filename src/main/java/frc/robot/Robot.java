@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
   private boolean mDrivetraiHighGear;
   private boolean mStartSelftestOrCalibration;
   private final Logger mLogger = LoggerFactory.getLogger(Robot.class);
-  private int mCount = 0;
+  // private int mCount = 0;
   
   @Override
   public void robotInit() {
@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
     mDrivetrain.mVisionLow.mVisionThread.startPeriodic(RobotMap.kVisionThreadTime);
     mLeds.mLEDThread.startPeriodic(RobotMap.kLEDThreadTime);
 
-    mCount = 0;
+    // mCount = 0;
 
     if (mDrivetrain.mVision.getLedMode() != -1.0) {
       mDrivetrain.mVision.setLimelightState(ledMode.kOff);

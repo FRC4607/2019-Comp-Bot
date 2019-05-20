@@ -23,8 +23,8 @@ public class IntakeJoystick extends Command {
   @Override
   protected void execute() {
 
-    double xCargoOuttake = -OI.mOperatorJoystick.getRawAxis(3);
-    double xCargoIntake = OI.mOperatorJoystick.getRawAxis(2);
+    double xCargoOuttake = (-1.0 * OI.mOperatorJoystick.getRawAxis(3));
+    double xCargoIntake = (1.0 * OI.mOperatorJoystick.getRawAxis(2));
 
     if (xCargoOuttake < -RobotMap.kDeadbandJoystick) {
       Robot.mMultiManipulator.setOpenLoop(xCargoOuttake);

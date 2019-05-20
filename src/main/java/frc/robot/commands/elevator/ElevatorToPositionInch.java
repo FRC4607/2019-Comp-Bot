@@ -28,7 +28,6 @@ public class ElevatorToPositionInch extends InstantCommand {
   ******************************************************************************************************************************/
   @Override
   protected void initialize() {
-    // TODO: add gain for gearing 
     Robot.mElevator.MotionMagicOutput(-Robot.mElevator.Math(mTargetPosition));
     Robot.mElevator.setOpenLoopControl();
   }

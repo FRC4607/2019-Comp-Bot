@@ -4,16 +4,15 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.OI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /******************************************************************************************************************************** 
 ** ELEVATOR JOYSTICK COMMAND
 ********************************************************************************************************************************/
 public class WristJoystick extends Command {
 
-  private final Logger mLogger = LoggerFactory.getLogger(WristJoystick.class);
+  // private final Logger mLogger = LoggerFactory.getLogger(WristJoystick.class);
 
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
