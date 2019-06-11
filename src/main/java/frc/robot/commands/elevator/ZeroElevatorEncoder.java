@@ -22,14 +22,4 @@ public class ZeroElevatorEncoder extends InstantCommand {
   protected void initialize() {
     Robot.mElevator.zeroSensorPosition();
   }
-
-  // @Override
-  // protected void execute() {
-  //   // Robot.mWrist.MotionMagicOutput(mTargetAngle);
-  // }
-
-  // @Override
-  // protected boolean isFinished() {
-  //   return false;
-  // }
 }

@@ -8,12 +8,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-// import com.ctre.phoenix.ErrorCode;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
-// import edu.wpi.first.wpilibj.Timer;
 import frc.robot.commands.elevator.ElevatorJoystick;
-// import frc.robot.commands.elevator.ElevatorToPosition;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -129,9 +126,7 @@ public class Elevator extends Subsystem {
   public void ApplyDriveSignal(double throttle) {
     double mThrottle = 0.0;
     
-    // This is inverted/not inverted along with the motor outputs in order go get the forward/reverse limit switches to work
-    
-    //                          COMPETITION BOT
+    // This is inverted alongside the motors in order to create working limit switches
     mThrottle = throttle * 1.0;
 
     if (mControlState == controlMode.kOpenLoop) {
@@ -198,18 +193,17 @@ public int getSensorPosition() {
     mMaster = master;
     mFollow = follower;
 
-    // Force a brake mode message
     mIsBrakeMode = false;
     setBrakeMode(true);
 
     mIsInverted = true;
     InvertOutput(false);
 
-    //                                 COMPETITION BOT
-    // These are inverted along with the joystick inputs in order go get the forward/reverse limit switches to work
+    // This is inverted alongside the joystick inputs in order to create working limit switches
     mMaster.setInverted(true);
     mFollow.setInverted(true);
-    // Get the mag encoder sensor in-phase with the motors, possibly false for practice robot
+
+    // Get the mag encoder sensor in-phase with the motors
     mFollow.setSensorPhase(true);
     mMaster.setSensorPhase(true);
 
@@ -217,7 +211,6 @@ public int getSensorPosition() {
     mFollow.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.kElevatorPIDLoopIdx, RobotMap.kLongCANTimeoutMs);
     mMaster.configRemoteFeedbackFilter(RobotMap.kElevatorMotorFollowerId, RemoteSensorSource.TalonSRX_SelectedSensor , 0);
     mMaster.configSelectedFeedbackSensor(RemoteFeedbackDevice.RemoteSensor0, RobotMap.kElevatorPIDLoopIdx, RobotMap.kLongCANTimeoutMs);
-    // mMaster.configSelectedFeedbackSensor(FeedbackDevice.Analog, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);
     mMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, RobotMap.kLongCANTimeoutMs);
     mMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.kLongCANTimeoutMs);
     mMaster.setSelectedSensorPosition(0, RobotMap.kElevatorPIDLoopIdx, RobotMap.kLongCANTimeoutMs);    

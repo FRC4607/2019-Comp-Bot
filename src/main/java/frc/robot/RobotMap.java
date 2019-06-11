@@ -16,13 +16,8 @@ public class RobotMap {
   public static final int kRightDriveFollowerAId = 11;                              // Has Pigeon attached
   public static final int kRightDriveFollowerBId = 12;
 
-//                              COMPETITION
   public static final int kShifterHighGearSolenoidId = 3;
   public static final int kShifterLowGearSolenoidId = 2;
-
-  //                             PRACTICE
-  // public static final int kShifterHighGearSolenoidId = 0;
-  // public static final int kShifterLowGearSolenoidId = 1;
 
   public static final int kPigeonId = 11;
   
@@ -74,15 +69,6 @@ public class RobotMap {
   public static final int kVelocityElevator = 12000;                
   public static final int kAccelerationElevator = 12000;                 
   
-  //                            PRACTICE
-  // From Ground: 1st = 19in, 2nd = 50in, 3rd = 76in
-  // Elevator positions for closed loop in encoder ticks
-  // public static final int kElevatorFirstLevel = -4200;     
-  // public static final int kElevatorSecondLevel = -19500; 
-  // public static final int kElevatorThirdLevel = -28000; 
-  public static final int kElevatorLowerLimit = 0;
-
-  //                          COMPETITION
   public static final int kElevatorFirstLevel = 0;            
   public static final int kElevatorSecondLevel = 14350;     
   public static final int kElevatorThirdLevel = 29800;      
@@ -134,19 +120,10 @@ public class RobotMap {
   ** MULTI-MANIPULATOR SUBSYSTEM
   ********************************************************************************************************************************/
   
-  //                                  COMPETITION
   public static final int kCargoMotorId = 20;                                   
-  //                                 PRACTICE
-  // public static final int kCargoMotorId = 15;
-  
 
-  //                      COMPETITION
   public static final int kPanelForwardId = 0;
   public static final int kPanelReverseId = 1;  
-
-  //                      PRAACTICE
-  // public static final int kPanelForwardId = 2;
-  // public static final int kPanelReverseId = 3;  
 
   /******************************************************************************************************************************** 
   ** JOYSTICKS

@@ -22,14 +22,4 @@ public class ZeroWristEncoder extends InstantCommand {
   protected void initialize() {
     Robot.mWrist.zeroEncoder();
   }
-
-  // @Override
-  // protected void execute() {
-  //   // Robot.mWrist.MotionMagicOutput(mTargetAngle);
-  // }
-
-  // @Override
-  // protected boolean isFinished() {
-  //   return false;
-  // }
 }

@@ -42,12 +42,6 @@ public class DriveJoystickWithVisionAssistTurning extends InstantCommand {
 
     elevatorTickPosition = Robot.mElevator.getSensorPosition();
 
-    mTurn = Robot.mDrivetrain.mVision.getOutput();
-    mStatus = Robot.mDrivetrain.mVision.getStatus();
-    mState = Robot.mDrivetrain.mVision.getState();
-
-    // Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOn);
-
     if (elevatorTickPosition > RobotMap.kElevatorLimelightLowPos) {
       mTurn = Robot.mDrivetrain.mVisionLow.getOutput();
       mStatus = Robot.mDrivetrain.mVisionLow.getStatus();

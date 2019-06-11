@@ -14,7 +14,6 @@ import frc.robot.Robot;
 public class ElevatorToPosition extends InstantCommand {
 
   private int mTargetPosition;
-  // private final Logger mLogger = LoggerFactory.getLogger(ElevatorToPosition.class);
 
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
@@ -35,9 +34,6 @@ public class ElevatorToPosition extends InstantCommand {
 
   @Override
   protected void execute() {
-    // Note that on an Xbox Controller, a positive input is to the bottom-right
-    // double zElevatorPosition = OI.mOperatorJoystick.getPOV();
-    // mLogger.info("Position: {}", zElevatorPosition);
   }
 
 }

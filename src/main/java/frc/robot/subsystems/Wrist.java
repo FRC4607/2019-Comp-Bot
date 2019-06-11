@@ -142,7 +142,6 @@ public class Wrist extends Subsystem {
 
     // Configure the feedback sensor
     mMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);
-    // mMaster.configSelectedFeedbackSensor(FeedbackDevice.Analog, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);
     mMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, RobotMap.kLongCANTimeoutMs);
     mMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.kLongCANTimeoutMs);
     mMaster.setSelectedSensorPosition(0, RobotMap.kPIDLoopIdx, RobotMap.kLongCANTimeoutMs);    
@@ -176,32 +175,13 @@ public class Wrist extends Subsystem {
     mMaster.configPeakCurrentDuration(200, RobotMap.kLongCANTimeoutMs);
     mMaster.enableCurrentLimit(true);
 
-    // Limit switches
-/*     mMaster.configForwardLimitSwitchSource();
-    mMaster.configReverseLimitSwitchSource();
-    mMaster.configForwardSoftLimitThreshold();
-    mMaster.configForwardSoftLimitEnable();
-    mMaster.configReverseSoftLimitThreshold();
-    mMaster.configReverseSoftLimitEnable();
-    // DO NOT reset encoder positions on limit switch
-    mMaster.configSetParameter(ParamEnum.eClearPositionOnLimitF, 0, 0, 0, 0);
-    mMaster.configSetParameter(ParamEnum.eClearPositionOnLimitR, 0, 0, 0, 0); */
-
     // Set closed loop to Motion Magic
     mMaster.selectProfileSlot(RobotMap.kMotionMagicSlotIdx, RobotMap.kPIDLoopIdx);
 
     // A +'ve motor ouptut needs to move the wrist up and a -'ve output needs to move the wrist down
-   
-    //                                 COMPETITION
     mMaster.setInverted(false);
     mMaster.setSensorPhase(false);
-
-    //                                PRACTICE BOT
-    // mMaster.setInverted(true);
-    // mMaster.setSensorPhase(true);
-
     mMaster.setNeutralMode(NeutralMode.Brake);
-    
     mMaster.set(ControlMode.PercentOutput, 0.0);
 
     mIsDefenseMode = true;

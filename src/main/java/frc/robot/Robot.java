@@ -72,9 +72,6 @@ public class Robot extends TimedRobot {
     if (mDrivetrain.mVisionLow.getLedMode() != -1.0) {
       mDrivetrain.mVisionLow.setLimelightState(ledMode.kOff);  
     }
-    // Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOff);
-    // Robot.mDrivetrain.mVisionLow.setLimelightState(ledMode.kOff);
-  
   }
 
   @Override

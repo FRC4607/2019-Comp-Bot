@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
 import frc.robot.lib.drivers.TalonSRX;
-// import frc.robot.lib.drivers.VictorSPX;
 import frc.robot.lib.controllers.Vision;
 import frc.robot.commands.drivetrain.DriveJoystick;
 import edu.wpi.first.wpilibj.Timer;
@@ -14,7 +13,6 @@ import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-// import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
