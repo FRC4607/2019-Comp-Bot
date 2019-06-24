@@ -21,8 +21,8 @@ public class LimelightTest {
   public void ledModeCheck(ledMode lmode, double checkValue) {
 		mLimelight1.setLedMode(lmode);
 		mLimelight2.setLedMode(lmode);
-		assertEquals(checkValue, mLimelight1.getLedMode(), 0.0);
-		assertEquals(checkValue, mLimelight2.getLedMode(), 0.0);
+		assertEquals(checkValue, mLimelight1.getLedMode(), 3.0);
+		assertEquals(checkValue, mLimelight2.getLedMode(), 3.0);
   }
 
   public void camModeCheck(camMode cmode, double checkValue) {
@@ -58,7 +58,7 @@ public class LimelightTest {
 		ledModeCheck(ledMode.kCurrentPipeline, 0.0);
 		ledModeCheck(ledMode.kOff, 1.0);
 		ledModeCheck(ledMode.kBlink, 2.0);
-		ledModeCheck(ledMode.kOn, 3.0);		
+		ledModeCheck(ledMode.kOff, 3.0);		
   }
 	
   @Test

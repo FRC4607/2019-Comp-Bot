@@ -1,44 +1,28 @@
-package frc.robot.commands.cargo;
+package frc.robot.commands.drivetrain;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
-import frc.robot.OI;
-import frc.robot.RobotMap;
+import frc.robot.lib.drivers.Limelight.ledMode;
 
 /******************************************************************************************************************************** 
-** CARGOJOYSTICK COMMAND
+** SHIFT DRIVETRAIN COMMAND
 ********************************************************************************************************************************/
-public class IntakeJoystick extends Command {
+public class limelightLEDOff extends InstantCommand {
   
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
-  public IntakeJoystick() {
-    requires(Robot.mMultiManipulator);
+  public limelightLEDOff() {
+    super();
+    requires(Robot.mDrivetrain);
   }
 
   /****************************************************************************************************************************** 
   ** COMMAND OVERRIDES
   ******************************************************************************************************************************/
   @Override
-  protected void execute() {
-
-    double xCargoOuttake = (-1.0 * OI.mOperatorJoystick.getRawAxis(3));
-    double xCargoIntake = (1.0 * OI.mOperatorJoystick.getRawAxis(2));
-
-    if (xCargoOuttake < -RobotMap.kDeadbandJoystick) {
-      Robot.mMultiManipulator.setOpenLoop(xCargoOuttake);
-    } else if (xCargoIntake > RobotMap.kDeadbandJoystick) {
-      Robot.mMultiManipulator.setOpenLoop(xCargoIntake);
-    } else {
-      Robot.mMultiManipulator.CargoStop();
-    }
-
+  protected void initialize() {
+    Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOff);
+    Robot.mDrivetrain.mVisionLow.setLimelightState(ledMode.kOff);
   }
-
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
-  
 }

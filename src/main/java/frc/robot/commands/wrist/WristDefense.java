@@ -1,44 +1,25 @@
-package frc.robot.commands.cargo;
+package frc.robot.commands.wrist;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
-import frc.robot.OI;
-import frc.robot.RobotMap;
 
 /******************************************************************************************************************************** 
-** CARGOJOYSTICK COMMAND
+** ELEVATOR JOYSTICK COMMAND
 ********************************************************************************************************************************/
-public class IntakeJoystick extends Command {
-  
+public class WristDefense extends InstantCommand {
+
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
-  public IntakeJoystick() {
-    requires(Robot.mMultiManipulator);
+  public WristDefense() {
+    requires(Robot.mWrist);
   }
 
   /****************************************************************************************************************************** 
   ** COMMAND OVERRIDES
   ******************************************************************************************************************************/
   @Override
-  protected void execute() {
-
-    double xCargoOuttake = (-1.0 * OI.mOperatorJoystick.getRawAxis(3));
-    double xCargoIntake = (1.0 * OI.mOperatorJoystick.getRawAxis(2));
-
-    if (xCargoOuttake < -RobotMap.kDeadbandJoystick) {
-      Robot.mMultiManipulator.setOpenLoop(xCargoOuttake);
-    } else if (xCargoIntake > RobotMap.kDeadbandJoystick) {
-      Robot.mMultiManipulator.setOpenLoop(xCargoIntake);
-    } else {
-      Robot.mMultiManipulator.CargoStop();
-    }
-
+  protected void initialize() {
+    Robot.mWrist.setDefenseMode(!Robot.mWrist.isDefenseMode());
   }
-
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
-  
 }

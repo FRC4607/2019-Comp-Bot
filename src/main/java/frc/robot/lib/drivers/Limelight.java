@@ -36,7 +36,6 @@ public class Limelight {
     stop, // 0	Stop taking snapshots
     start // 1	Take two snapshots per second
   }
-
   private void defaultConfiguration() {    
     setLedMode(ledMode.kOn);
     setCamMode(camMode.kDriver);

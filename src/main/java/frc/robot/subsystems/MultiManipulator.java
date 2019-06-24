@@ -38,9 +38,9 @@ public class MultiManipulator extends Subsystem {
     mCargoMotor.set(xCargo);
   }
 
-  /**
- Shifts the panel intake to the opposite position (i.e, if currently open will close)
- **/
+/****************************************************************************************************************************** 
+  ** SHIFTS PANEL TO OPPOSITE STATE
+  ******************************************************************************************************************************/
   public void shiftPanelIntake(boolean wantsPanelOpen) {
     if (wantsPanelOpen == true) {
       mPanelActuator.set(DoubleSolenoid.Value.kForward);

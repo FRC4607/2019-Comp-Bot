@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
 import frc.robot.lib.drivers.TalonSRX;
-// import frc.robot.lib.drivers.VictorSPX;
 import frc.robot.lib.controllers.Vision;
 import frc.robot.commands.drivetrain.DriveJoystick;
 import edu.wpi.first.wpilibj.Timer;
@@ -14,7 +13,6 @@ import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-// import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,6 +50,7 @@ public class Drivetrain extends Subsystem {
 
   // Closed-loop control with vision feedback
   public final Vision mVision;
+  public final Vision mVisionLow;
 
   // Misc.
   private final Logger mLogger = LoggerFactory.getLogger(Drivetrain.class);
@@ -231,7 +230,7 @@ public class Drivetrain extends Subsystem {
   ******************************************************************************************************************************/
   public Drivetrain(WPI_TalonSRX leftLeader, WPI_TalonSRX leftFollowerA, WPI_TalonSRX leftFollowerB, 
                     WPI_TalonSRX rightLeader, WPI_TalonSRX rightFollowerA, WPI_TalonSRX rightFollowerB,
-                    DoubleSolenoid shifter, Vision vision, Compressor compressor, DifferentialDrive diffDrive) {
+                    DoubleSolenoid shifter, Vision vision, Vision visionLow, Compressor compressor, DifferentialDrive diffDrive) {
 
     mLeftLeader = leftLeader;
     mLeftFollowerA = leftFollowerA; 
@@ -242,6 +241,7 @@ public class Drivetrain extends Subsystem {
     mRightFollowerB = rightFollowerB;
 
     mVision = vision;
+    mVisionLow = visionLow;
     mShifter = shifter;
     mCompressor = compressor;
 
@@ -250,8 +250,8 @@ public class Drivetrain extends Subsystem {
 
     // Start off in open-loop
     mControlState = controlMode.kOpenLoop;
-    mIsHighGear = false;
-    setHighGear(true);
+    mIsHighGear = true;
+    setHighGear(false);
     mIsCompressorClosedLoop = false;
     setCompressorClosedLoop(true);
     mIsBrakeMode = false;
@@ -282,12 +282,13 @@ public class Drivetrain extends Subsystem {
     DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.kPCMId, RobotMap.kShifterHighGearSolenoidId, RobotMap.kShifterLowGearSolenoidId);
 
     Vision vision = Vision.create();
+    Vision visionLow = Vision.create("limelight-low");
 
     Compressor compressor = new Compressor(RobotMap.kPCMId);
 
     DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader);
 
-    return new Drivetrain(leftLeader, leftFollowerA, leftFollowerB, rightLeader, rightFollowerA, rightFollowerB, shifter, vision, compressor, diffDrive);
+    return new Drivetrain(leftLeader, leftFollowerA, leftFollowerB, rightLeader, rightFollowerA, rightFollowerB, shifter, vision, visionLow, compressor, diffDrive);
  }
 
   /****************************************************************************************************************************** 

@@ -13,6 +13,8 @@ import frc.robot.lib.controllers.Vision;
 import frc.robot.lib.controllers.LEDs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import frc.robot.lib.drivers.Limelight.ledMode;
+
 
 /******************************************************************************************************************************** 
 ** ROBOT SUBSYSTEM CLASS
@@ -30,7 +32,7 @@ public class Robot extends TimedRobot {
   private boolean mDrivetraiHighGear;
   private boolean mStartSelftestOrCalibration;
   private final Logger mLogger = LoggerFactory.getLogger(Robot.class);
-  private int mCount = 0;
+  // private int mCount = 0;
   
   @Override
   public void robotInit() {
@@ -51,6 +53,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     mDrivetrain.mVision.mVisionThread.stop();
+    mDrivetrain.mVisionLow.mVisionThread.stop();
     mLeds.mLEDThread.stop();
   }
 
@@ -58,10 +61,17 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     mLogger.info("<=========== AUTONOMOUS INIT ===========>");
     mDrivetrain.mVision.mVisionThread.startPeriodic(RobotMap.kVisionThreadTime);
+    mDrivetrain.mVisionLow.mVisionThread.startPeriodic(RobotMap.kVisionThreadTime);
     mLeds.mLEDThread.startPeriodic(RobotMap.kLEDThreadTime);
 
-    mCount = 0;
+    // mCount = 0;
 
+    if (mDrivetrain.mVision.getLedMode() != -1.0) {
+      mDrivetrain.mVision.setLimelightState(ledMode.kOff);
+    }
+    if (mDrivetrain.mVisionLow.getLedMode() != -1.0) {
+      mDrivetrain.mVisionLow.setLimelightState(ledMode.kOff);  
+    }
   }
 
   @Override
@@ -86,6 +96,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     mLogger.info("<=========== TELEOP INIT ===========>");
     mDrivetrain.mVision.mVisionThread.startPeriodic(RobotMap.kVisionThreadTime);
+    mDrivetrain.mVisionLow.mVisionThread.startPeriodic(RobotMap.kVisionThreadTime);
     mLeds.mLEDThread.startPeriodic(RobotMap.kLEDThreadTime);
   }
 

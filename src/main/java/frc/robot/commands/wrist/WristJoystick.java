@@ -30,7 +30,11 @@ public class WristJoystick extends Command {
       zWrist = 0.0;
     }
 
-    Robot.mWrist.setOpenOutput(zWrist);
+    if (Robot.mWrist.isDefenseMode() == true) {
+      Robot.mWrist.MotionMagicOutput(Robot.mWrist.degreesToSensorTicks(RobotMap.kWristDefenseAngle) * RobotMap.kWristGearing + RobotMap.kWristTickOffset);
+    } else if (Robot.mWrist.isDefenseMode() == false) {
+      Robot.mWrist.setOpenOutput(zWrist);
+    }
   }
 
   @Override
