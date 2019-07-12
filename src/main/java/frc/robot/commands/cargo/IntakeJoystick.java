@@ -4,12 +4,17 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.OI;
 import frc.robot.RobotMap;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
+
 
 /******************************************************************************************************************************** 
 ** CARGOJOYSTICK COMMAND
 ********************************************************************************************************************************/
 public class IntakeJoystick extends Command {
-  
+
+  // private final Logger mLogger = LoggerFactory.getLogger(Robot.class);
+
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
@@ -31,10 +36,10 @@ public class IntakeJoystick extends Command {
     } else if (xCargoIntake > RobotMap.kDeadbandJoystick) {
       Robot.mMultiManipulator.setOpenLoop(xCargoIntake);
     } else {
-      Robot.mMultiManipulator.CargoStop();
-    }
-
+      Robot.mMultiManipulator.CargoLowCurrent();
+      // mLogger.info("wrist current enabled");
   }
+ }
 
   @Override
   protected boolean isFinished() {

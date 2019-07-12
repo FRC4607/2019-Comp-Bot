@@ -28,13 +28,12 @@ public class OI {
   public static Joystick mDriverJoystick = new Joystick(RobotMap.kDriverJoystick);
   public static Joystick mOperatorJoystick = new Joystick(RobotMap.kOperatorJoystick);
   
-  // Driver control
+  // Driver controls
   public static Button mShift = new JoystickButton(mDriverJoystick, 1);
   public static Button mPanelShift = new JoystickButton(mDriverJoystick, 2);
   public static Button mVisionAssistedTurning = new JoystickButton(mDriverJoystick, 3);
   
-  // Operator control
-
+  // Operator controls
   // Wrist 
   public static Button mWristToIntake = new JoystickButton(mOperatorJoystick, 1);
   public static Button mWristToUp = new JoystickButton(mOperatorJoystick, 4);

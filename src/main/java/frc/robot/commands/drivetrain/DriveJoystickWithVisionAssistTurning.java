@@ -47,12 +47,14 @@ public class DriveJoystickWithVisionAssistTurning extends InstantCommand {
       mStatus = Robot.mDrivetrain.mVisionLow.getStatus();
       mState = Robot.mDrivetrain.mVisionLow.getState();
       Robot.mDrivetrain.mVisionLow.setLimelightState(ledMode.kOn);
+      Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOff);
       mLogger.info("Using low limelight");
     } else {
       mTurn = Robot.mDrivetrain.mVision.getOutput();
       mStatus = Robot.mDrivetrain.mVision.getStatus();
       mState = Robot.mDrivetrain.mVision.getState();
       Robot.mDrivetrain.mVision.setLimelightState(ledMode.kOn);
+      Robot.mDrivetrain.mVisionLow.setLimelightState(ledMode.kOff);
       mLogger.info("Using high limelight");
     }
 

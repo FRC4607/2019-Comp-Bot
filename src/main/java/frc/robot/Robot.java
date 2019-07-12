@@ -1,5 +1,5 @@
 package frc.robot;
-
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -29,6 +29,7 @@ public class Robot extends TimedRobot {
   public static OI mOI = new OI();
   private Vision.Status mVisionStatus;
   private Drivetrain.controlMode mDrivetrainState;
+    // TODO: figure out why mDrivetrainState is not a controlmode
   private boolean mDrivetraiHighGear;
   private boolean mStartSelftestOrCalibration;
   private final Logger mLogger = LoggerFactory.getLogger(Robot.class);
@@ -66,6 +67,7 @@ public class Robot extends TimedRobot {
 
     // mCount = 0;
 
+    // turn off limelight LEDs when autonomous is initiated
     if (mDrivetrain.mVision.getLedMode() != -1.0) {
       mDrivetrain.mVision.setLimelightState(ledMode.kOff);
     }
@@ -128,6 +130,13 @@ public class Robot extends TimedRobot {
       }
     }
   
+    double time;
+    time = DriverStation.getInstance().getMatchTime();
+    if (time < 11) {
+      mLeds.setState(LEDs.colorState.kDisplayHighGear);
+    } else {
+      mLeds.setState(LEDs.colorState.kDisplayLowGear);
+   }
   }
 
   @Override

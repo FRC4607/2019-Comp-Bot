@@ -62,8 +62,8 @@ public class RobotMap {
 
   public static final int kElevatorMaxIntegralAccumulator = 500000;
   public static final int kElevatorSensorDeadband = 5;
-  public static final int kElevatorIZone = 500;                    
-  public static final int kSCurveStrengthElevator = 3;             
+  public static final int kElevatorIZone = 500;
+  public static final int kSCurveStrengthElevator = 3;
   public static final double kElevatorRampRate = 0.01;
 
   public static final int kVelocityElevator = 12000;                
@@ -71,7 +71,7 @@ public class RobotMap {
   
   public static final int kElevatorFirstLevel = 0;            
   public static final int kElevatorSecondLevel = 14350;     
-  public static final int kElevatorThirdLevel = 29800;      
+  public static final int kElevatorThirdLevel = 29800;
   
   public static final int kElevatorFirstLevelCargo = 8500;    
   public static final int kElevatorSecondLevelCargo = 23000;
@@ -135,7 +135,7 @@ public class RobotMap {
   /******************************************************************************************************************************** 
   ** VISION CONTROLLER
   ********************************************************************************************************************************/
-  public static final double kScaleHorizontalToTarget = 1.0 / 27.0;                // Limelight has 54deg FOV
+  public static final double kScaleHorizontalToTarget = 1.0 / 27.0; // Limelight has 54deg FOV
   public static final double kTurningGain = 1.0;
   public static final double kStopTurningDeg = 1.0;
   public static final double kVisionThreadTime = 0.01;

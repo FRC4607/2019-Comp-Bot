@@ -5,6 +5,7 @@ import frc.robot.RobotMap;
 import frc.robot.lib.drivers.TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import org.slf4j.Logger;
@@ -32,6 +33,11 @@ public class MultiManipulator extends Subsystem {
 
   public void CargoStop() {
     mCargoMotor.set(0.0);
+  }
+
+  public void CargoLowCurrent() {
+    // mLogger.info("intake current");
+    mCargoMotor.set(ControlMode.Current, 5);
   }
 
   public void setOpenLoop(double xCargo) {
