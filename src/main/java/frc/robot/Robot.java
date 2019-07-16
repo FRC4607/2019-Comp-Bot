@@ -1,6 +1,8 @@
+
 package frc.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,11 +31,12 @@ public class Robot extends TimedRobot {
   public static OI mOI = new OI();
   private Vision.Status mVisionStatus;
   private Drivetrain.controlMode mDrivetrainState;
-    // TODO: figure out why mDrivetrainState is not a controlmode
+  // TODO: figure out why mDrivetrainState is not a controlmode
   private boolean mDrivetraiHighGear;
   private boolean mStartSelftestOrCalibration;
   private final Logger mLogger = LoggerFactory.getLogger(Robot.class);
   // private int mCount = 0;
+  private double time;
   
   @Override
   public void robotInit() {
@@ -44,6 +47,11 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     SmartDashboard.putBoolean("Drivetrain gear:", mDrivetrain.isHighGear());
     SmartDashboard.putBoolean("Panel intake actuated:", mMultiManipulator.isPanelClosed());
+    OI.mDriverJoystick.setRumble(RumbleType.kLeftRumble, 1);
+    OI.mDriverJoystick.setRumble(RumbleType.kRightRumble, 0);
+    OI.mOperatorJoystick.setRumble(RumbleType.kLeftRumble, 1);
+    OI.mOperatorJoystick.setRumble(RumbleType.kRightRumble, 0);
+
   }
 
   @Override
@@ -129,14 +137,21 @@ public class Robot extends TimedRobot {
         mLeds.setState(LEDs.colorState.kDisplayLowGear);
       }
     }
-  
-    double time;
+
     time = DriverStation.getInstance().getMatchTime();
-    if (time < 11) {
-      mLeds.setState(LEDs.colorState.kDisplayHighGear);
-    } else {
-      mLeds.setState(LEDs.colorState.kDisplayLowGear);
-   }
+    if (time < 11 && time > 8) {
+      // make the LEDs white and have the controlleres rumble when there is 10 seconds left in the match
+      mLeds.setState(LEDs.colorState.kDisplayEndGame);
+      OI.mDriverJoystick.setRumble(RumbleType.kLeftRumble, 1);
+      OI.mDriverJoystick.setRumble(RumbleType.kRightRumble, 1);
+      OI.mOperatorJoystick.setRumble(RumbleType.kLeftRumble, 1);
+      OI.mOperatorJoystick.setRumble(RumbleType.kRightRumble, 1);
+    } else if (time < 8) {
+      OI.mDriverJoystick.setRumble(RumbleType.kLeftRumble, 0);
+      OI.mDriverJoystick.setRumble(RumbleType.kRightRumble, 0);
+      OI.mOperatorJoystick.setRumble(RumbleType.kLeftRumble, 0);
+      OI.mOperatorJoystick.setRumble(RumbleType.kRightRumble, 0);
+    }
   }
 
   @Override

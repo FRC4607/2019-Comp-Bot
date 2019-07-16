@@ -19,7 +19,8 @@ public class LEDs {
     kDisplayTargetAcquired,
     kDisplayTargetNotAcquired,
     kDisplayHighGear,
-    kDisplayLowGear
+    kDisplayLowGear,
+    kDisplayEndGame
   }
 
   private boolean mIsBlinkLEDOn = false;
@@ -51,6 +52,9 @@ public class LEDs {
               break;
           case kDisplayLowGear:
               setColor(0.5, 0.5, 0.0);
+              break;
+          case kDisplayEndGame:
+              setColor(1.0, 1.0, 1.0);
               break;
         }
 
