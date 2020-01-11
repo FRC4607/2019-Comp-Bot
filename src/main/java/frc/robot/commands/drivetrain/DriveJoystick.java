@@ -35,7 +35,7 @@ public class DriveJoystick extends Command {
       turn = 0.0;
     }
 
-    Robot.mDrivetrain.ApplyDriveSignal(throttle, turn);
+    Robot.mDrivetrain.ApplyDriveSignal(-throttle, turn);
   }
 
   @Override

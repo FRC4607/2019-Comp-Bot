@@ -9,12 +9,13 @@ public class RobotMap {
   /******************************************************************************************************************************** 
   ** DRIVETRAIN SUBSYSTEM
   ********************************************************************************************************************************/
+  // commented out extra motors now that actuate is driven by 4 cims
   public static final int kLeftDriveMasterId = 23;                                  // Has CTRE mag encoder attached
   public static final int kLeftDriveFollowerAId = 24;
-  public static final int kLeftDriveFollowerBId = 25;
+  // public static final int kLeftDriveFollowerBId = 25;
   public static final int kRightDriveMasterId = 10;                                 // Has CTRE mag encoder attached
   public static final int kRightDriveFollowerAId = 11;                              // Has Pigeon attached
-  public static final int kRightDriveFollowerBId = 12;
+  // public static final int kRightDriveFollowerBId = 12;
 
   public static final int kShifterHighGearSolenoidId = 3;
   public static final int kShifterLowGearSolenoidId = 2;

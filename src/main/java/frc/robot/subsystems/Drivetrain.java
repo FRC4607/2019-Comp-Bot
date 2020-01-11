@@ -33,7 +33,8 @@ public class Drivetrain extends Subsystem {
   // private static final double kDeadbandLowGearScalar = (1.0 - RobotMap.kDeadbandLowGear) / 1.0;
 
   // Hardware
-  private final WPI_TalonSRX mLeftLeader, mRightLeader, mRightFollowerA, mRightFollowerB,  mLeftFollowerA, mLeftFollowerB;
+  // private final WPI_TalonSRX mLeftLeader, mRightLeader, mRightFollowerA, mRightFollowerB,  mLeftFollowerA, mLeftFollowerB;
+  private final WPI_TalonSRX mLeftLeader, mRightLeader, mRightFollowerA, mLeftFollowerA;
   
   private final DoubleSolenoid mShifter;
   private final Compressor mCompressor;
@@ -85,10 +86,10 @@ public class Drivetrain extends Subsystem {
       mIsInverted = invert;
       mLeftLeader.setInverted(invert);
       mLeftFollowerA.setInverted(invert);
-      mLeftFollowerB.setInverted(invert);
+      // mLeftFollowerB.setInverted(invert);
       mRightLeader.setInverted(invert);
       mRightFollowerA.setInverted(invert);
-      mRightFollowerB.setInverted(invert);
+      // mRightFollowerB.setInverted(invert);
       mLogger.info("Set inverted: [{}]", mIsInverted);
     }
   }
@@ -131,20 +132,20 @@ public class Drivetrain extends Subsystem {
       mIsBrakeMode = wantsBrakeMode;
       mLeftLeader.setNeutralMode(NeutralMode.Brake);
       mLeftFollowerA.setNeutralMode(NeutralMode.Brake);
-      mLeftFollowerB.setNeutralMode(NeutralMode.Brake);
+      // mLeftFollowerB.setNeutralMode(NeutralMode.Brake);
       mRightLeader.setNeutralMode(NeutralMode.Brake);
       mRightFollowerA.setNeutralMode(NeutralMode.Brake);
-      mRightFollowerB.setNeutralMode(NeutralMode.Brake);
+      // mRightFollowerB.setNeutralMode(NeutralMode.Brake);
       mLogger.info("Neutral mode set to: [Brake]");
 
     } else if (!wantsBrakeMode && mIsBrakeMode) {
       mIsBrakeMode = wantsBrakeMode;
       mLeftLeader.setNeutralMode(NeutralMode.Coast);
       mLeftFollowerA.setNeutralMode(NeutralMode.Coast);
-      mLeftFollowerB.setNeutralMode(NeutralMode.Coast);
+      // mLeftFollowerB.setNeutralMode(NeutralMode.Coast);
       mRightLeader.setNeutralMode(NeutralMode.Coast);
       mRightFollowerA.setNeutralMode(NeutralMode.Coast);
-      mRightFollowerB.setNeutralMode(NeutralMode.Coast);
+      // mRightFollowerB.setNeutralMode(NeutralMode.Coast);
       mLogger.info("Neutral mode set to: [Coast]");
     }
   }
@@ -179,7 +180,7 @@ public class Drivetrain extends Subsystem {
     // mLogger.info("Joystick Throttle: {}, Joystick Turn: {}", throttle, turn);
     if (mControlState == controlMode.kOpenLoop || mControlState == controlMode.kDriveWithTurningAssist) {
       // Invert the turn signal to get the DifferentialDrive to turn right/left correctly
-      mDiffDrive.arcadeDrive(mThrottle, -mTurn);   
+      mDiffDrive.arcadeDrive(mThrottle, mTurn);   
       // mDiffDrive.arcadeDrive(throttle, -turn);   
 
     } else if (mControlState == controlMode.kVelocity) {
@@ -228,17 +229,17 @@ public class Drivetrain extends Subsystem {
   /****************************************************************************************************************************** 
   ** CONSTRUCTOR
   ******************************************************************************************************************************/
-  public Drivetrain(WPI_TalonSRX leftLeader, WPI_TalonSRX leftFollowerA, WPI_TalonSRX leftFollowerB, 
-                    WPI_TalonSRX rightLeader, WPI_TalonSRX rightFollowerA, WPI_TalonSRX rightFollowerB,
+  public Drivetrain(WPI_TalonSRX leftLeader, WPI_TalonSRX leftFollowerA, // WPI_TalonSRX leftFollowerB, 
+                    WPI_TalonSRX rightLeader, WPI_TalonSRX rightFollowerA, // WPI_TalonSRX rightFollowerB,
                     DoubleSolenoid shifter, Vision vision, Vision visionLow, Compressor compressor, DifferentialDrive diffDrive) {
 
     mLeftLeader = leftLeader;
     mLeftFollowerA = leftFollowerA; 
-    mLeftFollowerB = leftFollowerB;
+    // mLeftFollowerB = leftFollowerB;
 
     mRightLeader = rightLeader; 
     mRightFollowerA = rightFollowerA;
-    mRightFollowerB = rightFollowerB;
+    // mRightFollowerB = rightFollowerB;
 
     mVision = vision;
     mVisionLow = visionLow;
@@ -274,10 +275,10 @@ public class Drivetrain extends Subsystem {
   public static Drivetrain create() {
     WPI_TalonSRX leftLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kLeftDriveMasterId));
     WPI_TalonSRX leftFollowerA = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kLeftDriveFollowerAId), RobotMap.kLeftDriveMasterId);
-    WPI_TalonSRX leftFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kLeftDriveFollowerBId), RobotMap.kLeftDriveMasterId);
+    // WPI_TalonSRX leftFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kLeftDriveFollowerBId), RobotMap.kLeftDriveMasterId);
     WPI_TalonSRX rightLeader = TalonSRX.createTalonSRXWithEncoder(new WPI_TalonSRX(RobotMap.kRightDriveMasterId));
     WPI_TalonSRX rightFollowerA = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerAId), RobotMap.kRightDriveMasterId);
-    WPI_TalonSRX rightFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerBId), RobotMap.kRightDriveMasterId);
+    // WPI_TalonSRX rightFollowerB = TalonSRX.createTalonSRX(new WPI_TalonSRX(RobotMap.kRightDriveFollowerBId), RobotMap.kRightDriveMasterId);
 
     DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.kPCMId, RobotMap.kShifterHighGearSolenoidId, RobotMap.kShifterLowGearSolenoidId);
 
@@ -288,7 +289,8 @@ public class Drivetrain extends Subsystem {
 
     DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader);
 
-    return new Drivetrain(leftLeader, leftFollowerA, leftFollowerB, rightLeader, rightFollowerA, rightFollowerB, shifter, vision, visionLow, compressor, diffDrive);
+    // return new Drivetrain(leftLeader, leftFollowerA, leftFollowerB, rightLeader, rightFollowerA, rightFollowerB, shifter, vision, visionLow, compressor, diffDrive);
+    return new Drivetrain(leftLeader, leftFollowerA, rightLeader, rightFollowerA, shifter, vision, visionLow, compressor, diffDrive);
  }
 
   /****************************************************************************************************************************** 
@@ -351,10 +353,10 @@ public class Drivetrain extends Subsystem {
     setCompressorClosedLoop(false);
     mLeftLeader.set(ControlMode.PercentOutput, 0.0);
     mLeftFollowerA.set(ControlMode.PercentOutput, 0.0);
-    mLeftFollowerB.set(ControlMode.PercentOutput, 0.0);
+    // mLeftFollowerB.set(ControlMode.PercentOutput, 0.0);
     mRightLeader.set(ControlMode.PercentOutput, 0.0);
     mRightFollowerA.set(ControlMode.PercentOutput, 0.0);
-    mRightFollowerB.set(ControlMode.PercentOutput, 0.0);
+    // mRightFollowerB.set(ControlMode.PercentOutput, 0.0);
 
     // For each motor, polarity, gear: drive at 50% power for 2 seconds and capture encoder/power data
     // This can be done up on blocks since this data is only used for relative comparison
@@ -364,32 +366,32 @@ public class Drivetrain extends Subsystem {
     MeasureMotorHealth(mRightLeader, true, true);
     MeasureMotorHealth(mLeftFollowerA, true, true, mLeftLeader);
     MeasureMotorHealth(mRightFollowerA, true, true, mRightLeader);
-    MeasureMotorHealth(mLeftFollowerB, true, true, mLeftLeader);
-    MeasureMotorHealth(mRightFollowerB, true, true, mRightLeader);
+    // MeasureMotorHealth(mLeftFollowerB, true, true, mLeftLeader);
+    // MeasureMotorHealth(mRightFollowerB, true, true, mRightLeader);
     MeasureMotorHealth(mLeftLeader, false, true);
     MeasureMotorHealth(mRightLeader, false, true);
     MeasureMotorHealth(mLeftFollowerA, false, true, mLeftLeader);
     MeasureMotorHealth(mRightFollowerA, false, true, mRightLeader);
-    MeasureMotorHealth(mLeftFollowerB, false, true, mLeftLeader);
-    MeasureMotorHealth(mRightFollowerB, false, true, mRightLeader);
+    // MeasureMotorHealth(mLeftFollowerB, false, true, mLeftLeader);
+    // MeasureMotorHealth(mRightFollowerB, false, true, mRightLeader);
     MeasureMotorHealth(mLeftLeader, true, false);
     MeasureMotorHealth(mRightLeader, true, false);
     MeasureMotorHealth(mLeftFollowerA, true, false, mLeftLeader);
     MeasureMotorHealth(mRightFollowerA, true, false, mRightLeader);
-    MeasureMotorHealth(mLeftFollowerB, true, false, mLeftLeader);
-    MeasureMotorHealth(mRightFollowerB, true, false, mRightLeader);
+    // MeasureMotorHealth(mLeftFollowerB, true, false, mLeftLeader);
+    // MeasureMotorHealth(mRightFollowerB, true, false, mRightLeader);
     MeasureMotorHealth(mLeftLeader, false, false);
     MeasureMotorHealth(mRightLeader, false, false);
     MeasureMotorHealth(mLeftFollowerA, false, false, mLeftLeader);
     MeasureMotorHealth(mRightFollowerA, false, false, mRightLeader);
-    MeasureMotorHealth(mLeftFollowerB, false, false, mLeftLeader);
-    MeasureMotorHealth(mRightFollowerB, false, false, mRightLeader);
+    // MeasureMotorHealth(mLeftFollowerB, false, false, mLeftLeader);
+    // MeasureMotorHealth(mRightFollowerB, false, false, mRightLeader);
 
     // Return back to follower mode, set brake mode, compressor to closed loop, and set drivetrain to open loop control
     mLeftFollowerA.set(ControlMode.Follower, RobotMap.kLeftDriveMasterId);
-    mLeftFollowerB.set(ControlMode.Follower, RobotMap.kLeftDriveMasterId);
+    // mLeftFollowerB.set(ControlMode.Follower, RobotMap.kLeftDriveMasterId);
     mRightFollowerA.set(ControlMode.Follower, RobotMap.kRightDriveMasterId);
-    mRightFollowerB.set(ControlMode.Follower, RobotMap.kRightDriveMasterId);
+    // mRightFollowerB.set(ControlMode.Follower, RobotMap.kRightDriveMasterId);
     setOpenLoopControl();
     setCompressorClosedLoop(true);
   }

@@ -21,10 +21,10 @@ public class DrivetrainTest {
 
   WPI_TalonSRX leftLeaderMock = mock(WPI_TalonSRX.class);
   WPI_TalonSRX leftFollowerAMock = mock(WPI_TalonSRX.class);
-  WPI_TalonSRX leftFollowerBMock = mock(WPI_TalonSRX.class);
+  // WPI_TalonSRX leftFollowerBMock = mock(WPI_TalonSRX.class);
   WPI_TalonSRX rightLeaderMock = mock(WPI_TalonSRX.class);
   WPI_TalonSRX rightFollowerAMock = mock(WPI_TalonSRX.class);
-  WPI_TalonSRX rightFollowerBMock = mock(WPI_TalonSRX.class);
+  // WPI_TalonSRX rightFollowerBMock = mock(WPI_TalonSRX.class);
   DifferentialDrive diffDriveMock = mock(DifferentialDrive.class);
   Vision visionMock = mock(Vision.class);
   Vision visionMockLow = mock(Vision.class);
@@ -51,8 +51,8 @@ public class DrivetrainTest {
   ******************************************************************************************************************************/
   @Test
   public void testInvertOutput() {
-    Drivetrain drivetrain = new Drivetrain(leftLeaderMock, leftFollowerAMock, leftFollowerBMock, 
-                                           rightLeaderMock, rightFollowerAMock, rightFollowerBMock,
+    Drivetrain drivetrain = new Drivetrain(leftLeaderMock, leftFollowerAMock, // leftFollowerBMock, 
+                                           rightLeaderMock, rightFollowerAMock, // rightFollowerBMock,
                                            shifterMock, visionMock, visionMockLow, compressorMock, diffDriveMock);
     // Should start off inverted
     boolean invertedValue = false;
@@ -63,10 +63,10 @@ public class DrivetrainTest {
     drivetrain.InvertOutput(invertedValue);
     verify(leftLeaderMock, times(1)).setInverted(invertedValue);
     verify(leftFollowerAMock, times(1)).setInverted(invertedValue);
-    verify(leftFollowerBMock, times(1)).setInverted(invertedValue);
+    // verify(leftFollowerBMock, times(1)).setInverted(invertedValue);
     verify(rightLeaderMock, times(1)).setInverted(invertedValue);
     verify(rightFollowerAMock, times(1)).setInverted(invertedValue);
-    verify(rightFollowerBMock, times(1)).setInverted(invertedValue);                                       
+    // verify(rightFollowerBMock, times(1)).setInverted(invertedValue);                                       
     assertEquals(invertedValue, drivetrain.isInverted());
 
     // .setInverted(true)
@@ -74,10 +74,10 @@ public class DrivetrainTest {
     drivetrain.InvertOutput(invertedValue);
     verify(leftLeaderMock, times(2)).setInverted(invertedValue);
     verify(leftFollowerAMock, times(2)).setInverted(invertedValue);
-    verify(leftFollowerBMock, times(2)).setInverted(invertedValue);
+    // verify(leftFollowerBMock, times(2)).setInverted(invertedValue);
     verify(rightLeaderMock, times(2)).setInverted(invertedValue);
     verify(rightFollowerAMock, times(2)).setInverted(invertedValue);
-    verify(rightFollowerBMock, times(2)).setInverted(invertedValue);                                       
+    // verify(rightFollowerBMock, times(2)).setInverted(invertedValue);                                       
     assertEquals(invertedValue, drivetrain.isInverted());
     drivetrain.close();
   }
@@ -87,8 +87,8 @@ public class DrivetrainTest {
   ******************************************************************************************************************************/
   @Test
   public void testShift() {
-    Drivetrain drivetrain = new Drivetrain(leftLeaderMock, leftFollowerAMock, leftFollowerBMock, 
-                                           rightLeaderMock, rightFollowerAMock, rightFollowerBMock,
+    Drivetrain drivetrain = new Drivetrain(leftLeaderMock, leftFollowerAMock, // leftFollowerBMock, 
+                                           rightLeaderMock, rightFollowerAMock, // rightFollowerBMock,
                                            shifterMock, visionMock, visionMockLow, compressorMock, diffDriveMock);
     // // Should start off in high gear
     // boolean highGear = false;
@@ -114,8 +114,8 @@ public class DrivetrainTest {
   ******************************************************************************************************************************/
   @Test
   public void testCompressor() {
-    Drivetrain drivetrain = new Drivetrain(leftLeaderMock, leftFollowerAMock, leftFollowerBMock, 
-                                           rightLeaderMock, rightFollowerAMock, rightFollowerBMock,
+    Drivetrain drivetrain = new Drivetrain(leftLeaderMock, leftFollowerAMock, // leftFollowerBMock, 
+                                           rightLeaderMock, rightFollowerAMock, // rightFollowerBMock,
                                            shifterMock, visionMock, visionMockLow, compressorMock, diffDriveMock);
     // Should start off in closed loop mode
     boolean wantsClosedLoop = true;
@@ -143,8 +143,8 @@ public class DrivetrainTest {
   ******************************************************************************************************************************/
   @Test
   public void testBrakeMode() {
-    Drivetrain drivetrain = new Drivetrain(leftLeaderMock, leftFollowerAMock, leftFollowerBMock, 
-                                           rightLeaderMock, rightFollowerAMock, rightFollowerBMock,
+    Drivetrain drivetrain = new Drivetrain(leftLeaderMock, leftFollowerAMock, // leftFollowerBMock, 
+                                           rightLeaderMock, rightFollowerAMock, // rightFollowerBMock,
                                            shifterMock, visionMock, visionMockLow, compressorMock, diffDriveMock);
     // Should start off in coast mode
     boolean brakeMode = true;
@@ -155,10 +155,10 @@ public class DrivetrainTest {
     drivetrain.setBrakeMode(brakeMode);
     verify(leftLeaderMock, times(1)).setNeutralMode(NeutralMode.Coast);
     verify(leftFollowerAMock, times(1)).setNeutralMode(NeutralMode.Coast);
-    verify(leftFollowerBMock, times(1)).setNeutralMode(NeutralMode.Coast);
+    // verify(leftFollowerBMock, times(1)).setNeutralMode(NeutralMode.Coast);
     verify(rightLeaderMock, times(1)).setNeutralMode(NeutralMode.Coast);
     verify(rightFollowerAMock, times(1)).setNeutralMode(NeutralMode.Coast);
-    verify(rightFollowerBMock, times(1)).setNeutralMode(NeutralMode.Coast);
+    // verify(rightFollowerBMock, times(1)).setNeutralMode(NeutralMode.Coast);
     assertEquals(brakeMode, drivetrain.isBrakeMode());
 
     // Set back to coast mode
@@ -166,10 +166,10 @@ public class DrivetrainTest {
     drivetrain.setBrakeMode(brakeMode);
     verify(leftLeaderMock, times(2)).setNeutralMode(NeutralMode.Brake);
     verify(leftFollowerAMock, times(2)).setNeutralMode(NeutralMode.Brake);
-    verify(leftFollowerBMock, times(2)).setNeutralMode(NeutralMode.Brake);
+    // verify(leftFollowerBMock, times(2)).setNeutralMode(NeutralMode.Brake);
     verify(rightLeaderMock, times(2)).setNeutralMode(NeutralMode.Brake);
     verify(rightFollowerAMock, times(2)).setNeutralMode(NeutralMode.Brake);
-    verify(rightFollowerBMock, times(2)).setNeutralMode(NeutralMode.Brake);
+    // verify(rightFollowerBMock, times(2)).setNeutralMode(NeutralMode.Brake);
     assertEquals(brakeMode, drivetrain.isBrakeMode());
 
     drivetrain.close();
